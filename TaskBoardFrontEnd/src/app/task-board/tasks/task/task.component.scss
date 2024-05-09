@@ -1,0 +1,81 @@
+@use 'colors' as colors;
+
+.task-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 12px;
+    background: colors.$task-background;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    box-shadow: 2px 2px 7px 1px colors.$task-box-shadow;
+    width: 100%;
+}
+
+.moveable-zone {
+    width: 100px;
+    align-self: center;
+    font-size: 30px;
+    display: flex;
+    height: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.task {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: 100%;
+}
+
+.task-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: 800;
+    align-items: flex-start;
+
+    .task-header-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-wrap: nowrap;
+    }
+}
+
+.task-body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: colors.$secondary-text-priority-color;
+
+    .task-description {
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: colors.$secondary-text-color;
+        overflow: hidden;
+        text-wrap: balance;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
+
+    .task-date {
+        display: flex;
+
+    }
+
+    .task-priority {
+        display: flex;
+        width: max-content;
+        align-items: center;
+        background-color: colors.$task-priority-background;
+        border-radius: 10px;
+
+        &> :last-child {
+            margin-right: 10px;
+        }
+    }
+}

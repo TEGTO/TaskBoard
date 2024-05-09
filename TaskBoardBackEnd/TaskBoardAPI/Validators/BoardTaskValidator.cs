@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using TaskBoardAPI.Models;
+using TaskBoardAPI.Models.Dto;
 
 namespace TaskBoardAPI.Validators
 {
-    public class BoardTaskValidator : AbstractValidator<BoardTask>
+    public class BoardTaskValidator : AbstractValidator<BoardTaskDto>
     {
         public BoardTaskValidator()
         {
@@ -11,7 +11,6 @@ namespace TaskBoardAPI.Validators
             RuleFor(x => x.Id).NotNull();
             RuleFor(x => x.BoardTaskListId).NotNull();
             RuleFor(x => x.IsHead).NotNull();
-            RuleFor(x => x.CreationTime.ToUniversalTime()).LessThanOrEqualTo(DateTime.UtcNow);
             RuleFor(x => x.Priority).NotNull();
         }
     }

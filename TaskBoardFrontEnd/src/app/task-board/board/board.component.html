@@ -1,0 +1,23 @@
+<div class="board">
+    <div class="board-bar">
+        <p class="board-name">My Task Board</p>
+        <button class="history-menu" (click)="openHistoryBar()">
+            History
+            <span class="icon">
+                <i class="fas fa-history"></i>
+            </span>
+        </button>
+    </div>
+
+    <div class="board-wrapper">
+        <div class="board-columns" *ngIf="taskLists; else loading">
+            <ng-container *ngFor="let taskList of taskLists">
+                <tasks-list class="board-column" [taskList]="taskList" [allTaskLists]="taskLists"></tasks-list>
+            </ng-container>
+            <tasks-list class="board-column" [allTaskLists]="taskLists"></tasks-list>
+        </div>
+        <ng-template #loading>
+            Loading...
+        </ng-template>
+    </div>
+</div>

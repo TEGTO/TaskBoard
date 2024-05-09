@@ -1,0 +1,19 @@
+@use 'colors' as colors;
+
+.activity-wrapper {
+    color: colors.$secondary-text-color;
+    overflow-wrap: normal;
+
+    .activity-description {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        word-wrap: break-word;
+
+        &::before {
+            content: "•";
+            margin-right: 5px;
+        }
+    }
+}

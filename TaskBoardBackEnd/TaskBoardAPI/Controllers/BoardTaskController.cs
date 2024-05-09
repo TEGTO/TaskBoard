@@ -28,7 +28,12 @@ namespace TaskBoardAPI.Controllers
             BoardTaskDto boardTaskDto = mapper.Map<BoardTaskDto>(boardTask);
             return Ok(boardTaskDto);
         }
-
+        [HttpGet("list/{listId}")]
+        public async Task<ActionResult<IEnumerable<BoardTaskDto>>> GetTasksByListId(string listId, CancellationToken cancellationToken)
+        {
+            IEnumerable<BoardTask> boardTasks = await boardTaskService.GetTasksByListIdAsync(listId, cancellationToken: cancellationToken);
+            return Ok(boardTasks.Select(mapper.Map<BoardTaskDto>));
+        }
         [HttpPost]
         public async Task<ActionResult<BoardTaskDto>> CreateTask([FromBody] BoardTaskDto boardTaskDto, CancellationToken cancellationToken)
         {
@@ -44,11 +49,10 @@ namespace TaskBoardAPI.Controllers
             await boardTaskService.UpdateTaskAsync(boardTask, cancellationToken);
             return Ok();
         }
-        [HttpDelete]
-        public async Task<ActionResult> DeleteBoardTask([FromBody] BoardTaskDto boardTaskDto, CancellationToken cancellationToken)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteBoardTask(string id, CancellationToken cancellationToken)
         {
-            BoardTask boardTask = mapper.Map<BoardTask>(boardTaskDto);
-            await boardTaskService.DeleteTaskAsync(boardTask, cancellationToken);
+            await boardTaskService.DeleteTaskAsync(id, cancellationToken);
             return Ok();
         }
     }

@@ -24,21 +24,34 @@ namespace TaskBoardAPI.Services
                 return boardTask;
             }
         }
+        public async Task<IEnumerable<BoardTask>> GetTasksByListIdAsync(string listId, CancellationToken cancellationToken = default)
+        {
+            List<BoardTask> boardTasks = new List<BoardTask>();
+            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            {
+                boardTasks.AddRange(dbContext.BoardTasks
+                    .Where(x => x.BoardTaskListId == listId)
+                    .OrderByDescending(x => x.CreationTime.Date).ThenByDescending(c => c.CreationTime.TimeOfDay)
+                    .AsNoTracking());
+            }
+            return boardTasks;
+        }
         public async Task<BoardTask> CreateTaskAsync(BoardTask task, CancellationToken cancellationToken = default)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
+                task.Id = default!;
                 task.CreationTime = DateTime.UtcNow;
                 await dbContext.AddAsync(task, cancellationToken);
                 await dbContext.SaveChangesAsync(cancellationToken);
                 return task;
             }
         }
-        public async Task DeleteTaskAsync(BoardTask task, CancellationToken cancellationToken = default)
+        public async Task DeleteTaskAsync(string id, CancellationToken cancellationToken = default)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                BoardTask? taskInDb = await GetTaskByIdAsync(task.Id, cancellationToken: cancellationToken);
+                BoardTask? taskInDb = await GetTaskByIdAsync(id, cancellationToken: cancellationToken);
                 if (taskInDb != null)
                 {
                     await RemoveUpdateSiblings(dbContext, taskInDb, cancellationToken);
@@ -55,6 +68,7 @@ namespace TaskBoardAPI.Services
                 if (taskInDb != null)
                 {
                     taskInDb.CopyOther(task);
+                    dbContext.Update(taskInDb);
                     await dbContext.SaveChangesAsync(cancellationToken);
                 }
             }
@@ -70,6 +84,7 @@ namespace TaskBoardAPI.Services
                 if (taskInDb.IsHead)
                     await RemoveCurrentHeadTask(dbContext, cancellationToken);
                 await InsertUpdateSiblings(dbContext, taskInDb, cancellationToken);
+                dbContext.Update(taskInDb);
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
         }

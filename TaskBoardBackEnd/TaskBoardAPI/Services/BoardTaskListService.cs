@@ -24,21 +24,35 @@ namespace TaskBoardAPI.Services
                 return boardTaskList;
             }
         }
+        public async Task<IEnumerable<BoardTaskList>> GetTaskListsByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            List<BoardTaskList> boardTaskLists = new List<BoardTaskList>();
+            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            {
+                boardTaskLists.AddRange(dbContext.BoardTaskLists
+                  .Where(x => x.UserId == userId)
+                   .OrderBy(x => x.CreationTime.Date).ThenBy(c => c.CreationTime.TimeOfDay)
+                  .Include(x => x.BoardTasks.OrderByDescending(bt => bt.CreationTime.Date).ThenByDescending(c => c.CreationTime.TimeOfDay))
+                  .AsNoTracking());
+            }
+            return boardTaskLists;
+        }
         public async Task<BoardTaskList> CreateTaskListAsync(BoardTaskList taskList, CancellationToken cancellationToken = default)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
+                taskList.Id = default!;
                 taskList.CreationTime = DateTime.UtcNow;
                 await dbContext.AddAsync(taskList, cancellationToken);
                 await dbContext.SaveChangesAsync(cancellationToken);
                 return taskList;
             }
         }
-        public async Task DeleteTaskListAsync(BoardTaskList taskList, CancellationToken cancellationToken = default)
+        public async Task DeleteTaskListAsync(string id, CancellationToken cancellationToken = default)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                BoardTaskList? taskListInDb = await GetTaskListByIdAsync(taskList.Id, cancellationToken: cancellationToken);
+                BoardTaskList? taskListInDb = await GetTaskListByIdAsync(id, cancellationToken: cancellationToken);
                 if (taskListInDb != null)
                 {
                     dbContext.Remove(taskListInDb);
@@ -54,6 +68,7 @@ namespace TaskBoardAPI.Services
                 if (taskListInDb != null)
                 {
                     taskListInDb.CopyOther(taskList);
+                    dbContext.Update(taskListInDb);
                     await dbContext.SaveChangesAsync(cancellationToken);
                 }
             }

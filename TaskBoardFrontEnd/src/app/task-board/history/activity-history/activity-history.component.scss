@@ -1,0 +1,55 @@
+@use "task-card" as tc;
+
+.history-wrapper {
+    @extend .card-wrapper;
+    background: white;
+    width: 500px;
+    height: 100%;
+    top: 0;
+    position: fixed;
+    right: -500px;
+    animation: slideFromRight 0.35s ease-in forwards;
+    font-weight: 800;
+
+    .history-header {
+        @extend .card-header;
+        display: flex;
+        justify-content: space-between;
+        font-size: 25px;
+    }
+
+    .history-body {
+        @extend .card-body;
+        padding: 0;
+        height: 100%;
+
+        .mat-typography {
+            padding-top: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-height: 100%;
+
+            .activities {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                overflow: auto;
+            }
+
+            #show-more {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@keyframes slideFromRight {
+    from {
+        right: -500px;
+    }
+
+    to {
+        right: 0;
+    }
+}

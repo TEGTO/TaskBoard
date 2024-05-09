@@ -1,0 +1,22 @@
+$card-offset: 20px;
+
+.card-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .card-header {
+        display: flex;
+        padding: $card-offset $card-offset calc($card-offset / 2) $card-offset;
+        margin-bottom: calc($card-offset );
+        font-size: 20px;
+        font-weight: 800;
+        border-bottom: 1px solid #99999954;
+    }
+
+    .card-body {
+        padding: 0 $card-offset $card-offset $card-offset;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+}

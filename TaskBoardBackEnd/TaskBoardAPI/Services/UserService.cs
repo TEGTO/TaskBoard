@@ -28,6 +28,7 @@ namespace TaskBoardAPI.Services
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
+                user.Id = default!;
                 await dbContext.AddAsync(user, cancellationToken);
                 await dbContext.SaveChangesAsync(cancellationToken);
                 return user;

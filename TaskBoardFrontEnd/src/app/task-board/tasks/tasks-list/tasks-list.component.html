@@ -1,0 +1,54 @@
+<div class="task-list-wrapper">
+    <ng-container *ngIf="taskList; else elseBlock">
+        <header class="task-list-header">
+            <div class="header-title">
+                <div class="header-title-text">
+                    {{taskList.name}}
+                </div>
+                <div class="end-container">
+                    <span>{{taskList.boardTasks.length}}</span>
+                    <button class="card-header-icon" [matMenuTriggerFor]="menu">
+                        <span class="icon">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </span>
+                    </button>
+                </div>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="openListManagerMenu()">
+                        <span class="icon">
+                            <i class="fas fa-edit"></i>
+                        </span>
+                        <span>Edit</span>
+                    </button>
+                    <button mat-menu-item class="has-text-danger" (click)="deleteTaskList()">
+                        <span class="icon">
+                            <i class="fa-solid fa-trash"></i>
+                        </span>
+                        <span>Delete</span>
+                    </button>
+                </mat-menu>
+            </div>
+            <div class="new-card-menu">
+                <button class="new-card-button" aria-label="add new card" (click)="openNewTaskManagerMenu()">
+                    <span class="icon">
+                        <i class="fa-solid fa-plus"></i>
+                    </span>
+                    <span>Add New Card</span>
+                </button>
+            </div>
+        </header>
+
+        <body class="tasks-container">
+            <ng-container *ngFor="let task of taskList.boardTasks">
+                <task [task]="task" [taskList]="taskList" [allTaskLists]="allTaskLists"></task>
+            </ng-container>
+        </body>
+    </ng-container>
+    <ng-template #elseBlock>
+        <div class="empty-list">
+            <button (click)="openListManagerMenu()">
+                <i class="fas fa-plus-circle"></i>
+            </button>
+        </div>
+    </ng-template>
+</div>

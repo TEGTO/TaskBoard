@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper.Internal;
+using Microsoft.EntityFrameworkCore;
 using TaskBoardAPI.Data;
 using TaskBoardAPI.Models;
 
@@ -42,6 +43,7 @@ namespace TaskBoardAPI.Services
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
+                taskActivity.Id = default!;
                 taskActivity.ActivityTime = DateTime.UtcNow;
                 await dbContext.AddAsync(taskActivity, cancellationToken);
                 await dbContext.SaveChangesAsync(cancellationToken);

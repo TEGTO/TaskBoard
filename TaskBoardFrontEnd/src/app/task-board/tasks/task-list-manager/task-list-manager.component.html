@@ -1,0 +1,22 @@
+<form [formGroup]="taskListForm" (ngSubmit)="onSubmit()">
+    <div class="manager-wrapper">
+        <header class="manager-header">{{ cardName }}</header>
+
+        <body class="manager-body">
+            <div>
+                <span *ngIf="isNameInvalid()" class="message is-danger">
+                    Please enter list name
+                </span>
+                <input class="input" id="input-name" type="text" placeholder="List name" formControlName="name">
+            </div>
+            <div class="action-buttons">
+                <button mat-dialog-close class="button">
+                    <span>Cancel</span>
+                </button>
+                <button type="submit" [disabled]="taskListForm.invalid" class="button is-dark">
+                    <span>Save</span>
+                </button>
+            </div>
+        </body>
+    </div>
+</form>

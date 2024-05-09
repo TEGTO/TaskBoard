@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper.Internal;
+using Microsoft.EntityFrameworkCore;
 using TaskBoardAPI.Data;
 using TaskBoardAPI.Models;
 
@@ -45,10 +46,18 @@ namespace TaskBoardAPI.Services
             }
             return activitiesOnPage;
         }
+        public async Task<int> GetBoardActivityAmountByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            {
+                return await dbContext.BoardActivities.Where(x => x.UserId == userId).CountAsync();
+            }
+        }
         public async Task<BoardActivity> CreateBoardActivityAsync(BoardActivity boardActivity, CancellationToken cancellationToken = default)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
+                boardActivity.Id = default!;
                 boardActivity.ActivityTime = DateTime.UtcNow;
                 await dbContext.AddAsync(boardActivity, cancellationToken);
                 await dbContext.SaveChangesAsync(cancellationToken);

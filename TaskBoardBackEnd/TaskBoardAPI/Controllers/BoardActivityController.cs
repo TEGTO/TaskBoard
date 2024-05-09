@@ -28,6 +28,12 @@ namespace TaskBoardAPI.Controllers
             BoardActivityDto boardActivityDto = mapper.Map<BoardActivityDto>(boardActivity);
             return Ok(boardActivityDto);
         }
+        [HttpGet("userActivitiesOnPage/{userId}/amount")]
+        public async Task<ActionResult<int>> GetBoardActivityAmount(string userId, CancellationToken cancellationToken)
+        {
+           int amount = await boardActivityService.GetBoardActivityAmountByUserIdAsync(userId, cancellationToken);
+            return Ok(amount);
+        }
         [HttpGet("userActivitiesOnPage/{userId}")]
         public async Task<ActionResult<IEnumerable<BoardActivityDto>>> GetBoardActivityOnPage(string userId,
             [FromQuery] int page, [FromQuery] int amountOnPage, CancellationToken cancellationToken)

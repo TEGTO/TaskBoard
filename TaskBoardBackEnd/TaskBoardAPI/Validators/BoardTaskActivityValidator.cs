@@ -1,16 +1,15 @@
 ﻿using FluentValidation;
-using TaskBoardAPI.Models;
+using TaskBoardAPI.Models.Dto;
 
 namespace TaskBoardAPI.Validators
 {
-    public class BoardTaskActivityValidator : AbstractValidator<BoardTaskActivity>
+    public class BoardTaskActivityValidator : AbstractValidator<BoardTaskActivityDto>
     {
         public BoardTaskActivityValidator()
         {
             RuleFor(x => x).NotNull();
             RuleFor(x => x.Id).NotNull();
             RuleFor(x => x.BoardTaskId).NotNull();
-            RuleFor(x => x.ActivityTime.ToUniversalTime()).LessThanOrEqualTo(DateTime.UtcNow);
         }
     }
 }

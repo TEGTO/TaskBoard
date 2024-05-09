@@ -1,0 +1,93 @@
+@use "task-card" as tc;
+@use "colors" as colors;
+
+$description-height: 200px;
+
+.task-manager-wrapper {
+    @extend .card-wrapper;
+    width: 600px;
+
+    .task-manager-header {
+        @extend .card-header;
+    }
+
+    .task-manager-body {
+        @extend .card-body;
+        color: colors.$secondary-text-color;
+        gap: 20px;
+
+        .task-params {
+            display: grid;
+            max-width: 400px;
+            grid-template-columns: repeat(2, 1fr);
+            row-gap: 20px;
+            font-size: 15px;
+            align-items: center;
+
+            .param {
+                max-width: 300px;
+
+                * :not(.help) {
+                    color: colors.$secondary-text-priority-color;
+                    font-weight: 800;
+                }
+
+                .task-datapicker {
+                    display: flex;
+
+                    * {
+                        font-weight: 200;
+                    }
+                }
+            }
+        }
+
+        .task-description {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .description-header {
+                font-size: 17px;
+                font-weight: 800;
+                align-items: center;
+                color: colors.$secondary-text-priority-color;
+            }
+
+            .description-body {
+                color: colors.$secondary-text-color;
+                font-size: 15px;
+                box-shadow: 2px 2px 13px 3px colors.$task-box-shadow;
+                border: 1px solid colors.$outline;
+                outline: none;
+                border-radius: 5px;
+                text-wrap: pretty;
+                word-break: break-all;
+                overflow-y: auto;
+                padding: 10px;
+                resize: none;
+                height: $description-height;
+            }
+        }
+
+        .action-buttons {
+            width: 100%;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+
+            >* {
+                flex: 1 1 0;
+                border-radius: 5px;
+            }
+        }
+
+        #input-name {
+            border-radius: 2px;
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
