@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
-import { BoardTaskList } from '../../../../shared/models/board-task-list.model';
+import { BoardTaskList } from '../../../shared/models/board-task-list.model';
 import { UserApiService } from '../user-api/user-api.service';
 
 @Injectable({

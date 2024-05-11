@@ -22,7 +22,6 @@ namespace TaskBoardAPI.Models
         public string? Description { get; set; }
         public Priority Priority { get; set; }
         public string? PrevTaskId { get; set; }
-        public bool IsHead { get; set; }
         public string? NextTaskId { get; set; }
 
         public void CopyOther(BoardTask other)
@@ -33,6 +32,8 @@ namespace TaskBoardAPI.Models
             Name = other.Name;
             Description = other.Description;
             Priority = other.Priority;
+            PrevTaskId = other.PrevTaskId;
+            NextTaskId = other.NextTaskId;
         }
     }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BoardTaskList } from '../../shared/models/board-task-list.model';
 import { ActivityHistoryComponent } from '../history/activity-history/activity-history.component';
 import { TaskListApiService } from '../services/api/task-list-api/task-list-api.service';
+import { BoardTaskList } from '../shared/models/board-task-list.model';
 
 @Component({
   selector: 'task-board',
@@ -10,6 +10,7 @@ import { TaskListApiService } from '../services/api/task-list-api/task-list-api.
   styleUrl: './board.component.scss'
 })
 export class BoardComponent implements OnInit {
+
   taskLists: BoardTaskList[] = [];
 
   constructor(public dialog: MatDialog, private taskListService: TaskListApiService) { }

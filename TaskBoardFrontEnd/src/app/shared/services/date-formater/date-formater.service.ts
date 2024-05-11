@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { DateConfig } from '../configs/date-config/date-config';
-import { DATE_CONFIG } from '../configs/date-config/date-config.service';
+import { DateConfig } from '../../configs/date-config/date-config';
+import { DATE_CONFIG } from '../../configs/date-config/date-config.service';
 
 @Injectable({
   providedIn: 'root'

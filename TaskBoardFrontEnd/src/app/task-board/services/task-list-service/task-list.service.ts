@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BoardTaskList, copyTaskListValues } from '../../../shared/models/board-task-list.model';
+import { BoardTaskList, copyTaskListValues } from '../../shared/models/board-task-list.model';
 import { ActivityService } from '../acitvity-service/activity.service';
 import { TaskListApiService } from '../api/task-list-api/task-list-api.service';
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BoardActivity } from '../../../shared/models/board-activity.model';
-import { BoardTaskActivity } from '../../../shared/models/board-task-activity.model';
-import { BoardTaskList } from '../../../shared/models/board-task-list.model';
-import { BoardTask } from '../../../shared/models/board-task.model';
+import { BoardActivity } from '../../shared/models/board-activity.model';
+import { BoardTaskActivity } from '../../shared/models/board-task-activity.model';
+import { BoardTaskList } from '../../shared/models/board-task-list.model';
+import { BoardTask } from '../../shared/models/board-task.model';
 import { ActivityDescriptionFormatterService, ActivityDescriptions } from '../activity-description-formatter/activity-description-formatter.service';
 import { ActivityApiService } from '../api/acitvity-api/activity-api.service';
 import { TaskActivityApiService } from '../api/task-acitvity-api/task-activity-api.service';
@@ -40,8 +40,6 @@ export class ActivityService {
   }
   async createActivity_TaskUpdated(curentTask: BoardTask, prevTask: BoardTask) {
     var descriptions = await this.descriptionFormatter.taskUpdated(curentTask, prevTask);
-    console.log(descriptions);
-    console.log(descriptions.length);
     for (var i = 0; i < descriptions.length; i++) {
       this.createBoardActivity(descriptions[i]);
       this.createBoardTaskActivity(curentTask, descriptions[i]);
@@ -50,7 +48,6 @@ export class ActivityService {
   createActivity_TaskDeleted(task: BoardTask, taskList: BoardTaskList) {
     var descriptions = this.descriptionFormatter.taskDeleted(task, taskList)
     this.createBoardActivity(descriptions);
-    this.createBoardTaskActivity(task, descriptions);
   }
   createActivity_TaskListCreated(taskList: BoardTaskList) {
     var description = this.descriptionFormatter.taskListCreated(taskList)

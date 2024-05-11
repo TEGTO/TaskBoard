@@ -1,3 +1,4 @@
+import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -41,7 +42,10 @@ import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
     MatDatepickerModule,
     MatNativeDateModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDropListGroup
   ],
   exports: [BoardComponent]
 })

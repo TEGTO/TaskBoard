@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { BoardActivity } from '../../../shared/models/board-activity.model';
 import { DateFormaterService } from '../../../shared/services/date-formater/date-formater.service';
+import { BoardActivity } from '../../shared/models/board-activity.model';
 
 @Component({
   selector: 'app-activity',

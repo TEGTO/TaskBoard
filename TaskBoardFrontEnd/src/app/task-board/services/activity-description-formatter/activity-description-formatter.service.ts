@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
-import { BoardTaskList } from '../../../shared/models/board-task-list.model';
-import { BoardTask } from '../../../shared/models/board-task.model';
-import { ActivityFormatConfig } from '../../../shared/services/configs/activity-format-config/activity-format-config';
-import { ACTIVITY_FORMAT_CONFIG } from '../../../shared/services/configs/activity-format-config/activity-format-config.service';
-import { PriorityConvertorService } from '../../../shared/services/priority-convertor/priority-convertor.service';
-import { StringFormatService } from '../../../shared/services/string-format/string-format.service';
+import { Observable, forkJoin, lastValueFrom } from 'rxjs';
+import { ActivityFormatConfig } from '../../../shared/configs/activity-format-config/activity-format-config';
+import { ACTIVITY_FORMAT_CONFIG } from '../../../shared/configs/activity-format-config/activity-format-config.service';
+import { BoardTaskList } from '../../shared/models/board-task-list.model';
+import { BoardTask } from '../../shared/models/board-task.model';
 import { TaskListApiService } from '../api/task-list-api/task-list-api.service';
+import { PriorityConvertorService } from '../priority-convertor/priority-convertor.service';
+import { StringFormatService } from '../string-format/string-format.service';
 
 export interface ActivityDescriptions {
   activityDescription: string;
@@ -29,7 +29,7 @@ export class ActivityDescriptionFormatterService {
 
   taskCreated(task: BoardTask): ActivityDescriptions {
     var names = this.getActivitiesNames(task);
-    return this.getActivityDescForStr("You created {0} task", names.taskName_Activity, names.taskName_TaskActivity);
+    return this.getActivityDescForStr("You created {0}", names.taskName_Activity, names.taskName_TaskActivity);
   }
   async taskUpdated(curentTask: BoardTask, prevTask: BoardTask) {
     var names = this.getActivitiesNames(curentTask);
@@ -42,7 +42,7 @@ export class ActivityDescriptionFormatterService {
       updatedElemets: []
     }
     if (prevTask.boardTaskListId != curentTask.boardTaskListId) {
-      await this.taskUpdated_TaskList(taskUpdatedParams).toPromise();
+      await lastValueFrom(this.taskUpdated_TaskList(taskUpdatedParams));
     }
     if (prevTask.dueTime != curentTask.dueTime) {
       this.taskUpdate_DueTime(taskUpdatedParams);
@@ -60,32 +60,33 @@ export class ActivityDescriptionFormatterService {
   }
   taskDeleted(task: BoardTask, taskList: BoardTaskList) {
     var names = this.getActivitiesNames(task);
-    return this.getActivityDescForStr(`You removed {0} task from ${taskList?.name}`, names.taskName_Activity, names.taskName_TaskActivity);
+    var taskListName = this.getFormattedSecondName(taskList?.name);
+    return this.getActivityDescForStr(`You removed {0} from ${taskListName}`, names.taskName_Activity, names.taskName_TaskActivity);
   }
   taskListCreated(taskList: BoardTaskList) {
     var name = this.getTaskListName(taskList);
-    return `You created ${name} task list`;
+    return `You created ${name}`;
   }
-  taskListUpdate(prevTaskList: BoardTaskList, currentTaskList: BoardTaskList) {
+  taskListUpdate(currentTaskList: BoardTaskList, prevTaskList: BoardTaskList) {
     var name = this.getTaskListName(currentTaskList);
     var updatedElemets = [];
-    if (prevTaskList.name != currentTaskList.name) {
-      var prevName = this.getTaskListName(currentTaskList);
-      updatedElemets.push(`You changed task list name from ${prevName} to ${name}`);
+    if (currentTaskList.name != prevTaskList.name) {
+      var prevName = this.getTaskListName(prevTaskList);
+      updatedElemets.push(`You changed name from ${prevName} to ${name}`);
     }
     return updatedElemets;
   }
   taskListDeleted(taskList: BoardTaskList) {
     var name = this.getTaskListName(taskList);
-    return `You deleted ${name} task list`;
+    return `You removed ${name}`;
   }
   private getActivitiesNames(task: BoardTask) {
     var taskName_Activity = this.getFormattedMainName(task.name);
-    var taskName_TaskActivity = "this";
+    var taskName_TaskActivity = "this task";
     return { taskName_Activity: taskName_Activity, taskName_TaskActivity: taskName_TaskActivity };
   }
   private getTaskListName(taskList: BoardTaskList) {
-    return this.getFormattedMainName(taskList.name);
+    return this.getFormattedSecondName(taskList.name);
   }
   private getFormattedMainName(name: string | undefined) {
     var mainName = name ? name : "";
@@ -116,11 +117,10 @@ export class ActivityDescriptionFormatterService {
         this.taskListApi.getTaskListById(taskParams.curentTask.boardTaskListId)
       ]).subscribe(([prevList, currentList]) => {
         if (prevList && currentList) {
-          var prevListName = this.getFormattedSecondName(prevList.name);
-          var currentListName = this.getFormattedSecondName(currentList.name);
-          taskParams.updatedElemets.push(this.getActivityDescForStr(`You moved {0} task from ${prevListName} to ${currentListName}`,
+          var prevListName = this.getTaskListName(prevList);
+          var currentListName = this.getTaskListName(currentList);
+          taskParams.updatedElemets.push(this.getActivityDescForStr(`You moved {0} from ${prevListName} to ${currentListName}`,
             taskParams.taskName_Activity, taskParams.taskName_TaskActivity));
-          console.log(taskParams.updatedElemets.length);
         }
         observer.next();
         observer.complete();
@@ -130,16 +130,16 @@ export class ActivityDescriptionFormatterService {
   private taskUpdate_DueTime(taskParams: TaskUpdatedParams) {
     var prevPriority = this.getFormattedSecondName(taskParams.prevTask.dueTime?.toLocaleDateString());
     var currentDueTime = this.getFormattedSecondName(taskParams.curentTask.dueTime?.toLocaleDateString());
-    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed {0} task due time from ${prevPriority} to ${currentDueTime}`,
+    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed {0} due time from ${prevPriority} to ${currentDueTime}`,
       taskParams.taskName_Activity, taskParams.taskName_TaskActivity));
   }
   private taskUpdate_Name(taskParams: TaskUpdatedParams) {
     var prevPriority = this.getFormattedSecondName(taskParams.prevTask.name);
-    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed task name from ${prevPriority} to {0}`,
+    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed name from ${prevPriority} to {0}`,
       taskParams.taskName_Activity, taskParams.taskName_Activity));
   }
   private taskUpdate_Description(taskParams: TaskUpdatedParams) {
-    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed {0} task description`,
+    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed {0} description`,
       taskParams.taskName_Activity, taskParams.taskName_TaskActivity));
   }
   private taskUpdate_Priority(taskParams: TaskUpdatedParams) {

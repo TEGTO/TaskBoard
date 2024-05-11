@@ -10,6 +10,9 @@
 .tasks-container {
     overflow-y: scroll;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .task-list-header {
@@ -77,4 +80,28 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: colors.$task-list-scrollbar-thumb-hover;
+}
+
+.task-box {
+    display: flex;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px colors.$task-box-shadow,
+        0 8px 10px 1px colors.$task-box-shadow,
+        0 3px 14px 2px colors.$task-box-shadow;
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.1, 1);
+}
+
+.cdk-drop-list-dragging .task-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

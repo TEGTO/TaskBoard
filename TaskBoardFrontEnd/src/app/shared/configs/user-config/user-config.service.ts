@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { environment } from '../../../../../environment/environment';
+import { environment } from '../../../../environment/environment';
 import { UserConfig } from './user-config';
 
 export const USER_CONFIG = new InjectionToken<UserConfig>('userConfig');

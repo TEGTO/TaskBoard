@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Priority } from '../../../shared/enums/priority.enum';
-import { BoardTaskList } from '../../../shared/models/board-task-list.model';
-import { BoardTask, copyTaskValues, getDefaultBoardTask } from '../../../shared/models/board-task.model';
-import { PriorityConvertorService } from '../../../shared/services/priority-convertor/priority-convertor.service';
 import { CustromValidatorsService } from '../../services/custom-validators/custrom-validators.service';
+import { PriorityConvertorService } from '../../services/priority-convertor/priority-convertor.service';
 import { TaskService } from '../../services/task-service/task.service';
+import { Priority } from '../../shared/enums/priority.enum';
+import { BoardTaskList } from '../../shared/models/board-task-list.model';
+import { BoardTask, copyTaskValues, getDefaultBoardTask } from '../../shared/models/board-task.model';
 import { TaskPopupData } from '../util/task-popup-data';
 
 @Component({
@@ -20,7 +20,7 @@ export class TaskManagerComponent implements OnInit {
   minDate = new Date();
   taskLists!: BoardTaskList[];
   private task!: BoardTask;
-  private currentTaskList: BoardTaskList | undefined;
+  private currentTaskList!: BoardTaskList;
   private isNew: boolean = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: TaskPopupData,
@@ -29,7 +29,7 @@ export class TaskManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentTaskList = this.data.currentTaskList;
+    this.currentTaskList = this.data.currentTaskList!;
     this.cardName = this.data.task ? "Edit Task" : "Create Task";
     this.isNew = this.data.task == undefined;
     this.getTaskLists();
@@ -87,6 +87,9 @@ export class TaskManagerComponent implements OnInit {
     this.taskService.createNewTask(this.task, this.taskLists);
   }
   private updateTask() {
-    this.taskService.updateTask(this.task, this.taskLists, this.currentTaskList);
+    var newIndex = 0;
+    if (this.task.boardTaskListId == this.currentTaskList.id)
+      newIndex = this.currentTaskList.boardTasks.indexOf(this.task);
+    this.taskService.updateTask(this.task, this.taskLists, newIndex);
   }
 }

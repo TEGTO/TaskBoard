@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BoardTaskActivity } from '../../../../shared/models/board-task-activity.model';
+import { BoardTaskActivity } from '../../../shared/models/board-task-activity.model';
 
 @Injectable({
   providedIn: 'root'

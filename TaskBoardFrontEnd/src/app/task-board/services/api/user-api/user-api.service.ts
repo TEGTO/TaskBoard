@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { User } from '../../../../shared/models/user.model';
-import { UserConfig } from '../../../../shared/services/configs/user-config/user-config';
-import { USER_CONFIG } from '../../../../shared/services/configs/user-config/user-config.service';
+import { UserConfig } from '../../../../shared/configs/user-config/user-config';
+import { USER_CONFIG } from '../../../../shared/configs/user-config/user-config.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage/local-storage.service';
+import { User } from '../../../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,10 @@ export class UserApiService {
   }
 
   getUser() {
-    if (!this.user$)
-      this.user$ = this.httpClient.get<User>(`/api/User/${this.userId}`);
+    if (!this.user$) {
+      var userId = isDevMode() ? "1" : this.userId;
+      this.user$ = this.httpClient.get<User>(`/api/User/${userId}`);
+    }
     return this.user$;
   }
   private getUserId() {

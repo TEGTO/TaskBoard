@@ -16,12 +16,11 @@ CREATE TABLE IF NOT EXISTS "BoardTasks"(
     "Description" TEXT,
     "Priority" INT NOT NULL,
     "PrevTaskId" TEXT,
-    "IsHead" BOOL NOT NULL,
     "NextTaskId" TEXT
 );
 CREATE TABLE IF NOT EXISTS "BoardActivities"(
     "Id" TEXT PRIMARY KEY,
-     "UserId" TEXT REFERENCES "Users"("Id") ON DELETE CASCADE NOT NULL,
+    "UserId" TEXT REFERENCES "Users"("Id") ON DELETE CASCADE NOT NULL,
     "ActivityTime" TIMESTAMPTZ NOT NULL,
     "Description" TEXT
 );
@@ -35,9 +34,9 @@ CREATE TABLE IF NOT EXISTS "BoardTaskActivities"(
 INSERT INTO "Users" ("Id") VALUES ('1');
 INSERT INTO "BoardTaskLists" ("Id", "UserId", "CreationTime", "Name") VALUES ('1', '1', '2024-05-24 16:09:00', 'To do');
 INSERT INTO "BoardTaskLists" ("Id", "UserId", "CreationTime", "Name") VALUES ('2', '1', '2024-05-24 16:09:00', 'Large nameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-INSERT INTO "BoardTasks" ("Id", "BoardTaskListId", "CreationTime", "DueTime", "Name", "Description", "Priority", "IsHead") VALUES ('1', '1', '2024-05-24 17:09:00','2024-05-24 18:09:00', 'Groceries', 'Buy groceries', 1, true);
-INSERT INTO "BoardTasks" ("Id", "BoardTaskListId", "CreationTime", "DueTime", "Name", "Description", "Priority", "IsHead") VALUES ('2', '1', '2024-05-24 17:09:00','2024-05-24 18:09:00', 
-'Large nameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'Large descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn', 1, true);
+INSERT INTO "BoardTasks" ("Id", "BoardTaskListId", "CreationTime", "DueTime", "Name", "Description", "Priority", "NextTaskId") VALUES ('1', '1', '2024-05-24 17:09:00','2024-05-24 18:09:00', 'Groceries', 'Buy groceries', 1, '2');
+INSERT INTO "BoardTasks" ("Id", "BoardTaskListId", "CreationTime", "DueTime", "Name", "Description", "Priority", "PrevTaskId") VALUES ('2', '1', '2024-05-24 17:09:00','2024-05-24 18:09:00', 
+'Large nameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'Large descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn', 1, '1');
 INSERT INTO "BoardActivities" ("Id","UserId", "ActivityTime", "Description") VALUES ('1','1', '2024-05-24 16:15:00', 'Renamed New list to To do');
 INSERT INTO "BoardActivities" ("Id","UserId", "ActivityTime", "Description") VALUES ('2','1', '2024-05-24 16:15:00', 'Large activityyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
 INSERT INTO "BoardTaskActivities" ("Id", "BoardTaskId", "ActivityTime", "Description") VALUES ('1', '1', '2024-05-24 17:15:00', 'Renamed ⦿ New task to ⦿ Groceries');

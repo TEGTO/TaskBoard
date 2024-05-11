@@ -38,10 +38,13 @@
             </div>
         </header>
 
-        <body class="tasks-container">
-            <ng-container *ngFor="let task of taskList.boardTasks">
-                <task [task]="task" [taskList]="taskList" [allTaskLists]="allTaskLists"></task>
-            </ng-container>
+        <body class="tasks-container" cdkDropList [cdkDropListData]="taskList"
+            (cdkDropListDropped)="onTaskDrop($event)">
+            @for (task of taskList.boardTasks; track task) {
+            <task class="task-box" [task]="task" [taskList]="taskList" [allTaskLists]="allTaskLists" cdkDrag
+                [cdkDragData]="task">
+            </task>
+            }
         </body>
     </ng-container>
     <ng-template #elseBlock>

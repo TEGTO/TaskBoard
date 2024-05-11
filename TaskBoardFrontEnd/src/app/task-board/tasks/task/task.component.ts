@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Priority } from '../../../shared/enums/priority.enum';
-import { BoardTaskList } from '../../../shared/models/board-task-list.model';
-import { BoardTask } from '../../../shared/models/board-task.model';
 import { DateFormaterService } from '../../../shared/services/date-formater/date-formater.service';
-import { PriorityConvertorService } from '../../../shared/services/priority-convertor/priority-convertor.service';
+import { PriorityConvertorService } from '../../services/priority-convertor/priority-convertor.service';
 import { TaskService } from '../../services/task-service/task.service';
+import { Priority } from '../../shared/enums/priority.enum';
+import { BoardTaskList } from '../../shared/models/board-task-list.model';
+import { BoardTask } from '../../shared/models/board-task.model';
 import { TaskInfoComponent } from '../task-info/task-info.component';
 import { TaskManagerComponent } from '../task-manager/task-manager.component';
 import { TaskPopupData } from '../util/task-popup-data';

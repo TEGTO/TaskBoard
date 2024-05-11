@@ -1,7 +1,9 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BoardTaskList } from '../../../shared/models/board-task-list.model';
 import { TaskListService } from '../../services/task-list-service/task-list.service';
+import { TaskService } from '../../services/task-service/task.service';
+import { BoardTaskList } from '../../shared/models/board-task-list.model';
 import { TaskListManagerComponent } from '../task-list-manager/task-list-manager.component';
 import { TaskManagerComponent } from '../task-manager/task-manager.component';
 import { TaskPopupData } from '../util/task-popup-data';
@@ -16,8 +18,17 @@ export class TasksListComponent {
   @Input() taskList: BoardTaskList | undefined;
 
   constructor(private dialog: MatDialog,
-    private taskListService: TaskListService) { }
+    private taskListService: TaskListService,
+    private taskService: TaskService
+  ) { }
 
+  onTaskDrop(event: CdkDragDrop<BoardTaskList>) {
+    var boardTask = this.taskService.getUpdatedDragDropTask(event);
+    console.log(boardTask)
+    this.taskService.updateTaskLists(boardTask, event.previousContainer.data, event.container.data, event.currentIndex);
+    this.taskService.updateTask(boardTask, this.allTaskLists);
+    console.log(event.container.data.boardTasks)
+  }
   openListManagerMenu() {
     const dialogRef = this.dialog.open(TaskListManagerComponent, {
       data: this.taskList

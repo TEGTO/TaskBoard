@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
-import { BoardActivity } from '../../../../shared/models/board-activity.model';
+import { BoardActivity } from '../../../shared/models/board-activity.model';
 import { UserApiService } from '../user-api/user-api.service';
 
 @Injectable({

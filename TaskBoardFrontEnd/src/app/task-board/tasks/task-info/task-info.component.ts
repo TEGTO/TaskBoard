@@ -2,13 +2,13 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
-import { Priority } from '../../../shared/enums/priority.enum';
-import { BoardTaskActivity } from '../../../shared/models/board-task-activity.model';
-import { BoardTaskList } from '../../../shared/models/board-task-list.model';
-import { BoardTask } from '../../../shared/models/board-task.model';
 import { DateFormaterService } from '../../../shared/services/date-formater/date-formater.service';
-import { PriorityConvertorService } from '../../../shared/services/priority-convertor/priority-convertor.service';
 import { ActivityService } from '../../services/acitvity-service/activity.service';
+import { PriorityConvertorService } from '../../services/priority-convertor/priority-convertor.service';
+import { Priority } from '../../shared/enums/priority.enum';
+import { BoardTaskActivity } from '../../shared/models/board-task-activity.model';
+import { BoardTaskList } from '../../shared/models/board-task-list.model';
+import { BoardTask } from '../../shared/models/board-task.model';
 import { TaskManagerComponent } from '../task-manager/task-manager.component';
 import { TaskPopupData } from '../util/task-popup-data';
 

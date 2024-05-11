@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Priority } from '../../enums/priority.enum';
+import { Priority } from '../../../task-board/shared/enums/priority.enum';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BoardActivity } from '../../../shared/models/board-activity.model';
 import { ActivityService } from '../../services/acitvity-service/activity.service';
+import { BoardActivity } from '../../shared/models/board-activity.model';
 
 @Component({
   selector: 'app-activity-history',

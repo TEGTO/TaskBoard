@@ -6,21 +6,12 @@ namespace TaskBoardAPI.Services
 {
     public class BoardTaskService(IDbContextFactory<BoardTasksDbContext> contextFactory) : ServiceDBBase(contextFactory), IBoardTaskService
     {
-        public async Task<BoardTask?> GetTaskByIdAsync(string id, bool isTrackable = false, CancellationToken cancellationToken = default)
+        public async Task<BoardTask?> GetTaskByIdAsync(string id, CancellationToken cancellationToken = default)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                BoardTask? boardTask;
-                if (isTrackable)
-                {
-                    boardTask = await dbContext.BoardTasks
+                BoardTask? boardTask = await dbContext.BoardTasks.AsNoTracking()
                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ?? null;
-                }
-                else
-                {
-                    boardTask = await dbContext.BoardTasks.AsNoTracking()
-                   .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ?? null;
-                }
                 return boardTask;
             }
         }
@@ -29,10 +20,12 @@ namespace TaskBoardAPI.Services
             List<BoardTask> boardTasks = new List<BoardTask>();
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                boardTasks.AddRange(dbContext.BoardTasks
-                    .Where(x => x.BoardTaskListId == listId)
-                    .OrderByDescending(x => x.CreationTime.Date).ThenByDescending(c => c.CreationTime.TimeOfDay)
-                    .AsNoTracking());
+                var headTask = dbContext.BoardTasks.FirstOrDefault(x => x.PrevTaskId == null && x.BoardTaskListId == listId);
+                while (headTask != null)
+                {
+                    boardTasks.Add(headTask);
+                    headTask = dbContext.BoardTasks.FirstOrDefault(x => x.Id == headTask.NextTaskId && x.BoardTaskListId == listId);
+                }
             }
             return boardTasks;
         }
@@ -43,6 +36,7 @@ namespace TaskBoardAPI.Services
                 task.Id = default!;
                 task.CreationTime = DateTime.UtcNow;
                 await dbContext.AddAsync(task, cancellationToken);
+                await AddNewHeadTask(task, dbContext, cancellationToken);
                 await dbContext.SaveChangesAsync(cancellationToken);
                 return task;
             }
@@ -54,7 +48,9 @@ namespace TaskBoardAPI.Services
                 BoardTask? taskInDb = await GetTaskByIdAsync(id, cancellationToken: cancellationToken);
                 if (taskInDb != null)
                 {
-                    await RemoveUpdateSiblings(dbContext, taskInDb, cancellationToken);
+                    BoardTask? prevTask = await GetPrevTaskFromDb(taskInDb, dbContext, cancellationToken);
+                    BoardTask? nextTask = await GetNextTaskFromDb(taskInDb, dbContext, cancellationToken);
+                    UpdateOldSiblings(taskInDb, prevTask, nextTask);
                     dbContext.Remove(taskInDb);
                     await dbContext.SaveChangesAsync(cancellationToken);
                 }
@@ -64,57 +60,73 @@ namespace TaskBoardAPI.Services
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                BoardTask? taskInDb = await GetTaskByIdAsync(task.Id, true, cancellationToken: cancellationToken);
+                BoardTask? taskInDb = await GetTaskByIdAsync(task.Id, cancellationToken: cancellationToken);
                 if (taskInDb != null)
                 {
+                    if (CheckIfPositionNeedUpdate(task, taskInDb))
+                        await UpdateTaskPosition(task, taskInDb, dbContext, cancellationToken);
                     taskInDb.CopyOther(task);
                     dbContext.Update(taskInDb);
                     await dbContext.SaveChangesAsync(cancellationToken);
                 }
             }
         }
-        public async Task UpdateTaskPosition(BoardTask task, CancellationToken cancellationToken = default)
+        private async Task UpdateTaskPosition(BoardTask task, BoardTask taskInDb, BoardTasksDbContext dbContext, CancellationToken cancellationToken = default)
         {
-            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            BoardTask? prevTask = await GetPrevTaskFromDb(task, dbContext, cancellationToken);
+            BoardTask? nextTask = await GetNextTaskFromDb(task, dbContext, cancellationToken);
+            BoardTask? oldPrevTask = await GetPrevTaskFromDb(taskInDb, dbContext, cancellationToken);
+            BoardTask? oldNextTask = await GetNextTaskFromDb(taskInDb, dbContext, cancellationToken);
+            UpdateOldSiblings(task, oldPrevTask, oldNextTask);
+            UpdateCurrentSiblings(task, prevTask, nextTask);
+        }
+        private async Task<BoardTask?> GetPrevTaskFromDb(BoardTask task, BoardTasksDbContext dbContext, CancellationToken cancellationToken = default)
+        {
+            return await dbContext.BoardTasks
+               .FirstOrDefaultAsync(x => x.Id == task.PrevTaskId, cancellationToken);
+        }
+        private async Task<BoardTask?> GetNextTaskFromDb(BoardTask task, BoardTasksDbContext dbContext, CancellationToken cancellationToken = default)
+        {
+            return await dbContext.BoardTasks
+                .FirstOrDefaultAsync(x => x.Id == task.NextTaskId, cancellationToken);
+        }
+        private async Task AddNewHeadTask(BoardTask task, BoardTasksDbContext dbContext, CancellationToken cancellationToken = default)
+        {
+            BoardTask? headTask = await dbContext.BoardTasks
+                .Where(x => x.BoardTaskListId == task.BoardTaskListId)
+                .FirstOrDefaultAsync(x => x.PrevTaskId == null, cancellationToken) ?? null;
+            UpdateCurrentSiblings(task, null, headTask);
+        }
+        private void UpdateCurrentSiblings(BoardTask task, BoardTask? prevTask, BoardTask? nextTask)
+        {
+            task.PrevTaskId = null;
+            task.NextTaskId = null;
+            if (prevTask != null)
             {
-                BoardTask? taskInDb = await GetTaskByIdAsync(task.Id, true, cancellationToken: cancellationToken);
-                if (taskInDb == null)
-                    throw new InvalidDataException("Task does not exist in database!");
-                taskInDb.CopyOther(task);
-                if (taskInDb.IsHead)
-                    await RemoveCurrentHeadTask(dbContext, cancellationToken);
-                await InsertUpdateSiblings(dbContext, taskInDb, cancellationToken);
-                dbContext.Update(taskInDb);
-                await dbContext.SaveChangesAsync(cancellationToken);
+                prevTask.NextTaskId = task.Id;
+                task.PrevTaskId = prevTask.Id;
+            }
+            if (nextTask != null)
+            {
+                nextTask.PrevTaskId = task.Id;
+                task.NextTaskId = nextTask.Id;
             }
         }
-        private async Task RemoveCurrentHeadTask(BoardTasksDbContext dbContext, CancellationToken cancellationToken = default)
+        private void UpdateOldSiblings(BoardTask task, BoardTask? prevTask, BoardTask? nextTask)
         {
-            BoardTask? headTask = await dbContext.BoardTasks.FirstOrDefaultAsync(x => x.IsHead, cancellationToken) ?? null;
-            if (headTask != null)
-                headTask.IsHead = false;
-        }
-        private async Task InsertUpdateSiblings(BoardTasksDbContext dbContext, BoardTask task, CancellationToken cancellationToken = default)
-        {
-            BoardTask? prevTask = await dbContext.BoardTasks.FirstOrDefaultAsync(x => x.Id == task.PrevTaskId, cancellationToken) ?? null;
-            BoardTask? nextTask = await dbContext.BoardTasks.FirstOrDefaultAsync(x => x.Id == task.NextTaskId, cancellationToken) ?? null;
-            if (prevTask != null)
-                prevTask.NextTaskId = task.Id;
-            if (nextTask != null)
-                nextTask.PrevTaskId = task.Id;
-        }
-        private async Task RemoveUpdateSiblings(BoardTasksDbContext dbContext, BoardTask task, CancellationToken cancellationToken = default)
-        {
-            BoardTask? prevTask = await dbContext.BoardTasks.FirstOrDefaultAsync(x => x.Id == task.PrevTaskId, cancellationToken) ?? null;
-            BoardTask? nextTask = await dbContext.BoardTasks.FirstOrDefaultAsync(x => x.Id == task.NextTaskId, cancellationToken) ?? null;
             if (prevTask != null)
                 prevTask.NextTaskId = nextTask == null ? null : nextTask.Id;
             if (nextTask != null)
-            {
                 nextTask.PrevTaskId = prevTask == null ? null : prevTask.Id;
-                if (prevTask == null && task.IsHead)
-                    nextTask.IsHead = true;
-            }
+            task.NextTaskId = null;
+            task.PrevTaskId = null;
+        }
+        private bool CheckIfPositionNeedUpdate(BoardTask boardTask, BoardTask boardTaskInDb)
+        {
+            if (boardTask.BoardTaskListId != boardTaskInDb.BoardTaskListId) return true;
+            else if (boardTask.PrevTaskId != boardTaskInDb.PrevTaskId) return true;
+            else if (boardTask.NextTaskId != boardTaskInDb.NextTaskId) return true;
+            return false;
         }
     }
 }

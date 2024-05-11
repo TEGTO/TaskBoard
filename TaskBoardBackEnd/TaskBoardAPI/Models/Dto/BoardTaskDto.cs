@@ -13,7 +13,6 @@ namespace TaskBoardAPI.Models.Dto
         public string? Description { get; set; }
         public Priority Priority { get; set; }
         public string? PrevTaskId { get; set; }
-        public bool IsHead { get; set; }
         public string? NextTaskId { get; set; }
     }
 }
