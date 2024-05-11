@@ -20,7 +20,7 @@ export class TaskManagerComponent implements OnInit {
   minDate = new Date();
   taskLists!: BoardTaskList[];
   private task!: BoardTask;
-  private currentTaskList!: BoardTaskList;
+  private taskList!: BoardTaskList;
   private isNew: boolean = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: TaskPopupData,
@@ -29,7 +29,7 @@ export class TaskManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentTaskList = this.data.currentTaskList!;
+    this.taskList = this.data.currentTaskList!;
     this.cardName = this.data.task ? "Edit Task" : "Create Task";
     this.isNew = this.data.task == undefined;
     this.getTaskLists();
@@ -62,7 +62,7 @@ export class TaskManagerComponent implements OnInit {
     this.task = this.data.task ? this.data.task : getDefaultBoardTask();
   }
   private initForm(): void {
-    const firstListId = this.currentTaskList ? this.currentTaskList.id : "";
+    const firstListId = this.taskList ? this.taskList.id : "";
     this.taskForm = this.formBuilder.group({
       name: [this.task?.name || '', Validators.required],
       listId: [this.task?.boardTaskListId || firstListId, Validators.required],
@@ -88,8 +88,9 @@ export class TaskManagerComponent implements OnInit {
   }
   private updateTask() {
     var newIndex = 0;
-    if (this.task.boardTaskListId == this.currentTaskList.id)
-      newIndex = this.currentTaskList.boardTasks.indexOf(this.task);
-    this.taskService.updateTask(this.task, this.taskLists, newIndex);
+    var currentTaskList = this.taskLists.find(x => x.id == this.task.boardTaskListId)!;
+    if (currentTaskList.id == this.taskList.id)
+      newIndex = this.taskList.boardTasks.findIndex((element) => element.id === this.task.id)
+    this.taskService.updateTask(this.task, this.taskList, currentTaskList, newIndex);
   }
 }

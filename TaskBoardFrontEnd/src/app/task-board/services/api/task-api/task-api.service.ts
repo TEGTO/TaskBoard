@@ -14,8 +14,8 @@ export class TaskApiService {
   createNewTask(task: BoardTask) {
     return this.httpClient.post<BoardTask>(`/api/BoardTask`, task);
   }
-  updateTask(task: BoardTask) {
-    return this.httpClient.put(`/api/BoardTask`, task);
+  updateTask(task: BoardTask, positionIndex: number) {
+    return this.httpClient.put(`/api/BoardTask?positionIndex=${positionIndex}`, task);
   }
   deleteTask(task: BoardTask) {
     return this.httpClient.delete(`/api/BoardTask/${task.id}`);

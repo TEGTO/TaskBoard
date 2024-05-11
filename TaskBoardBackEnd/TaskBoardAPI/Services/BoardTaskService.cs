@@ -24,7 +24,7 @@ namespace TaskBoardAPI.Services
                 while (headTask != null)
                 {
                     boardTasks.Add(headTask);
-                    headTask = dbContext.BoardTasks.FirstOrDefault(x => x.Id == headTask.NextTaskId && x.BoardTaskListId == listId);
+                    headTask = dbContext.BoardTasks.FirstOrDefault(x => x.Id == headTask.NextTaskId);
                 }
             }
             return boardTasks;
@@ -56,7 +56,7 @@ namespace TaskBoardAPI.Services
                 }
             }
         }
-        public async Task UpdateTaskAsync(BoardTask task, CancellationToken cancellationToken = default)
+        public async Task UpdateTaskAsync(BoardTask task, int positionIndex, CancellationToken cancellationToken = default)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
@@ -64,21 +64,29 @@ namespace TaskBoardAPI.Services
                 if (taskInDb != null)
                 {
                     if (CheckIfPositionNeedUpdate(task, taskInDb))
-                        await UpdateTaskPosition(task, taskInDb, dbContext, cancellationToken);
+                        await UpdateTaskPosition(task, taskInDb, positionIndex, cancellationToken);
                     taskInDb.CopyOther(task);
                     dbContext.Update(taskInDb);
                     await dbContext.SaveChangesAsync(cancellationToken);
                 }
             }
         }
-        private async Task UpdateTaskPosition(BoardTask task, BoardTask taskInDb, BoardTasksDbContext dbContext, CancellationToken cancellationToken = default)
+        private async Task UpdateTaskPosition(BoardTask task, BoardTask taskInDb, int positionIndex, CancellationToken cancellationToken = default)
         {
-            BoardTask? prevTask = await GetPrevTaskFromDb(task, dbContext, cancellationToken);
-            BoardTask? nextTask = await GetNextTaskFromDb(task, dbContext, cancellationToken);
-            BoardTask? oldPrevTask = await GetPrevTaskFromDb(taskInDb, dbContext, cancellationToken);
-            BoardTask? oldNextTask = await GetNextTaskFromDb(taskInDb, dbContext, cancellationToken);
-            UpdateOldSiblings(task, oldPrevTask, oldNextTask);
-            UpdateCurrentSiblings(task, prevTask, nextTask);
+            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            {
+                BoardTask? oldPrevTask = await GetPrevTaskFromDb(taskInDb, dbContext, cancellationToken);
+                BoardTask? oldNextTask = await GetNextTaskFromDb(taskInDb, dbContext, cancellationToken);
+                UpdateOldSiblings(task, oldPrevTask, oldNextTask);
+                dbContext.SaveChanges();
+            }
+            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            {
+                BoardTask? nextTask = GetSiblingFromDbOnPosition(task, positionIndex, dbContext);
+                BoardTask? prevTask = GetSiblingFromDbOnPosition(task, positionIndex - 1, dbContext);
+                UpdateCurrentSiblings(task, prevTask, nextTask);
+                dbContext.SaveChanges();
+            }
         }
         private async Task<BoardTask?> GetPrevTaskFromDb(BoardTask task, BoardTasksDbContext dbContext, CancellationToken cancellationToken = default)
         {
@@ -89,6 +97,18 @@ namespace TaskBoardAPI.Services
         {
             return await dbContext.BoardTasks
                 .FirstOrDefaultAsync(x => x.Id == task.NextTaskId, cancellationToken);
+        }
+        private BoardTask? GetSiblingFromDbOnPosition(BoardTask task, int positionIndex, BoardTasksDbContext dbContext)
+        {
+            if (positionIndex < 0) return null;
+            var headTask = dbContext.BoardTasks.FirstOrDefault(x => x.Id != task.Id && x.PrevTaskId == null && x.BoardTaskListId == task.BoardTaskListId);
+            int index = 0;
+            while (headTask != null && index != positionIndex)
+            {
+                headTask = dbContext.BoardTasks.FirstOrDefault(x => x.Id == headTask.NextTaskId);
+                index++;
+            }
+            return headTask;
         }
         private async Task AddNewHeadTask(BoardTask task, BoardTasksDbContext dbContext, CancellationToken cancellationToken = default)
         {

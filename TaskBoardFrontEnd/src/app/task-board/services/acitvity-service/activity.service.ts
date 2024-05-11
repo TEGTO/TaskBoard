@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { ActivityType } from '../../shared/enums/activity-type.enum';
 import { BoardActivity } from '../../shared/models/board-activity.model';
 import { BoardTaskActivity } from '../../shared/models/board-task-activity.model';
 import { BoardTaskList } from '../../shared/models/board-task-list.model';
 import { BoardTask } from '../../shared/models/board-task.model';
+import { TaskActivityData, TaskListActivityData } from '../../tasks/util/activity-data';
 import { ActivityDescriptionFormatterService, ActivityDescriptions } from '../activity-description-formatter/activity-description-formatter.service';
 import { ActivityApiService } from '../api/acitvity-api/activity-api.service';
 import { TaskActivityApiService } from '../api/task-acitvity-api/task-activity-api.service';
@@ -33,33 +35,77 @@ export class ActivityService {
   getBoardActivityAmount() {
     return this.activityApi.getBoardActivitiesAmount();
   }
-  createActivity_TaskCreated(task: BoardTask) {
+
+  async createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData) {
+    try {
+      switch (activityType) {
+        case ActivityType.Create:
+          return this.createTaskActivity_Create(taskActivityData.task);
+        case ActivityType.Update:
+          if (!taskActivityData.prevTask)
+            throw new Error('To create update activity, define previous task data!');
+          await this.createTaskActivity_Update(taskActivityData.task, taskActivityData.prevTask);
+          break;
+        case ActivityType.Delete:
+          if (!taskActivityData.taskList)
+            throw new Error('To create delete activity, define task list data!');
+          this.createTaskActivity_Delete(taskActivityData.task, taskActivityData.taskList);
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData) {
+    try {
+      switch (activityType) {
+        case ActivityType.Create:
+          return this.createListActivity_Create(listActivityData.taskList);
+        case ActivityType.Update:
+          if (!listActivityData.prevTaskList)
+            throw new Error('To create update activity, define previous task list data!');
+          this.createListActivity_Update(listActivityData.taskList, listActivityData.prevTaskList);
+          break;
+        case ActivityType.Delete:
+          this.createListActivity_Delete(listActivityData.taskList);
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private createTaskActivity_Create(task: BoardTask) {
     var descriptions = this.descriptionFormatter.taskCreated(task)
     this.createBoardActivity(descriptions);
     this.createBoardTaskActivity(task, descriptions);
   }
-  async createActivity_TaskUpdated(curentTask: BoardTask, prevTask: BoardTask) {
+  private async createTaskActivity_Update(curentTask: BoardTask, prevTask: BoardTask) {
     var descriptions = await this.descriptionFormatter.taskUpdated(curentTask, prevTask);
     for (var i = 0; i < descriptions.length; i++) {
       this.createBoardActivity(descriptions[i]);
       this.createBoardTaskActivity(curentTask, descriptions[i]);
     }
   }
-  createActivity_TaskDeleted(task: BoardTask, taskList: BoardTaskList) {
+  private createTaskActivity_Delete(task: BoardTask, taskList: BoardTaskList) {
     var descriptions = this.descriptionFormatter.taskDeleted(task, taskList)
     this.createBoardActivity(descriptions);
   }
-  createActivity_TaskListCreated(taskList: BoardTaskList) {
+  private createListActivity_Create(taskList: BoardTaskList) {
     var description = this.descriptionFormatter.taskListCreated(taskList)
     this.createBoardActivity(description);
   }
-  createActivity_TaskListUpdated(currentTaskList: BoardTaskList, prevTaskList: BoardTaskList) {
+  private createListActivity_Update(currentTaskList: BoardTaskList, prevTaskList: BoardTaskList) {
     var descriptions = this.descriptionFormatter.taskListUpdate(currentTaskList, prevTaskList)
     for (var i = 0; i < descriptions.length; i++) {
       this.createBoardActivity(descriptions[i]);
     }
   }
-  createActivity_TaskListDeleted(taskList: BoardTaskList) {
+  private createListActivity_Delete(taskList: BoardTaskList) {
     var description = this.descriptionFormatter.taskListDeleted(taskList)
     this.createBoardActivity(description);
   }

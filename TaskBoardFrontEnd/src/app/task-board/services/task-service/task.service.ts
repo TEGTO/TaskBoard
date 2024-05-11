@@ -1,5 +1,6 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Injectable } from '@angular/core';
+import { ActivityType } from '../../shared/enums/activity-type.enum';
 import { BoardTaskList } from '../../shared/models/board-task-list.model';
 import { BoardTask, copyTaskValues } from '../../shared/models/board-task.model';
 import { ActivityService } from '../acitvity-service/activity.service';
@@ -18,49 +19,43 @@ export class TaskService {
         copyTaskValues(task, res);
         const taskList = allTaskLists.find(x => x.id == task.boardTaskListId)!;
         this.updateTaskLists(task, taskList, taskList, 0);
-        this.activityService.createActivity_TaskCreated(task);
+        this.activityService.createTaskActivity(ActivityType.Create, {
+          task: task,
+          prevTask: undefined,
+          taskList: undefined
+        });
       });
   }
-  getUpdatedDragDropTask(event: CdkDragDrop<BoardTaskList>) {
-    var currentIndex = event.currentIndex;
-    var nextTask = event.container.data.boardTasks.at(currentIndex);
-    var prevTask = currentIndex > 0 ? event.container.data.boardTasks.at(currentIndex - 1) : undefined;
-    var updatedTask: BoardTask = {
-      ...event.item.data,
-      boardTaskListId: event.container.data.id,
-      nextTaskId: nextTask?.id,
-      prevTaskId: prevTask?.id
-    };
-    return updatedTask;
-  }
-  updateTask(task: BoardTask, allTaskLists: BoardTaskList[], newIndex: number | undefined = undefined) {
-    var prevTask: BoardTask;
+  updateTask(task: BoardTask, prevTaskList: BoardTaskList, currentTaskList: BoardTaskList, currentIndex: number) {
+    this.updateTaskLists(task, prevTaskList, currentTaskList, currentIndex);
     this.apiService.getTaskById(task.id).subscribe(
-      (res) => {
-        prevTask = res;
+      (prevTask) => {
         if (prevTask) {
-          this.apiService.updateTask(task).subscribe
+          this.apiService.updateTask(task, currentIndex).subscribe
             (() => {
-              if (newIndex) {
-                const prevTaskList = allTaskLists.find(x => x.id == prevTask.boardTaskListId)!;
-                const currentTaskList = allTaskLists.find(x => x.id == task.boardTaskListId)!;
-                this.updateTaskLists(task, prevTaskList, currentTaskList, newIndex);
-              }
-              this.activityService.createActivity_TaskUpdated(task, prevTask);
+              this.activityService.createTaskActivity(ActivityType.Update, {
+                task: task,
+                prevTask: prevTask,
+                taskList: undefined
+              });
             });
         }
       }
-    )
+    );
   }
   deleteTask(task: BoardTask, currentTaskList: BoardTaskList) {
     this.apiService.deleteTask(task).subscribe(
       () => {
         this.deleteTaskFromCurrentTaskList(task, currentTaskList);
-        this.activityService.createActivity_TaskDeleted(task, currentTaskList);
+        this.activityService.createTaskActivity(ActivityType.Delete, {
+          task: task,
+          prevTask: undefined,
+          taskList: currentTaskList
+        });
       }
     );
   }
-  updateTaskLists(task: BoardTask, prevTaskList: BoardTaskList, currentTaskList: BoardTaskList, currentIndex: number) {
+  private updateTaskLists(task: BoardTask, prevTaskList: BoardTaskList, currentTaskList: BoardTaskList, currentIndex: number) {
     const prevIndex = prevTaskList.boardTasks.findIndex((element) => element.id === task.id);
     var toUpdateArray: BoardTask[];
     if (task.boardTaskListId === prevTaskList.id) {

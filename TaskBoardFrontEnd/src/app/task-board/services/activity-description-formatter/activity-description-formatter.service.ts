@@ -12,7 +12,7 @@ export interface ActivityDescriptions {
   activityDescription: string;
   activityTaskDescription: string;
 }
-interface TaskUpdatedParams {
+interface TaskUpdateActivityData {
   curentTask: BoardTask,
   prevTask: BoardTask,
   taskName_Activity: string,
@@ -33,7 +33,7 @@ export class ActivityDescriptionFormatterService {
   }
   async taskUpdated(curentTask: BoardTask, prevTask: BoardTask) {
     var names = this.getActivitiesNames(curentTask);
-    var taskUpdatedParams: TaskUpdatedParams =
+    var taskUpdatedParams: TaskUpdateActivityData =
     {
       curentTask: curentTask,
       prevTask: prevTask,
@@ -88,13 +88,19 @@ export class ActivityDescriptionFormatterService {
   private getTaskListName(taskList: BoardTaskList) {
     return this.getFormattedSecondName(taskList.name);
   }
-  private getFormattedMainName(name: string | undefined) {
-    var mainName = name ? name : "";
+  private getFormattedMainName(name: string | undefined): string {
+    let mainName = name ? name.slice(0, this.format.maxNameLength) : "";
+    if (name && name.length > this.format.maxNameLength) {
+      mainName += this.format.maxNameLengthReplacingString;
+    }
     mainName = this.deleteSpecialCharacterInName(mainName);
     return `${this.format.mainNameStyleBegin}${mainName}${this.format.mainNameStyleEnd}`;
   }
   private getFormattedSecondName(name: string | undefined) {
-    var secondName = name ? name : "";
+    let secondName = name ? name.slice(0, this.format.maxNameLength) : "";
+    if (name && name.length > this.format.maxNameLength) {
+      secondName += this.format.maxNameLengthReplacingString;
+    }
     secondName = this.deleteSpecialCharacterInName(secondName);
     return `${this.format.secondaryNameStyleBegin}${secondName}${this.format.secondaryNameStyleEnd}`;
   }
@@ -110,7 +116,7 @@ export class ActivityDescriptionFormatterService {
 
   // The Twilight Zone
 
-  private taskUpdated_TaskList(taskParams: TaskUpdatedParams): Observable<void> {
+  private taskUpdated_TaskList(taskParams: TaskUpdateActivityData): Observable<void> {
     return new Observable<void>((observer) => {
       forkJoin([
         this.taskListApi.getTaskListById(taskParams.prevTask.boardTaskListId),
@@ -127,22 +133,22 @@ export class ActivityDescriptionFormatterService {
       });
     });
   }
-  private taskUpdate_DueTime(taskParams: TaskUpdatedParams) {
+  private taskUpdate_DueTime(taskParams: TaskUpdateActivityData) {
     var prevPriority = this.getFormattedSecondName(taskParams.prevTask.dueTime?.toLocaleDateString());
     var currentDueTime = this.getFormattedSecondName(taskParams.curentTask.dueTime?.toLocaleDateString());
     taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed {0} due time from ${prevPriority} to ${currentDueTime}`,
       taskParams.taskName_Activity, taskParams.taskName_TaskActivity));
   }
-  private taskUpdate_Name(taskParams: TaskUpdatedParams) {
+  private taskUpdate_Name(taskParams: TaskUpdateActivityData) {
     var prevPriority = this.getFormattedSecondName(taskParams.prevTask.name);
     taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed name from ${prevPriority} to {0}`,
       taskParams.taskName_Activity, taskParams.taskName_Activity));
   }
-  private taskUpdate_Description(taskParams: TaskUpdatedParams) {
+  private taskUpdate_Description(taskParams: TaskUpdateActivityData) {
     taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed {0} description`,
       taskParams.taskName_Activity, taskParams.taskName_TaskActivity));
   }
-  private taskUpdate_Priority(taskParams: TaskUpdatedParams) {
+  private taskUpdate_Priority(taskParams: TaskUpdateActivityData) {
     var prevPriority = this.getFormattedSecondName(PriorityConvertorService.getPriorityString(taskParams.prevTask.priority));
     var currentPriority = this.getFormattedSecondName(PriorityConvertorService.getPriorityString(taskParams.curentTask.priority));
     taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed {0} priority from ${prevPriority} to ${currentPriority}`,

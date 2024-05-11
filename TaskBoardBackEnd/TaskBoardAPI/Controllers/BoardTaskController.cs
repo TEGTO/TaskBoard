@@ -43,10 +43,12 @@ namespace TaskBoardAPI.Controllers
             return Ok(boardTaskDto);
         }
         [HttpPut]
-        public async Task<ActionResult> UpdateBoardTask([FromBody] BoardTaskDto boardTaskDto, CancellationToken cancellationToken)
+        public async Task<ActionResult> UpdateBoardTask(
+            [FromQuery] int positionIndex,
+            [FromBody] BoardTaskDto boardTaskDto, CancellationToken cancellationToken)
         {
             BoardTask boardTask = mapper.Map<BoardTask>(boardTaskDto);
-            await boardTaskService.UpdateTaskAsync(boardTask, cancellationToken);
+            await boardTaskService.UpdateTaskAsync(boardTask, positionIndex, cancellationToken);
             return Ok();
         }
         [HttpDelete("{id}")]

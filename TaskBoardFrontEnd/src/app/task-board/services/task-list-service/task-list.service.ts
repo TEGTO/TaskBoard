@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivityType } from '../../shared/enums/activity-type.enum';
 import { BoardTaskList, copyTaskListValues } from '../../shared/models/board-task-list.model';
 import { ActivityService } from '../acitvity-service/activity.service';
 import { TaskListApiService } from '../api/task-list-api/task-list-api.service';
@@ -21,7 +22,10 @@ export class TaskListService {
       this.taskListApi.createNewTaskList(taskList).subscribe(res => {
         copyTaskListValues(taskList, res);
         allTaskLists.push(taskList);
-        this.activityService.createActivity_TaskListCreated(taskList);
+        this.activityService.createTaskListActivity(ActivityType.Create, {
+          taskList: taskList,
+          prevTaskList: undefined
+        });
       });
     }
   }
@@ -29,7 +33,10 @@ export class TaskListService {
     if (taskList) {
       this.getTaskListById(taskList.id).subscribe(prevTaskList => {
         this.taskListApi.updateTaskList(taskList).subscribe(() => {
-          this.activityService.createActivity_TaskListUpdated(taskList, prevTaskList!);
+          this.activityService.createTaskListActivity(ActivityType.Update, {
+            taskList: taskList,
+            prevTaskList: prevTaskList
+          });
         });
       });
     }
@@ -38,7 +45,10 @@ export class TaskListService {
     if (taskList) {
       this.taskListApi.deleteTaskList(taskList).subscribe(() => {
         this.deleteTaskListFromArray(taskList, allTaskLists);
-        this.activityService.createActivity_TaskListDeleted(taskList);
+        this.activityService.createTaskListActivity(ActivityType.Delete, {
+          taskList: taskList,
+          prevTaskList: undefined
+        });
       });
     }
   }

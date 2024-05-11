@@ -8,8 +8,6 @@ export interface BoardTask {
     name?: string;
     description?: string;
     priority: Priority;
-    prevTaskId?: string;
-    nextTaskId?: string;
 }
 export function getDefaultBoardTask() {
     const task: BoardTask = {
@@ -31,7 +29,5 @@ export function copyTaskValues(dest: BoardTask, toCopy: BoardTask) {
         dest.name = toCopy?.name;
         dest.description = toCopy?.description;
         dest.priority = toCopy?.priority;
-        dest.prevTaskId = toCopy?.prevTaskId;
-        dest.nextTaskId = toCopy?.nextTaskId;
     }
 }

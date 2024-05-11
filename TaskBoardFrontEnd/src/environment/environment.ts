@@ -6,5 +6,7 @@ export const environment =
   mainNameStyleBegin: '<span style="color: black;">⦿ ',
   mainNameStyleEnd: '</span>',
   secondaryNameStyleBegin: '<span style="font-weight: 600;">',
-  secondaryNameStyleEnd: '</span>'
+  secondaryNameStyleEnd: '</span>',
+  maxNameLength: 20,
+  maxNameLengthReplacingString: '...'
 };

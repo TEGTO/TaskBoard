@@ -10,4 +10,6 @@ export const APP_ACTIVITY_FORMAT_CONFIG: ActivityFormatConfig =
   mainNameStyleEnd: environment.mainNameStyleEnd,
   secondaryNameStyleBegin: environment.secondaryNameStyleBegin,
   secondaryNameStyleEnd: environment.secondaryNameStyleEnd,
+  maxNameLength: environment.maxNameLength,
+  maxNameLengthReplacingString: environment.maxNameLengthReplacingString
 }

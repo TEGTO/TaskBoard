@@ -3,4 +3,6 @@ export interface ActivityFormatConfig {
     mainNameStyleEnd: string;
     secondaryNameStyleBegin: string;
     secondaryNameStyleEnd: string;
+    maxNameLength: number;
+    maxNameLengthReplacingString: string;
 }
