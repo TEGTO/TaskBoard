@@ -16,11 +16,11 @@ namespace TaskBoardAPITests.Controllers
         public override void SetUp()
         {
             base.SetUp();
-            this.mockUserService = CreateMockUserService();
+            mockUserService = CreateMockUserService();
         }
         private Mock<IUserService> CreateMockUserService()
         {
-            var mockService = this.mockRepository.Create<IUserService>();
+            var mockService = mockRepository.Create<IUserService>();
             mockService.Setup(x => x.GetUserByIdAsync("validId", It.IsAny<bool>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => new User { Id = "validResult" });
             mockService.Setup(x => x.GetUserByIdAsync(It.Is<string>(x => x != "validId"), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
@@ -34,14 +34,14 @@ namespace TaskBoardAPITests.Controllers
         protected override UserController CreateController()
         {
             return new UserController(
-                this.mockUserService.Object,
-                this.mockMapper.Object);
+                mockUserService.Object,
+                mockMapper.Object);
         }
         [Test]
         public async Task GetUserById_ValidId_OkStatusCodeWithData()
         {
             // Arrange
-            var userController = this.CreateController();
+            var userController = CreateController();
             string id = "validId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -63,7 +63,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetUserById_InvalidId_NotFound()
         {
             // Arrange
-            var userController = this.CreateController();
+            var userController = CreateController();
             string id = "inValidId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -79,7 +79,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task CreateUser_ValidData_OkStatusCodeWithNewAddedData()
         {
             // Arrange
-            var userController = this.CreateController();
+            var userController = CreateController();
             UserDto userDto = new UserDto();
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -102,7 +102,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task CreateUser_NullData_OkStatusCodeWithNull()
         {
             // Arrange
-            var userController = this.CreateController();
+            var userController = CreateController();
             UserDto userDto = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act

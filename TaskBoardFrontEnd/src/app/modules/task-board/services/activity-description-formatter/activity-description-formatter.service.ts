@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable, forkJoin, lastValueFrom } from 'rxjs';
-import { ActivityFormatConfig } from '../../../shared/configs/activity-format-config/activity-format-config';
-import { ACTIVITY_FORMAT_CONFIG } from '../../../shared/configs/activity-format-config/activity-format-config.service';
+import { ActivityFormatConfig } from '../../../../shared/configs/activity-format-config/activity-format-config';
+import { ACTIVITY_FORMAT_CONFIG } from '../../../../shared/configs/activity-format-config/activity-format-config.service';
 import { BoardTaskList } from '../../shared/models/board-task-list.model';
 import { BoardTask } from '../../shared/models/board-task.model';
 import { TaskListApiService } from '../api/task-list-api/task-list-api.service';

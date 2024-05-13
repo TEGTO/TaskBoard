@@ -10,13 +10,13 @@ namespace TaskBoardAPITests.Services
         protected override BoardActivityService CreateService()
         {
             return new BoardActivityService(
-                this.mockDbContextFactory.Object);
+                mockDbContextFactory.Object);
         }
         [Test]
         public async Task GetActivityByIdAsync_ValidId_ValidResult()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -47,7 +47,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetActivityByIdAsync_InvalidId_NullResult()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -70,7 +70,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetActivitiesOnPageByUserIdAsync_ValidIdSkip2_GetOneValid()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string userId = "1";
             int page = 2;
             int amountObjectsPerPage = 2;
@@ -93,7 +93,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetActivitiesOnPageByUserIdAsync_InvalidId_GetZero()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string userId = "100";
             int page = 2;
             int amountObjectsPerPage = 2;
@@ -114,7 +114,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetBoardActivityAmountByUserIdAsync_ValidId_GetAmountThree()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string userId = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -131,7 +131,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetBoardActivityAmountByUserIdAsync_InvalidId_GetAmountZero()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string userId = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -148,7 +148,7 @@ namespace TaskBoardAPITests.Services
         public async Task CreateBoardActivityAsync_ValidActivity_SameAddedActivityWithNewTimeAndId()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             BoardActivity boardActivity = new BoardActivity { Id = "oldId", ActivityTime = DateTime.MinValue, Description = "NewActivity", UserId = "1" };
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -172,7 +172,7 @@ namespace TaskBoardAPITests.Services
         public void CreateBoardActivityAsync_InvalidActivity_ThrowsException()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             BoardActivity nullBoardActivity = null,
             invalidBoardActivity = new BoardActivity { UserId = "10" }; 
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);

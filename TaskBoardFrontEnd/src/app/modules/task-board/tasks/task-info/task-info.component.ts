@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
-import { DateFormaterService } from '../../../shared/services/date-formater/date-formater.service';
+import { DateFormaterService } from '../../../../shared/services/date-formater/date-formater.service';
 import { ActivityService } from '../../services/acitvity-service/activity.service';
 import { PriorityConvertorService } from '../../services/priority-convertor/priority-convertor.service';
 import { Priority } from '../../shared/enums/priority.enum';

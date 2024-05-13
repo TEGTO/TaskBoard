@@ -10,13 +10,13 @@ namespace TaskBoardAPITests.Services
         protected override BoardTaskActivityService CreateService()
         {
             return new BoardTaskActivityService(
-                this.mockDbContextFactory.Object);
+                mockDbContextFactory.Object);
         }
         [Test]
         public async Task GetTaskActivityByIdAsync_ValidId_ValidResult()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -47,7 +47,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetTaskActivityByIdAsync_InvalidId_NullResult()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -70,7 +70,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetTaskActivitiesByTaskIdAsync_ValidId_GetAllTaskActivities()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string taskId = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -89,7 +89,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetTaskActivitiesByTaskIdAsync_InvalidId_GetEmptyList()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string taskId = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -106,7 +106,7 @@ namespace TaskBoardAPITests.Services
         public async Task CreateTaskBoardActivityAsync_ValidActivity_SameActivityWithNewTimeAndId()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             BoardTaskActivity taskActivity = new BoardTaskActivity() { Id = "oldId", BoardTaskId = "1", ActivityTime = DateTime.MinValue, Description = "NewTaskActivity" };
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -130,7 +130,7 @@ namespace TaskBoardAPITests.Services
         public void CreateTaskBoardActivityAsync_InvalidActivity_ThrowsException()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             BoardTaskActivity nullTaskActivity = null, invalidActivity = new BoardTaskActivity { BoardTaskId = "100" };
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act and Assert

@@ -16,11 +16,11 @@ namespace TaskBoardAPITests.Controllers
         public override void SetUp()
         {
             base.SetUp();
-            this.mockBoardActivityService = CreateMockBoardActivityService();
+            mockBoardActivityService = CreateMockBoardActivityService();
         }
         private Mock<IBoardActivityService> CreateMockBoardActivityService()
         {
-            var mockService = this.mockRepository.Create<IBoardActivityService>();
+            var mockService = mockRepository.Create<IBoardActivityService>();
             mockService.Setup(x => x.GetActivityByIdAsync("validId", It.IsAny<bool>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => new BoardActivity { Id = "validResult" });
             mockService.Setup(x => x.GetActivityByIdAsync(It.Is<string>(x => x != "validId"), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
@@ -38,14 +38,14 @@ namespace TaskBoardAPITests.Controllers
         protected override BoardActivityController CreateController()
         {
             return new BoardActivityController(
-                this.mockBoardActivityService.Object,
-                this.mockMapper.Object);
+                mockBoardActivityService.Object,
+                mockMapper.Object);
         }
         [Test]
         public async Task GetBoardActivityById_ValidId_OkStatusCodeWithData()
         {
             // Arrange
-            var boardActivityController = this.CreateController();
+            var boardActivityController = CreateController();
             string id = "validId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -67,7 +67,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetBoardActivityById_InvalidId_NotFound()
         {
             // Arrange
-            var boardActivityController = this.CreateController();
+            var boardActivityController = CreateController();
             string id = "invalidId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -83,7 +83,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetBoardActivityAmount_AnyUserId_ExpectedCountOfActivititiesByUser()
         {
             // Arrange
-            var boardActivityController = this.CreateController();
+            var boardActivityController = CreateController();
             string userId = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -105,7 +105,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetBoardActivityOnPage_ValidId_OkStatusCodeWithData()
         {
             // Arrange
-            var boardActivityController = this.CreateController();
+            var boardActivityController = CreateController();
             string userId = "validId";
             int page = 0;
             int amountOnPage = 0;
@@ -132,7 +132,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetBoardActivityOnPage_InvalidId_NotFound()
         {
             // Arrange
-            var boardActivityController = this.CreateController();
+            var boardActivityController = CreateController();
             string userId = "invalidId";
             int page = 0;
             int amountOnPage = 0;
@@ -153,7 +153,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task CreateBoardActivity_ValidData_OkStatusCodeWithNewAddedData()
         {
             // Arrange
-            var boardActivityController = this.CreateController();
+            var boardActivityController = CreateController();
             BoardActivityDto boardActivityDto = new BoardActivityDto();
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -176,7 +176,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task CreateBoardActivity_NullData_OkStatusCodeWithNull()
         {
             // Arrange
-            var boardActivityController = this.CreateController();
+            var boardActivityController = CreateController();
             BoardActivityDto boardActivityDto = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act

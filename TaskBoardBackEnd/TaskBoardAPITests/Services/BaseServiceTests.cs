@@ -16,13 +16,15 @@ namespace TaskBoardAPITests.Services
         protected List<BoardTaskList> testBoardTaskLists;
         protected List<BoardTask> testBoardTasks;
 
+        protected MockRepository mockRepository;
         protected Mock<IDbContextFactory<BoardTasksDbContext>> mockDbContextFactory;
         protected Mock<BoardTasksDbContext> mockDbContext;
 
         [SetUp]
         public virtual void SetUp()
         {
-            mockDbContextFactory = new Mock<IDbContextFactory<BoardTasksDbContext>>();
+            mockRepository = new MockRepository(MockBehavior.Default);
+            mockDbContextFactory = mockRepository.Create<IDbContextFactory<BoardTasksDbContext>>();
             mockDbContext = CreateMockDbContext();
             mockDbContextFactory.Setup(m => m.CreateDbContextAsync(It.IsAny<CancellationToken>())).ReturnsAsync(mockDbContext.Object);
         }
@@ -32,7 +34,7 @@ namespace TaskBoardAPITests.Services
             var options = new DbContextOptionsBuilder<BoardTasksDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            var mockDbContext = new Mock<BoardTasksDbContext>(options);
+            var mockDbContext = mockRepository.Create<BoardTasksDbContext>(options);
             mockDbContext.Setup(m => m.Users).Returns(GetTestUserDbSet());
             mockDbContext.Setup(m => m.BoardActivities).Returns(GetTestBoardActivitiesDbSet());
             mockDbContext.Setup(m => m.BoardTaskActivities).Returns(GetTestTaskBoardActivitiesDbSet());

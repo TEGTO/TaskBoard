@@ -12,12 +12,12 @@ namespace TaskBoardAPITests.Services
         protected override BoardTaskListService CreateService()
         {
             return new BoardTaskListService(
-                this.mockDbContextFactory.Object,
+                mockDbContextFactory.Object,
                 CreateTaskService());
         }
         private IBoardTaskService CreateTaskService()
         {
-            mockBoardTaskService = new Mock<IBoardTaskService>();
+            mockBoardTaskService = mockRepository.Create<IBoardTaskService>();
             mockBoardTaskService.Setup(x => x.GetTasksByListIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((string listId, CancellationToken cancellationToken) =>
             {
@@ -30,7 +30,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetTaskListByIdAsync_ValidId_ValidResult()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -53,7 +53,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetTaskListByIdAsync_InvalidId_NullResult()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -71,7 +71,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetTaskListsByUserIdAsync_ValidId_ValidTwoLists()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string userId = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -95,7 +95,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetTaskListsByUserIdAsync_InvalidId_EmptyList()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string userId = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -113,7 +113,7 @@ namespace TaskBoardAPITests.Services
         public async Task CreateTaskListAsync_ValidListTask_SameListTaskWithNewIdAndCreationTime()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             BoardTaskList taskList = new BoardTaskList
             {
                 Id = "oldId",
@@ -154,7 +154,7 @@ namespace TaskBoardAPITests.Services
         public void CreateTaskListAsync_InvalidListTask_ThrowsException()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             BoardTaskList nullList = null, invalidList = new BoardTaskList { UserId = "100" };
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act and Assert
@@ -175,7 +175,7 @@ namespace TaskBoardAPITests.Services
         public async Task DeleteTaskListAsync_ValidId_DeletesList()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -196,7 +196,7 @@ namespace TaskBoardAPITests.Services
         public async Task DeleteTaskListAsync_InvalidId_WontDelete()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -217,7 +217,7 @@ namespace TaskBoardAPITests.Services
         public async Task UpdateTaskListAsync_ValidData_UpdatesList()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             BoardTaskList taskList = new BoardTaskList
             {
                 Id = "1",
@@ -256,7 +256,7 @@ namespace TaskBoardAPITests.Services
         public void UpdateTaskListAsync_NullData_ThrowsException()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             BoardTaskList taskList = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act + Assert
@@ -275,7 +275,7 @@ namespace TaskBoardAPITests.Services
         public async Task UpdateTaskListAsync_ListNotExists_WontUpdateList()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             BoardTaskList taskList = new BoardTaskList
             {
                 Id = "100",

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { UserConfig } from '../../../../shared/configs/user-config/user-config';
-import { USER_CONFIG } from '../../../../shared/configs/user-config/user-config.service';
-import { LocalStorageService } from '../../../../shared/services/local-storage/local-storage.service';
+import { UserConfig } from '../../../../../shared/configs/user-config/user-config';
+import { USER_CONFIG } from '../../../../../shared/configs/user-config/user-config.service';
+import { LocalStorageService } from '../../../../../shared/services/local-storage/local-storage.service';
 import { User } from '../../../shared/models/user.model';
 
 @Injectable({

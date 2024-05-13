@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivityHistoryComponent } from '../../../../task-board/history/activity-history/activity-history.component';
+import { ActivityHistoryComponent } from '../../../modules/task-board/history/activity-history/activity-history.component';
 
 @Component({
   selector: 'app-main-view',

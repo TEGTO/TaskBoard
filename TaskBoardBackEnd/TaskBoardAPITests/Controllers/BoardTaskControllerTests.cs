@@ -16,12 +16,12 @@ namespace TaskBoardAPITests.Controllers
         public override void SetUp()
         {
             base.SetUp();
-            this.mockBoardTaskService = this.mockRepository.Create<IBoardTaskService>();
-            this.mockBoardTaskService = CreateMockBoardTaskService();
+            mockBoardTaskService = mockRepository.Create<IBoardTaskService>();
+            mockBoardTaskService = CreateMockBoardTaskService();
         }
         private Mock<IBoardTaskService> CreateMockBoardTaskService()
         {
-            var mockService = this.mockRepository.Create<IBoardTaskService>();
+            var mockService = mockRepository.Create<IBoardTaskService>();
             mockService.Setup(x => x.GetTaskByIdAsync("validId", It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => new BoardTask { Id = "validResult" });
             mockService.Setup(x => x.GetTaskByIdAsync(It.Is<string>(x => x != "validId"), It.IsAny<CancellationToken>()))
@@ -39,14 +39,14 @@ namespace TaskBoardAPITests.Controllers
         protected override BoardTaskController CreateController()
         {
             return new BoardTaskController(
-                this.mockBoardTaskService.Object,
-                this.mockMapper.Object);
+                mockBoardTaskService.Object,
+                mockMapper.Object);
         }
         [Test]
         public async Task GetTaskById_ValidId_OkStatusCodeWithData()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             string id = "validId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -68,7 +68,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetTaskById_InvalidId_NotFound()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             string id = "invalidId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -84,7 +84,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetTasksByListId_ValidId_OkStatusCodeWithData()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             string listId = "validId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -107,7 +107,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetTasksByListId_InvalidId_OkWithEmptyList()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             string listId = "invalidId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -130,7 +130,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task CreateTask_ValidData_OkStatusCodeWithNewAddedData()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             BoardTaskDto boardTaskDto = new BoardTaskDto();
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -153,7 +153,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task CreateTask_NullData_OkStatusCodeWithNull()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             BoardTaskDto boardTaskDto = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -172,7 +172,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task UpdateBoardTask_ValidDate_OkStatusCodeWithoutData()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             int positionIndex = 0;
             BoardTaskDto boardTaskDto = new BoardTaskDto();
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
@@ -190,7 +190,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task UpdateBoardTask_InvalidDate_OkStatusCodeWithoutData()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             int positionIndex = 0;
             BoardTaskDto boardTaskDto = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
@@ -208,7 +208,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task DeleteBoardTask_ValidDate_OkStatusCodeWithoutData()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             string id = "validId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -224,7 +224,7 @@ namespace TaskBoardAPITests.Controllers
         public async Task DeleteBoardTask_InvalidDate_OkStatusCodeWithoutData()
         {
             // Arrange
-            var boardTaskController = this.CreateController();
+            var boardTaskController = CreateController();
             string id = "inValidId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act

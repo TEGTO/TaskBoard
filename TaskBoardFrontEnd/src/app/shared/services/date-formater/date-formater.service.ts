@@ -9,7 +9,7 @@ import { DATE_CONFIG } from '../../configs/date-config/date-config.service';
 export class DateFormaterService {
   pipe = new DatePipe('en-US');
 
-  constructor(@Inject(DATE_CONFIG) private dateConfig: DateConfig,) { }
+  constructor(@Inject(DATE_CONFIG) private dateConfig: DateConfig) { }
 
   formatDate(date: Date | undefined) {
     if (!date) return Date.now();

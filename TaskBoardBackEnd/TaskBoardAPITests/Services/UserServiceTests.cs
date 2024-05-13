@@ -1,5 +1,4 @@
 ﻿using Moq;
-using System.Threading.Tasks;
 using TaskBoardAPI.Models;
 using TaskBoardAPI.Services;
 
@@ -11,13 +10,13 @@ namespace TaskBoardAPITests.Services
         protected override UserService CreateService()
         {
             return new UserService(
-                this.mockDbContextFactory.Object);
+                mockDbContextFactory.Object);
         }
         [Test]
         public async Task GetUserByIdAsync_ValidId_ValidResult()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -40,7 +39,7 @@ namespace TaskBoardAPITests.Services
         public async Task GetUserByIdAsync_InvalidId_NullResult()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             string id = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
@@ -63,8 +62,8 @@ namespace TaskBoardAPITests.Services
         public async Task CreateNewUserAsync_ValidUser_AddedNewUserWithNewId()
         {
             // Arrange
-            var service = this.CreateService();
-            User user = new User {Id = "oldID", BoardTaskLists = new List<BoardTaskList> { new BoardTaskList { Name = "NewTaskList" } } };
+            var service = CreateService();
+            User user = new User { Id = "oldID", BoardTaskLists = new List<BoardTaskList> { new BoardTaskList { Name = "NewTaskList" } } };
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
             var result = await service.CreateNewUserAsync(
@@ -83,7 +82,7 @@ namespace TaskBoardAPITests.Services
         public void CreateNewUserAsync_NullUser_ThrowsException()
         {
             // Arrange
-            var service = this.CreateService();
+            var service = CreateService();
             User user = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act + Assert

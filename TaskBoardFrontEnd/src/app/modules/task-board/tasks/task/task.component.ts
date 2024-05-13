@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DateFormaterService } from '../../../shared/services/date-formater/date-formater.service';
+import { DateFormaterService } from '../../../../shared/services/date-formater/date-formater.service';
 import { PriorityConvertorService } from '../../services/priority-convertor/priority-convertor.service';
 import { TaskService } from '../../services/task-service/task.service';
 import { Priority } from '../../shared/enums/priority.enum';

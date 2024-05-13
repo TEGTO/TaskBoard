@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainViewComponent } from './core/components/pages/main-view/main-view.component';
+import { MainViewComponent } from './core/components/main-view/main-view.component';
 
 export const routes: Routes = [
   { path: "", component: MainViewComponent }

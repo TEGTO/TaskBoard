@@ -14,12 +14,12 @@ namespace TaskBoardAPITests.Controllers
         [SetUp]
         public virtual void SetUp()
         {
-            this.mockRepository = new MockRepository(MockBehavior.Default);
-            this.mockMapper = CreateMockMapper();
+            mockRepository = new MockRepository(MockBehavior.Default);
+            mockMapper = CreateMockMapper();
         }
         private Mock<IMapper> CreateMockMapper()
         {
-            mockMapper = this.mockRepository.Create<IMapper>();
+            mockMapper = mockRepository.Create<IMapper>();
             mockMapper.Setup(x =>
             x.Map<BoardActivityDto>(It.IsAny<BoardActivity>()))
             .Returns<BoardActivity>((x) =>
