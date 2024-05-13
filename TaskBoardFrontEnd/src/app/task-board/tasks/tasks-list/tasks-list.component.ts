@@ -26,7 +26,8 @@ export class TasksListComponent {
   onTaskDrop(event: CdkDragDrop<BoardTaskList>) {
     var task: BoardTask = event.item.data;
     task.boardTaskListId = event.container.data.id;
-    this.taskService.updateTask(event.item.data, event.previousContainer.data, event.container.data, event.currentIndex);
+    this.taskService.updateTask(task, event.previousContainer.data,
+      event.container.data, event.currentIndex);
   }
   openListManagerMenu() {
     const dialogRef = this.dialog.open(TaskListManagerComponent, {

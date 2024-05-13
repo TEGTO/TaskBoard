@@ -43,10 +43,10 @@ namespace TaskBoardAPI.Services
         }
         public async Task DeleteTaskAsync(string id, CancellationToken cancellationToken = default)
         {
-            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            BoardTask? taskInDb = await GetTaskByIdAsync(id, cancellationToken: cancellationToken);
+            if (taskInDb != null)
             {
-                BoardTask? taskInDb = await GetTaskByIdAsync(id, cancellationToken: cancellationToken);
-                if (taskInDb != null)
+                using (var dbContext = await CreateDbContextAsync(cancellationToken))
                 {
                     BoardTask? prevTask = await GetPrevTaskFromDb(taskInDb, dbContext, cancellationToken);
                     BoardTask? nextTask = await GetNextTaskFromDb(taskInDb, dbContext, cancellationToken);
@@ -58,10 +58,10 @@ namespace TaskBoardAPI.Services
         }
         public async Task UpdateTaskAsync(BoardTask task, int positionIndex, CancellationToken cancellationToken = default)
         {
-            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            BoardTask? taskInDb = await GetTaskByIdAsync(task.Id, cancellationToken: cancellationToken);
+            if (taskInDb != null)
             {
-                BoardTask? taskInDb = await GetTaskByIdAsync(task.Id, cancellationToken: cancellationToken);
-                if (taskInDb != null)
+                using (var dbContext = await CreateDbContextAsync(cancellationToken))
                 {
                     if (CheckIfPositionNeedUpdate(task, taskInDb))
                         await UpdateTaskPosition(task, taskInDb, positionIndex, cancellationToken);

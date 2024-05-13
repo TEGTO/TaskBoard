@@ -22,8 +22,8 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(allowedOrigins)
-        .AllowAnyHeader()
-        .AllowAnyMethod();
+            .AllowAnyHeader()
+            .AllowAnyMethod();
             policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
         });
     }
