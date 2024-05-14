@@ -50,7 +50,6 @@ builder.Services.AddSingleton<IBoardActivityService, BoardActivityService>();
 builder.Services.AddSingleton<IBoardTaskActivityService, BoardTaskActivityService>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<UserDtoValidator>();

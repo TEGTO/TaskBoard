@@ -11,21 +11,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BoardComponent } from './board/board.component';
-import { ActivityHistoryComponent } from './history/activity-history/activity-history.component';
-import { ActivityComponent } from './history/activity/activity.component';
-import { TaskInfoComponent } from './tasks/task-info/task-info.component';
-import { TaskListManagerComponent } from './tasks/task-list-manager/task-list-manager.component';
-import { TaskManagerComponent } from './tasks/task-manager/task-manager.component';
-import { TaskComponent } from './tasks/task/task.component';
-import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
+import { ActivityControllerService, ActivityService } from '../action-history';
+import { ActionHistoryModule } from '../action-history/action-history.module';
+import { CustomDatePickerValidatorService, DateValidator } from '../shared';
+import { BoardComponent, TaskComponent, TaskControllerService, TaskInfoComponent, TaskListControllerService, TaskListManagerComponent, TaskListService, TaskManagerComponent, TaskService, TasksListComponent } from './index';
 
 @NgModule({
   declarations: [
     TaskComponent,
     TasksListComponent,
-    ActivityHistoryComponent,
-    ActivityComponent,
     TaskListManagerComponent,
     TaskInfoComponent,
     TaskManagerComponent,
@@ -45,8 +39,15 @@ import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
     ReactiveFormsModule,
     CdkDropList,
     CdkDrag,
-    CdkDropListGroup
+    CdkDropListGroup,
+    ActionHistoryModule
   ],
-  exports: [BoardComponent]
+  exports: [BoardComponent],
+  providers: [
+    { provide: DateValidator, useClass: CustomDatePickerValidatorService },
+    { provide: TaskListService, useClass: TaskListControllerService },
+    { provide: TaskService, useClass: TaskControllerService },
+    { provide: ActivityService, useClass: ActivityControllerService },
+  ],
 })
 export class TaskBoardModule { }
