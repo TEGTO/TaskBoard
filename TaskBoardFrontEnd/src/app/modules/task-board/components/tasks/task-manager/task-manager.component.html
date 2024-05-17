@@ -1,0 +1,88 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div class="task-manager-wrapper">
+        <header class="task-manager-header">
+            {{cardName}}
+        </header>
+
+        <body class="task-manager-body">
+
+            <div>
+                <label>Task Name</label>
+                <div>
+                    <input class="input" id="input-name" type="text" placeholder="Task name" formControlName="name">
+                    <p *ngIf="isNameInvalid()" class="help is-danger">
+                        Please enter task name
+                    </p>
+                </div>
+            </div>
+            <div class="task-params">
+                <div class="param-header">
+                    <span class="icon">
+                        <i class="fa-solid fa-list"></i>
+                    </span>
+                    <span>List</span>
+                </div>
+                <div class="param">
+                    <ng-container *ngIf="taskLists; else loading">
+                        <mat-select formControlName="listId">
+                            <ng-container *ngFor="let taskList of taskLists;">
+                                <mat-option [value]="taskList.id">{{taskList.name}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </ng-container>
+                    <ng-template #loading>
+                        Loading...
+                    </ng-template>
+                </div>
+                <div class="param-header">
+                    <span class="icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </span>
+                    <span>Due date</span>
+                </div>
+                <div class="param">
+                    <div class="task-datapicker">
+                        <div>
+                            <input class="input" [matDatepicker]="picker" formControlName="dueDate" [min]="minDate">
+                            <p *ngIf="isDateInvalid()" class="help is-danger">
+                                Date must be today or after
+                            </p>
+                        </div>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    </div>
+                </div>
+                <div class="param-header">
+                    <span class="icon">
+                        <i class="fa-solid fa-tags"></i>
+                    </span>
+                    <span>Priority</span>
+                </div>
+                <div class="param">
+                    <span>
+                        <mat-select formControlName="priority">
+                            <ng-container *ngFor="let priority of  this.getAllPriorityNames(); index as i">
+                                <mat-option [value]="i">{{priority}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </span>
+                </div>
+            </div>
+            <div class="task-description">
+                <div class="description-header">
+                    Description
+                </div>
+                <textarea class="description-body" formControlName="description">
+            </textarea>
+            </div>
+            <div class="action-buttons">
+                <button mat-dialog-close class="button">
+                    <span>Cancel</span>
+                </button>
+                <button type="submit" [disabled]="taskForm.invalid" class="button is-dark">
+                    <span>Save</span>
+                </button>
+            </div>
+        </body>
+    </div>
+</form>

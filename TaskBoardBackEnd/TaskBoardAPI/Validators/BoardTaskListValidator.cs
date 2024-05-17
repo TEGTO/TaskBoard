@@ -7,7 +7,6 @@ namespace TaskBoardAPI.Validators
     {
         public BoardTaskListValidator()
         {
-            RuleFor(x => x).NotNull();
             RuleFor(x => x.Id).NotNull();
             RuleFor(x => x.UserId).NotNull();
             RuleFor(x => x.BoardTasks).NotNull();

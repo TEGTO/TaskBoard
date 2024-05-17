@@ -1,0 +1,7 @@
+<div class="activity-wrapper">
+    <div class="activity-description" *ngIf="activity.description" [innerHTML]="sanitizeHtml(activity.description!)">
+    </div>
+    <div class="activity-date is-italic">
+        {{getFormatedDate(activity.activityTime)}}
+    </div>
+</div>

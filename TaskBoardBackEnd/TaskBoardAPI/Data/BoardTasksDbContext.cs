@@ -6,10 +6,10 @@ namespace TaskBoardAPI.Data
 {
     public class BoardTasksDbContext(DbContextOptions<BoardTasksDbContext> options) : DbContext(options)
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<BoardTaskList> BoardTaskLists { get; set; }
-        public DbSet<BoardTask> BoardTasks { get; set; }
-        public DbSet<BoardTaskActivity> BoardTaskActivities { get; set; }
-        public DbSet<BoardActivity> BoardActivities { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<BoardTaskList> BoardTaskLists { get; set; }
+        public virtual DbSet<BoardTask> BoardTasks { get; set; }
+        public virtual DbSet<BoardTaskActivity> BoardTaskActivities { get; set; }
+        public virtual DbSet<BoardActivity> BoardActivities { get; set; }
     }
 }

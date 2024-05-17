@@ -7,7 +7,6 @@ namespace TaskBoardAPI.Validators
     {
         public UserDtoValidator()
         {
-            RuleFor(x => x).NotNull();
             RuleFor(x => x.Id).NotNull();
         }
     }

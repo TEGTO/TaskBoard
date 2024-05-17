@@ -1,0 +1,29 @@
+<div class="history-wrapper">
+    <header class="history-header">
+        History
+        <button mat-dialog-close>
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </header>
+
+    <body class="history-body">
+        <mat-dialog-content class="mat-typography">
+            <div class="activities">
+                <ng-container *ngIf="activities;">
+                    <ng-container *ngFor="let activity of activities">
+                        <app-activity [activity]="activity"></app-activity>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <button *ngIf="activitiesAmount > amountOnPage * page" id="show-more" class="button is-dark"
+                (click)="showMore()">
+                <span class="icon">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </span>
+                <span>
+                    Show more
+                </span>
+            </button>
+        </mat-dialog-content>
+    </body>
+</div>

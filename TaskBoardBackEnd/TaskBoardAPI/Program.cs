@@ -22,8 +22,8 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(allowedOrigins)
-        .AllowAnyHeader()
-        .AllowAnyMethod();
+            .AllowAnyHeader()
+            .AllowAnyMethod();
             policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
         });
     }
@@ -49,7 +49,6 @@ builder.Services.AddSingleton<IBoardTaskService, BoardTaskService>();
 builder.Services.AddSingleton<IBoardActivityService, BoardActivityService>();
 builder.Services.AddSingleton<IBoardTaskActivityService, BoardTaskActivityService>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
