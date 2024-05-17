@@ -14,9 +14,9 @@ export class TaskManagerComponent implements OnInit {
   cardName: string = "";
   minDate = new Date();
   taskLists!: BoardTaskList[];
+  isNew: boolean = false;
   private task!: BoardTask;
   private taskList!: BoardTaskList;
-  private isNew: boolean = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: TaskPopupData,
     private formBuilder: FormBuilder, private dialogRef: MatDialogRef<TaskManagerComponent>,

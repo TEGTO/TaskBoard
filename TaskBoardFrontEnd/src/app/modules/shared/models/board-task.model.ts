@@ -22,12 +22,12 @@ export function getDefaultBoardTask() {
 }
 export function copyTaskValues(dest: BoardTask, toCopy: BoardTask) {
     if (dest && toCopy) {
-        dest.id = toCopy?.id;
-        dest.boardTaskListId = toCopy?.boardTaskListId;
-        dest.creationTime = toCopy?.creationTime;
+        dest.id = toCopy.id;
+        dest.boardTaskListId = toCopy.boardTaskListId;
+        dest.creationTime = toCopy.creationTime;
         dest.dueTime = toCopy?.dueTime;
         dest.name = toCopy?.name;
         dest.description = toCopy?.description;
-        dest.priority = toCopy?.priority;
+        dest.priority = toCopy.priority;
     }
 }

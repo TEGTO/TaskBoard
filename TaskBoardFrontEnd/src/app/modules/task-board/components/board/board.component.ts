@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivityHistoryComponent } from '../../../action-history';
 import { BoardTaskList, TaskListApiService } from '../../../shared';
 
-
 @Component({
   selector: 'task-board',
   templateUrl: './board.component.html',

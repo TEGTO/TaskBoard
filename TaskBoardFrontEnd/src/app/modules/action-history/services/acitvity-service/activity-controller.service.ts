@@ -33,7 +33,8 @@ export class ActivityControllerService extends ActivityService {
     try {
       switch (activityType) {
         case ActivityType.Create:
-          return this.createTaskActivity_Create(taskActivityData.task);
+          this.createTaskActivity_Create(taskActivityData.task);
+          break;
         case ActivityType.Update:
           if (!taskActivityData.prevTask)
             throw new Error('To create update activity, define previous task data!');
@@ -55,7 +56,8 @@ export class ActivityControllerService extends ActivityService {
     try {
       switch (activityType) {
         case ActivityType.Create:
-          return this.createListActivity_Create(listActivityData.taskList);
+          this.createListActivity_Create(listActivityData.taskList);
+          break;
         case ActivityType.Update:
           if (!listActivityData.prevTaskList)
             throw new Error('To create update activity, define previous task list data!');
@@ -112,7 +114,7 @@ export class ActivityControllerService extends ActivityService {
       activityTime: new Date(),
       description: activityDescription
     };
-    this.activityApi.createActivity(boardActivity).subscribe(res => { });
+    this.activityApi.createActivity(boardActivity).subscribe();
   }
   private createBoardTaskActivity(task: BoardTask, description: ActivityDescriptions) {
     const boardTaskActivity: BoardTaskActivity = {
@@ -121,6 +123,6 @@ export class ActivityControllerService extends ActivityService {
       activityTime: new Date(),
       description: description.activityTaskDescription
     };
-    this.takActivityApi.createTaskActivity(boardTaskActivity).subscribe(res => { });
+    this.takActivityApi.createTaskActivity(boardTaskActivity).subscribe();
   }
 }

@@ -2,10 +2,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 import { ActivityApiService, ActivityType, Priority, TaskActivityApiService, User, UserApiService } from '../../../shared';
-import { ActivityDescriptionFormatterService, TaskActivityData } from '../../index';
+import { ActivityDescriptionFormatterService, TaskActivityData, TaskListActivityData } from '../../index';
 import { ActivityControllerService } from './activity-controller.service';
 
-fdescribe('ActivityControllerService', () => {
+describe('ActivityControllerService', () => {
   const userMockData: User = { id: "user_id" };
   var mockUserService: jasmine.SpyObj<UserApiService>;
   var mockActivityApi: jasmine.SpyObj<ActivityApiService>;
@@ -19,7 +19,9 @@ fdescribe('ActivityControllerService', () => {
     mockUserService = jasmine.createSpyObj<UserApiService>('UserApiService', ['getUser']);
     mockTaskActivityApi = jasmine.createSpyObj<TaskActivityApiService>('TaskActivityApiService', ['getTaskActivitiesByTaskId', 'createTaskActivity']);
     mockActivityApi = jasmine.createSpyObj<ActivityApiService>('ActivityApiService', ['getBoardActivitiesOnPage', 'createActivity', 'getBoardActivitiesAmount']);
+    mockActivityApi.createActivity.and.returnValue(of({ id: "", userId: "", activityTime: new Date(), description: "" }));
     mockUserService.getUser.and.returnValue(of(userMockData));
+    mockDescriptionFormatter.taskCreated.and.returnValue({ activityDescription: "", activityTaskDescription: "" });
     TestBed.configureTestingModule({
       providers: [
         ActivityControllerService,
@@ -62,65 +64,84 @@ fdescribe('ActivityControllerService', () => {
 
     expect(mockActivityApi.getBoardActivitiesAmount).toHaveBeenCalled();
   });
-  fit('should create task activity for Create type', () => {
+  it('should create task activity type of "Create"', async () => {
     const taskActivityData: TaskActivityData = {
       task: { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low },
       prevTask: undefined,
       taskList: undefined
     };
-    spyOn<any>(service, 'createTaskActivity_Create');
     spyOn<any>(service, 'createBoardActivity');
     spyOn<any>(service, 'createBoardTaskActivity');
+    await service.createTaskActivity(ActivityType.Create, taskActivityData);
 
-    service.createTaskActivity(ActivityType.Create, taskActivityData);
-
-    expect(service['createTaskActivity_Create']).toHaveBeenCalledWith(taskActivityData.task);
-
-    //expect(mockDescriptionFormatter.taskCreated).toHaveBeenCalledWith(taskActivityData.task);
+    expect(service['createBoardActivity']).toHaveBeenCalled();
+    expect(service['createBoardTaskActivity']).toHaveBeenCalled();
+    expect(mockDescriptionFormatter.taskCreated).toHaveBeenCalledWith(taskActivityData.task);
   });
-  it('should create task activity for Update type', async () => {
+  it('should create task activity type of "Update"', async () => {
     const taskActivityData: TaskActivityData = {
       task: { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low },
       prevTask: { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low },
       taskList: undefined
     };
-    spyOn<any>(service, 'createTaskActivity_Update');
+    mockDescriptionFormatter.taskUpdated.and.returnValue(Promise.resolve(
+      [{ activityDescription: 'description1', activityTaskDescription: 'description1' }]));
+    spyOn<any>(service, 'createBoardActivity');
+    spyOn<any>(service, 'createBoardTaskActivity');
     await service.createTaskActivity(ActivityType.Update, taskActivityData);
-    expect(service['createTaskActivity_Update']).toHaveBeenCalledWith(taskActivityData.task, taskActivityData.prevTask!);
+
+    expect(service['createBoardActivity']).toHaveBeenCalled();
+    expect(service['createBoardTaskActivity']).toHaveBeenCalled();
+    expect(mockDescriptionFormatter.taskUpdated).toHaveBeenCalledWith(taskActivityData.task, taskActivityData.prevTask!);
   });
-  it('should create task activity for Delete type', () => {
+  it('should create task activity type of "Delete"', () => {
     const taskActivityData: TaskActivityData = {
       task: { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low },
       prevTask: undefined,
       taskList: { id: 'list_id', userId: 'user_id', creationTime: new Date(), boardTasks: [] }
     };
-    spyOn<any>(service, 'createTaskActivity_Delete');
+    spyOn<any>(service, 'createBoardActivity');
+    spyOn<any>(service, 'createBoardTaskActivity');
     service.createTaskActivity(ActivityType.Delete, taskActivityData);
-    expect(service['createTaskActivity_Delete']).toHaveBeenCalledWith(taskActivityData.task, taskActivityData.taskList!);
+
+    expect(service['createBoardActivity']).toHaveBeenCalled();
+    expect(mockDescriptionFormatter.taskDeleted).toHaveBeenCalledWith(taskActivityData.task, taskActivityData.taskList!);
   });
+  it('should create activity for list type of "Create"', async () => {
+    const taskListActivityData: TaskListActivityData = {
+      taskList: { id: 'task_id', userId: 'user_id', creationTime: new Date(), boardTasks: [] },
+      prevTaskList: undefined,
+    };
+    spyOn<any>(service, 'createBoardActivity');
+    spyOn<any>(service, 'createBoardTaskActivity');
+    await service.createTaskListActivity(ActivityType.Create, taskListActivityData);
 
-  // it('should create task activity for Update type', async () => {
-  //   spyOn(service, 'createBoardActivity');
-  //   spyOn(service, 'createBoardTaskActivity');
-  //   spyOn(service.descriptionFormatter, 'taskUpdated').and.returnValue(Promise.resolve(['description1', 'description2']));
+    expect(service['createBoardActivity']).toHaveBeenCalled();
+    expect(mockDescriptionFormatter.taskListCreated).toHaveBeenCalledWith(taskListActivityData.taskList);
+  });
+  it('should create activity for list type of "Update"', async () => {
+    const taskListActivityData: TaskListActivityData = {
+      taskList: { id: 'task_id', userId: 'user_id', creationTime: new Date(), boardTasks: [] },
+      prevTaskList: { id: 'prev_task_id', userId: 'user_id', creationTime: new Date(), boardTasks: [] },
+    };
+    mockDescriptionFormatter.taskListUpdate.and.returnValue(['description1']);
+    spyOn<any>(service, 'createBoardActivity');
+    spyOn<any>(service, 'createBoardTaskActivity');
+    await service.createTaskListActivity(ActivityType.Update, taskListActivityData);
 
-  //   const currentTask: BoardTask = { id: 'task_id', name: 'Task' };
-  //   const prevTask: BoardTask = { id: 'prev_task_id', name: 'Prev Task' };
+    expect(service['createBoardActivity']).toHaveBeenCalled();
+    expect(mockDescriptionFormatter.taskListUpdate).toHaveBeenCalledWith(taskListActivityData.taskList, taskListActivityData.prevTaskList!);
+  });
+  it('should create activity for list type of "Delete"', async () => {
+    const taskListActivityData: TaskListActivityData = {
+      taskList: { id: 'task_id', userId: 'user_id', creationTime: new Date(), boardTasks: [] },
+      prevTaskList: { id: 'prev_task_id', userId: 'user_id', creationTime: new Date(), boardTasks: [] },
+    };
+    spyOn<any>(service, 'createBoardActivity');
+    spyOn<any>(service, 'createBoardTaskActivity');
+    await service.createTaskListActivity(ActivityType.Delete, taskListActivityData);
 
-  //   await service.createTaskActivity_Update(currentTask, prevTask);
-
-  //   expect(service.createBoardActivity).toHaveBeenCalledTimes(2);
-  //   expect(service.createBoardTaskActivity).toHaveBeenCalledTimes(2);
-  // });
-
-  // it('should create task activity for Delete type', () => {
-  //   spyOn(service, 'createBoardActivity');
-
-  //   const task: BoardTask = { id: 'task_id', name: 'Task' };
-  //   const taskList: BoardTaskList = { id: 'task_list_id', name: 'Task List' };
-
-  //   service.createTaskActivity_Delete(task, taskList);
-
-  //   expect(service.createBoardActivity).toHaveBeenCalled();
-  // });
+    expect(service['createBoardActivity']).toHaveBeenCalled();
+    expect(mockDescriptionFormatter.taskListDeleted).toHaveBeenCalledWith(taskListActivityData.taskList);
+  });
 });

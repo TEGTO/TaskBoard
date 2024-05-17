@@ -9,14 +9,11 @@
     <body class="history-body">
         <mat-dialog-content class="mat-typography">
             <div class="activities">
-                <ng-container *ngIf="activities; else loading">
+                <ng-container *ngIf="activities;">
                     <ng-container *ngFor="let activity of activities">
                         <app-activity [activity]="activity"></app-activity>
                     </ng-container>
                 </ng-container>
-                <ng-template #loading>
-                    Loading...
-                </ng-template>
             </div>
             <button *ngIf="activitiesAmount > amountOnPage * page" id="show-more" class="button is-dark"
                 (click)="showMore()">

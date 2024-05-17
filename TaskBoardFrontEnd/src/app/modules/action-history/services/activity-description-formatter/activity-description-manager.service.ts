@@ -120,14 +120,14 @@ export class ActivityDescriptionManagerService extends ActivityDescriptionFormat
     });
   }
   private taskUpdate_DueTime(taskParams: TaskUpdateActivityData) {
-    var prevPriority = this.getFormattedSecondName(taskParams.prevTask.dueTime?.toLocaleDateString());
+    var prevDueTime = this.getFormattedSecondName(taskParams.prevTask.dueTime?.toLocaleDateString());
     var currentDueTime = this.getFormattedSecondName(taskParams.curentTask.dueTime?.toLocaleDateString());
-    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed {0} due time from ${prevPriority} to ${currentDueTime}`,
+    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed {0} due time from ${prevDueTime} to ${currentDueTime}`,
       taskParams.taskName_Activity, taskParams.taskName_TaskActivity));
   }
   private taskUpdate_Name(taskParams: TaskUpdateActivityData) {
-    var prevPriority = this.getFormattedSecondName(taskParams.prevTask.name);
-    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed name from ${prevPriority} to {0}`,
+    var prevName = this.getFormattedSecondName(taskParams.prevTask.name);
+    taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed name from ${prevName} to {0}`,
       taskParams.taskName_Activity, taskParams.taskName_Activity));
   }
   private taskUpdate_Description(taskParams: TaskUpdateActivityData) {

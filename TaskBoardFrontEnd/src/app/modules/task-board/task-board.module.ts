@@ -11,10 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ActivityControllerService, ActivityService } from '../action-history';
 import { ActionHistoryModule } from '../action-history/action-history.module';
-import { CustomDatePickerValidatorService, DateValidator } from '../shared';
-import { BoardComponent, TaskComponent, TaskControllerService, TaskInfoComponent, TaskListControllerService, TaskListManagerComponent, TaskListService, TaskManagerComponent, TaskService, TasksListComponent } from './index';
+import { BoardComponent, TaskComponent, TaskInfoComponent, TaskListManagerComponent, TaskManagerComponent, TasksListComponent } from './index';
 
 @NgModule({
   declarations: [
@@ -43,11 +41,5 @@ import { BoardComponent, TaskComponent, TaskControllerService, TaskInfoComponent
     ActionHistoryModule
   ],
   exports: [BoardComponent],
-  providers: [
-    { provide: DateValidator, useClass: CustomDatePickerValidatorService },
-    { provide: TaskListService, useClass: TaskListControllerService },
-    { provide: TaskService, useClass: TaskControllerService },
-    { provide: ActivityService, useClass: ActivityControllerService },
-  ],
 })
 export class TaskBoardModule { }

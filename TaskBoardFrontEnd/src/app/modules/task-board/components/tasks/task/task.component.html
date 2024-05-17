@@ -5,9 +5,7 @@
         </div>
         <div class="task">
             <header class="task-header">
-                <p class="task-header-text">
-                    {{task.name}}
-                </p>
+                <p class="task-header-text">{{task.name}}</p>
                 <button [matMenuTriggerFor]="menu">
                     <span class="icon">
                         <i class="fas fa-ellipsis-v"></i>
@@ -36,24 +34,18 @@
             </header>
 
             <body class="task-body">
-                <div class="task-description">
-                    {{task.description}}
-                </div>
+                <div class="task-description">{{task.description}}</div>
                 <div class="task-date">
                     <span class="icon">
                         <i class="fas fa-calendar-alt"></i>
                     </span>
-                    <div>
-                        {{getFormatedDate(task.dueTime)}}
-                    </div>
+                    <div>{{getFormatedDate(task.dueTime)}}</div>
                 </div>
                 <div class="task-priority">
                     <span class="icon">
                         &#x2022;
                     </span>
-                    <div>
-                        {{getPriorityString(task.priority)}}
-                    </div>
+                    <div>{{getPriorityString(task.priority)}}</div>
                 </div>
             </body>
         </div>
