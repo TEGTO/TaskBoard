@@ -1,17 +1,19 @@
-import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { LocalStorageService, User, UserConfig } from '../../../index';
+import { CustomErrorHandler, LocalStorageService, User, UserConfig } from '../../../index';
 import { UserApiService } from './user-api.service';
 
 describe('UserApiService', () => {
   const userIdKey = 'SOME_KEY';
   const userMockData: User = { id: "1" };
   var mockLocalStorageService: jasmine.SpyObj<LocalStorageService>;
+  var mockErrorHandler: jasmine.SpyObj<CustomErrorHandler>;
   var httpTestingController: HttpTestingController;
+  var service: UserApiService;
 
   beforeEach(() => {
     mockLocalStorageService = jasmine.createSpyObj('LocalStorageService', ['getItem', 'setItem']);
+    mockErrorHandler = jasmine.createSpyObj('ErrorHandler', ['handleError']);
     mockLocalStorageService.getItem.and.callFake((key: string) => {
       if (key === userIdKey) {
         return "SOME_USER_ID";
@@ -26,6 +28,7 @@ describe('UserApiService', () => {
       ]
     });
     httpTestingController = TestBed.inject(HttpTestingController);
+    service = TestBed.inject(UserApiService);
   });
   afterEach(() => {
     httpTestingController.verify();
@@ -33,7 +36,6 @@ describe('UserApiService', () => {
 
   it('should call getItem of local storage service with userId key', () => {
     const mockUserConfig: UserConfig = { userIdKey: userIdKey };
-    var service = new UserApiService(mockUserConfig, TestBed.inject(HttpClient), mockLocalStorageService);
     expect(mockLocalStorageService.getItem).toHaveBeenCalledWith(userIdKey);
     expect(mockLocalStorageService.getItem).toHaveBeenCalledTimes(1);
   });
@@ -41,7 +43,6 @@ describe('UserApiService', () => {
     const mockUserConfig: UserConfig = { userIdKey: userIdKey };
     const newKey = "NEW_KEY";
     mockUserConfig.userIdKey = newKey;
-    var service = new UserApiService(mockUserConfig, TestBed.inject(HttpClient), mockLocalStorageService);
     expect(mockLocalStorageService.getItem).toHaveBeenCalledWith(newKey);
     expect(mockLocalStorageService.getItem).toHaveBeenCalledTimes(1);
     const mockReq = httpTestingController.expectOne('/api/User');
@@ -52,7 +53,6 @@ describe('UserApiService', () => {
   });
   it('should send GET to return correct user that was previously created', () => {
     const configWithNotExistingKey: UserConfig = { userIdKey: "notExistingKey" };
-    var service = new UserApiService(configWithNotExistingKey, TestBed.inject(HttpClient), mockLocalStorageService);
     // POST request
     const mockPostReq = httpTestingController.expectOne('/api/User');
     mockPostReq.flush(userMockData);

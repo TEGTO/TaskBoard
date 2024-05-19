@@ -15,9 +15,13 @@ export * from './services/api/task-api/task-api.service';
 export * from './services/api/task-list-api/task-list-api.service';
 export * from './services/api/user-api/user-api.service';
 export * from './services/date-formater/date-formater.service';
+export * from './services/error-handler/custom-error-handler';
+export * from './services/error-handler/error-handler.service';
 export * from './services/local-storage/local-storage.service';
 export * from './services/priority-convertor/priority-convertor.service';
 export * from './services/string-format/string-format.service';
+export * from './services/url-definer/url-definer';
+export * from './services/url-definer/url-definer.service';
 export * from './services/validators/date/custrom-validators.service';
 export * from './services/validators/date/date-validators';
 

@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  db:
+    container_name: taskDB
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "taskDB"
+      POSTGRES_USER: "user1"
+      POSTGRES_PASSWORD: "12345"
+    networks:
+      - backend-net
+    volumes:
+      - taskDB:/var/lib/postgresql/data
+
+  webapi:
+    container_name: taskWebAPI
+    image: taskboardapi
+    build:
+      context: ./TaskBoardBackEnd
+      dockerfile: TaskBoardAPI/Dockerfile
+    ports:
+      - "44300:8080"
+      - "44301:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development # Development or Release
+      - ASPNETCORE_URLS=https://+:8081;http://+:8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=12345
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/certificates/aspnetapp.pfx
+      - ConnectionStrings__DefaultConnection=User ID=user1;Password=12345;Host=db;Port=5432;Database=taskDB;Pooling=true;MinPoolSize=0;MaxPoolSize=100;ConnectionLifetime=0;TrustServerCertificate=true
+      - AllowedCORSOrigins=*
+      # - AllowedCORSOrigins=http://example.com,http://another-example.com
+    networks:
+      - backend-net
+    depends_on:
+      - db
+
+  frontend:
+    container_name: taskBoardAngular
+    image: taskboardangular
+    build:
+      context: ./TaskBoardFrontEnd
+      args:
+        - API_URL=https://localhost:44301
+        - ENV=development # development or production
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+    driver: bridge
+
+volumes:
+  taskDB:

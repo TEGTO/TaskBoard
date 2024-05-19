@@ -24,7 +24,8 @@ builder.Services.AddCors(options =>
             policy.WithOrigins(allowedOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod();
-            policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
+            if (builder.Environment.IsDevelopment())
+                policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
         });
     }
     else
@@ -37,6 +38,11 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
         });
     }
+});
+
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
 });
 
 builder.Services.AddControllers();
@@ -76,6 +82,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 
