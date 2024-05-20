@@ -1,16 +1,52 @@
 ## Description
-A modern task board made using Angular for the frontend, ASP.NET Web API for the backend, and PostgreSQL for the database, all packaged with a Docker Compose setup for seamless deployment.
+A modern kanban board (task board) made using Angular for the frontend, ASP.NET Web API for the backend, and PostgreSQL for the database, all packaged with a Docker Compose setup for seamless deployment.
 
 ## Installation
 
 ### To Run an application using docker
 
+- Set SSL (.pxf) certificate name and path in docker-compose.yaml
+```bash
+#Example
+- ASPNETCORE_Kestrel__Certificates__Default__Password=12345
+- ASPNETCORE_Kestrel__Certificates__Default__Path=/app/certificates/aspnetapp.pfx
+```
+- Run command
 ```bash
 docker-compose up
 ```
 ### To Run an application locally
+- Install the tools if you haven't already
+```bash
+npm install -g dotenv-cli
+npm install -g concurrently
+```
+- Configure .env file
+```bash
+#Example
 
+# Backend Environment Variables
+ASPNETCORE_ENVIRONMENT=Development #Release
+ASPNETCORE_URLS=http://localhost:5001;https://localhost:5002
+ConnectionStrings__DefaultConnection=User ID=user1;Password=12345;Host=localhost;Port=5432;Database=taskDB;
+AllowedCORSOrigins=*
+
+# Frontend Environment Variables
+API_URL=https://localhost:5002
+ENV=development #production
+```
+- Run command
+```bash
+npm start
+```
 ## Test
+#### Backend (inside TaskBoardBackEnd)
+```bash
+# unit tests
+dotnet build TaskBoardAPITests
+dotnet test "TaskBoardAPITests\bin\Debug\net8.0\TaskBoardAPITests.dll"
+```
+#### Frontend (inside TaskBoardFrontEnd)
 ```bash
 # unit tests
 npm run test
