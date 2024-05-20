@@ -43,8 +43,6 @@ describe('TaskListManagerComponent', () => {
   });
   it('should initialize with correct card name', () => {
     expect(component.taskListForm).toBeTruthy();
-    expect(component.cardName).toBe('Create List');
-    component.ngOnInit();
     expect(component.cardName).toBe('Edit List');
   });
   it('should initialize form with task list data', () => {

@@ -2,7 +2,7 @@ export const environment =
 {
   production: false,
   // api: 'API_URL',
-  api: "https://localhost:44301",
+  api: "https://localhost:44300",
   dateFormat: 'EEE, d MMM YYYY',
   localStorageUser: 'USER_ID',
   mainNameStyleBegin: '<span style="color: black;">⦿ ',

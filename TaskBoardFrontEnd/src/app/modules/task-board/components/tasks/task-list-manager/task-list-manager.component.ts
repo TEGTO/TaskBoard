@@ -18,7 +18,7 @@ export class TaskListManagerComponent implements OnInit {
     private dialogRef: MatDialogRef<TaskListManagerComponent>) { }
 
   ngOnInit(): void {
-    this.cardName = this.taskList ? "Edit List" : "Create List";
+    this.cardName = this.data ? "Edit List" : "Create List";
     this.assignTaskList();
     this.initForm();
   }

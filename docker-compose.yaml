@@ -14,6 +14,7 @@ services:
       - backend-net
     volumes:
       - taskDB:/var/lib/postgresql/data
+      - ./init_tests.sql:/docker-entrypoint-initdb.d/init_test.sql
 
   webapi:
     container_name: taskWebAPI
