@@ -1,7 +1,7 @@
 export const environment =
 {
   production: true,
-  api: 'API_URL',
+  api: 'https://localhost:5002',
   dateFormat: 'EEE, d MMM YYYY',
   localStorageUser: 'USER_ID',
   mainNameStyleBegin: '<span style="color: black;">⦿ ',

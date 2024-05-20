@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "start:backend": "dotenv -e .env -- dotnet run --project TaskBoardBackEnd/TaskBoardAPI --no-launch-profile",
+        "start:frontend": "dotenv -e .env -- npm run environment-start --prefix TaskBoardFrontEnd",
+        "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+    }
+}

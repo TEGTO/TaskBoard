@@ -3,11 +3,11 @@ const path = require('path');
 
 const apiUrl = process.env.API_URL || 'https://localhost:44301';
 
-const replaceInFile = (filePath, placeholder, value) => {
+const replaceInFile = (filePath, param, value) => {
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    const updatedContent = fileContent.replace(new RegExp(placeholder, 'g'), value);
+    const updatedContent = fileContent.replace(new RegExp(`${param}: .*`, 'g'), `${param}: '${value}',`);
     fs.writeFileSync(filePath, updatedContent, 'utf8');
-    console.log(`Replaced ${placeholder} in ${filePath}`);
+    console.log(`Replaced ${param} in ${filePath}`);
 };
 
 const environmentFiles = [
@@ -16,5 +16,5 @@ const environmentFiles = [
 ];
 
 environmentFiles.forEach(filePath => {
-    replaceInFile(filePath, 'API_URL', apiUrl);
+    replaceInFile(filePath, 'api', apiUrl);
 });
