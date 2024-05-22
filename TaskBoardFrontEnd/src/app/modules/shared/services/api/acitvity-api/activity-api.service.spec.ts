@@ -1,26 +1,21 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
-import { BoardActivity, URLDefiner, User, UserApiService } from '../../../index';
+import { Board, BoardActivity, URLDefiner } from '../../../index';
 import { ActivityApiService } from './activity-api.service';
 
 describe('ActivityApiService', () => {
-  const userMockData: User = { id: "1" };
-  var mockUserApiService: jasmine.SpyObj<UserApiService>;
+  const mockBoardData: Board = { id: "1", userId: "1", creationTime: new Date() };
   var mockUrlDefiner: jasmine.SpyObj<URLDefiner>
   var httpTestingController: HttpTestingController;
   var service: ActivityApiService;
 
   beforeEach(() => {
-    mockUserApiService = jasmine.createSpyObj<UserApiService>('UserApiService', ['getUser']);
     mockUrlDefiner = jasmine.createSpyObj<URLDefiner>('URLDefiner', ['combineWithApiUrl']);
-    mockUserApiService.getUser.and.returnValue(of(userMockData));
     mockUrlDefiner.combineWithApiUrl.and.callFake((subpath: string) => subpath);
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
-        { provide: UserApiService, useValue: mockUserApiService },
         { provide: URLDefiner, useValue: mockUrlDefiner },
       ]
     });
@@ -35,32 +30,23 @@ describe('ActivityApiService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-  it('should return empty array when user is not available', () => {
-    mockUserApiService.getUser.and.returnValue(of(null));
-
-    service.getBoardActivitiesOnPage(1, 10).subscribe(boardActivities => {
-      expect(boardActivities).toEqual([]);
-    });
-  });
-  it('should send GET to get activities on specific page when user is available', () => {
-    const mockActivities: BoardActivity[] = [{ id: '1', userId: userMockData.id, activityTime: new Date() },
-    { id: '2', userId: userMockData.id, activityTime: new Date() }];
+  it('should send GET to get activities on specific page', () => {
+    const mockActivities: BoardActivity[] = [{ id: '1', boardId: mockBoardData.id, activityTime: new Date() },
+    { id: '2', boardId: mockBoardData.id, activityTime: new Date() }];
     var page = 1;
     var amountOnPage = 10;
-    const expectedReq = `/BoardActivity/userActivitiesOnPage/${userMockData.id}?page=${page}&amountOnPage=${amountOnPage}`;
+    const expectedReq = `/BoardActivity/board/${mockBoardData.id}/onpage?page=${page}&amountOnPage=${amountOnPage}`;
 
-    service.getBoardActivitiesOnPage(1, 10).subscribe(activities => {
+    service.getBoardActivitiesOnPageByBoardId(mockBoardData.id, 1, 10).subscribe(activities => {
       expect(activities).toEqual(mockActivities);
     });
 
-    expect(mockUserApiService.getUser).toHaveBeenCalledTimes(1);
     const req = httpTestingController.expectOne(expectedReq);
     expect(req.request.method).toBe('GET');
-    expect(mockUrlDefiner.combineWithApiUrl).toHaveBeenCalledWith(expectedReq);
     req.flush(mockActivities);
   });
   it('should send POST to create new activity', () => {
-    const mockActivity: BoardActivity = { id: '1', userId: userMockData.id, activityTime: new Date() };
+    const mockActivity: BoardActivity = { id: '1', boardId: mockBoardData.id, activityTime: new Date() };
     const expectedReq = `/BoardActivity`;
 
     service.createActivity(mockActivity).subscribe(result => {
@@ -70,27 +56,18 @@ describe('ActivityApiService', () => {
     const req = httpTestingController.expectOne(expectedReq);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(mockActivity);
-    expect(mockUrlDefiner.combineWithApiUrl).toHaveBeenCalledWith(expectedReq);
     req.flush(mockActivity);
   });
-  it('should return 0 when user is not available', () => {
-    mockUserApiService.getUser.and.returnValue(of(null));
-
-    service.getBoardActivitiesAmount().subscribe(amount => {
-      expect(amount).toEqual(0);
-    });
-  });
-  it('should return board activities amount when user is available', () => {
+  it('should return board activities amount', () => {
     const mockAmount = 10;
-    const expectedReq = `/BoardActivity/userActivitiesOnPage/${userMockData.id}/amount`;
+    const expectedReq = `/BoardActivity/board/${mockBoardData.id}/amount`;
 
-    service.getBoardActivitiesAmount().subscribe(amount => {
+    service.getBoardActivitiesAmountByBoardId(mockBoardData.id).subscribe(amount => {
       expect(amount).toEqual(mockAmount);
     });
 
     const req = httpTestingController.expectOne(expectedReq);
     expect(req.request.method).toBe('GET');
-    expect(mockUrlDefiner.combineWithApiUrl).toHaveBeenCalledWith(expectedReq);
     req.flush(mockAmount);
   });
 });

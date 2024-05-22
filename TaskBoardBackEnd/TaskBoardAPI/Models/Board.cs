@@ -1,21 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace TaskBoardAPI.Models
 {
-    public class BoardTaskList
+    public class Board
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; } = null!;
-        public string BoardId { get; set; } = null!;
+        public string UserId { get; set; } = null!;
         public DateTime CreationTime { get; set; }
         public string? Name { get; set; }
-        public List<BoardTask> BoardTasks { get; set; } = new List<BoardTask>();
 
-        public void CopyOther(BoardTaskList other)
+        public void CopyOther(Board other)
         {
-            BoardId = other.BoardId;
+            UserId = other.UserId;
             Name = other.Name;
             CreationTime = other.CreationTime;
         }

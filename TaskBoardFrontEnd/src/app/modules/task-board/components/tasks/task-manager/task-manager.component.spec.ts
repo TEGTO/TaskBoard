@@ -21,7 +21,7 @@ describe('TaskManagerComponent', () => {
     priority: Priority.Low,
     description: 'Test Description'
   };
-  const mockTaskList: BoardTaskList = { id: '1', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [mockTask] }
+  const mockTaskList: BoardTaskList = { id: '1', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [mockTask] }
   const mockData: TaskPopupData = {
     currentTaskList: mockTaskList,
     task: mockTask,

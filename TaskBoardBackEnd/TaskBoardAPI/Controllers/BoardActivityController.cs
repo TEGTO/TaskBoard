@@ -28,17 +28,17 @@ namespace TaskBoardAPI.Controllers
             BoardActivityDto boardActivityDto = mapper.Map<BoardActivityDto>(boardActivity);
             return Ok(boardActivityDto);
         }
-        [HttpGet("userActivitiesOnPage/{userId}/amount")]
-        public async Task<ActionResult<int>> GetBoardActivityAmount(string userId, CancellationToken cancellationToken)
+        [HttpGet("board/{boardId}/amount")]
+        public async Task<ActionResult<int>> GetBoardActivityAmount(string boardId, CancellationToken cancellationToken)
         {
-           int amount = await boardActivityService.GetBoardActivityAmountByUserIdAsync(userId, cancellationToken);
+            int amount = await boardActivityService.GetBoardActivityAmountByBoardIdAsync(boardId, cancellationToken);
             return Ok(amount);
         }
-        [HttpGet("userActivitiesOnPage/{userId}")]
-        public async Task<ActionResult<IEnumerable<BoardActivityDto>>> GetBoardActivityOnPage(string userId,
+        [HttpGet("board/{boardId}/onpage")]
+        public async Task<ActionResult<IEnumerable<BoardActivityDto>>> GetBoardActivityOnPage(string boardId,
             [FromQuery] int page, [FromQuery] int amountOnPage, CancellationToken cancellationToken)
         {
-            IEnumerable<BoardActivity> boardActivities = await boardActivityService.GetActivitiesOnPageByUserIdAsync(userId, page, amountOnPage, cancellationToken);
+            IEnumerable<BoardActivity> boardActivities = await boardActivityService.GetActivitiesOnPageByBoardIdAsync(boardId, page, amountOnPage, cancellationToken);
             if (boardActivities == null)
                 return NotFound();
             return Ok(boardActivities.Select(mapper.Map<BoardActivityDto>));

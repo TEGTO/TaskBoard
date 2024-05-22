@@ -10,7 +10,7 @@ import { TaskComponent } from './task.component';
 
 describe('TaskComponent', () => {
   const mockTask: BoardTask = { id: 'task_id', name: 'task', boardTaskListId: 'list_id', creationTime: new Date(), dueTime: new Date(), priority: Priority.Low, description: 'desc' };
-  const mockTaskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [mockTask] }
+  const mockTaskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [mockTask] }
   var component: TaskComponent;
   var fixture: ComponentFixture<TaskComponent>;
   var dialog: MatDialog;

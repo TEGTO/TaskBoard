@@ -1,38 +1,37 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialogClose, MatDialogModule } from '@angular/material/dialog';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MAT_DIALOG_DATA, MatDialogClose, MatDialogModule } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { BoardActivity } from '../../../../shared';
-import { ActivityService } from '../../../services/acitvity-service/activity-service';
+import { Board, BoardActivity } from '../../../../shared';
+import { ActivityPopupData, ActivityService } from '../../../index';
 import { ActivityHistoryComponent } from './activity-history.component';
 
 describe('ActivityHistoryComponent', () => {
-  const mockActivity: BoardActivity = { id: "1", userId: "1", activityTime: new Date() }
+  const mockBoardData: Board = { id: "1", userId: "1", creationTime: new Date() };
+  const mockActivity: BoardActivity = { id: "1", boardId: mockBoardData.id, activityTime: new Date() }
   const mockActivities: BoardActivity[] = [mockActivity, mockActivity, mockActivity];
+  const mockPopupData: ActivityPopupData = { board: mockBoardData };
   var component: ActivityHistoryComponent;
   var fixture: ComponentFixture<ActivityHistoryComponent>;
   var activityService: jasmine.SpyObj<ActivityService>;
   var debugEl: DebugElement;
 
   beforeEach(async () => {
-    activityService = jasmine.createSpyObj<ActivityService>('ActivityService', ['getBoardActivitiesOnPage', 'getBoardActivityAmount']);
-    activityService.getBoardActivitiesOnPage.and.returnValue(of(mockActivities));
-    activityService.getBoardActivityAmount.and.returnValue(of(mockActivities.length));
+    activityService = jasmine.createSpyObj<ActivityService>('ActivityService', ['getBoardActivitiesOnPageByBoardId', 'getBoardActivityAmountByBoardId']);
+    activityService.getBoardActivitiesOnPageByBoardId.and.returnValue(of(mockActivities));
+    activityService.getBoardActivityAmountByBoardId.and.returnValue(of(mockActivities.length));
     await TestBed.configureTestingModule({
       imports: [MatDialogModule],
       declarations: [ActivityHistoryComponent],
       providers: [
         { provide: ActivityService, useValue: activityService },
+        { provide: MAT_DIALOG_DATA, useValue: mockPopupData },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
     activityService = TestBed.inject(ActivityService) as jasmine.SpyObj<ActivityService>;
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(ActivityHistoryComponent);
     debugEl = fixture.debugElement;
     component = fixture.componentInstance;
@@ -41,8 +40,8 @@ describe('ActivityHistoryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(activityService.getBoardActivitiesOnPage).toHaveBeenCalledWith(component.page, component.amountOnPage);
-    expect(activityService.getBoardActivityAmount).toHaveBeenCalled();
+    expect(activityService.getBoardActivitiesOnPageByBoardId).toHaveBeenCalledWith(mockBoardData.id, component.page, component.amountOnPage);
+    expect(activityService.getBoardActivityAmountByBoardId).toHaveBeenCalledWith(mockBoardData.id);
   });
   it('should render dialog close button', () => {
     const closeButtonDebugElements = fixture.debugElement.queryAll(By.directive(MatDialogClose));
@@ -55,7 +54,7 @@ describe('ActivityHistoryComponent', () => {
     expect(component.activitiesAmount).toEqual(mockActivities.length);
   });
   it('should load more activities on showMore', () => {
-    activityService.getBoardActivityAmount.and.returnValue(of(2 * mockActivities.length));
+    activityService.getBoardActivityAmountByBoardId.and.returnValue(of(2 * mockActivities.length));
     fixture = TestBed.createComponent(ActivityHistoryComponent);
     debugEl = fixture.debugElement;
     component = fixture.componentInstance;
@@ -66,7 +65,7 @@ describe('ActivityHistoryComponent', () => {
     expect(buttons.length).toBe(2);
     buttons[1].nativeElement.click();
     fixture.detectChanges();
-    expect(activityService.getBoardActivitiesOnPage).toHaveBeenCalledWith(onPage++, component.amountOnPage);
+    expect(activityService.getBoardActivitiesOnPageByBoardId).toHaveBeenCalledWith(mockBoardData.id, onPage++, component.amountOnPage);
     expect(component.activitiesAmount).toEqual(2 * mockActivities.length);
     expect(component.activities).toEqual([...mockActivities, ...mockActivities]);
   });

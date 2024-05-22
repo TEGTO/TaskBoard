@@ -1,19 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { catchError, of, shareReplay, tap, throwError } from 'rxjs';
+import { catchError, of, shareReplay, tap } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { CustomErrorHandler, LocalStorageService, URLDefiner, USER_CONFIG, User, UserConfig } from '../../../index';
-import { DevModeService } from '../../dev-mode/dev-mode.service';
+import { BaseApiService, CustomErrorHandler, DevModeService, LocalStorageService, URLDefiner, USER_CONFIG, User, UserConfig } from '../../../index';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserApiService {
+export class UserApiService extends BaseApiService {
   user$: Observable<User | null> | undefined;
   user!: User | null;
 
-  constructor(@Inject(USER_CONFIG) private userConfig: UserConfig, private errorHandler: CustomErrorHandler, private httpClient: HttpClient,
-    private localStorageService: LocalStorageService, private devService: DevModeService, private urlDefiner: URLDefiner) {
+  constructor(httpClient: HttpClient, errorHandler: CustomErrorHandler, urlDefiner: URLDefiner,
+    @Inject(USER_CONFIG) private userConfig: UserConfig, private localStorageService: LocalStorageService, private devService: DevModeService) {
+    super(httpClient, errorHandler, urlDefiner);
   }
 
   getUser(): Observable<User | null> {
@@ -29,10 +29,10 @@ export class UserApiService {
         );
       }
       else {
-        this.user$ = this.httpClient.get<User>(this.urlDefiner.combineWithApiUrl(`/User/${this.user!.id}`)).pipe(
+        this.user$ = this.getHttpClient().get<User>(this.combinePathWithApiUrl(`/User/${this.user!.id}`)).pipe(
           catchError((err) => {
             this.localStorageService.removeItem(this.userConfig.userIdKey);
-            this.errorHandler.handleError(err);
+            this.handleError(err);
             return of(null);
           })
         );
@@ -50,10 +50,9 @@ export class UserApiService {
     return { id: "1" } as User;
   }
   private createUser() {
-    return this.httpClient.post<User>(this.urlDefiner.combineWithApiUrl(`/User`), { id: '' }).pipe(
+    return this.getHttpClient().post<User>(this.combinePathWithApiUrl(`/User`), { id: '' }).pipe(
       catchError((err) => {
-        this.errorHandler.handleError(err);
-        return throwError(() => new Error(err.message));
+        return this.handleError(err);
       })
     );
   }

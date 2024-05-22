@@ -1,36 +1,30 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
-import { BoardTask, CustomErrorHandler, URLDefiner } from '../../../index';
+import { catchError } from 'rxjs';
+import { BaseApiService, BoardTask } from '../../../index';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskApiService {
-  constructor(private httpClient: HttpClient, private errorHandler: CustomErrorHandler, private urlDefiner: URLDefiner) { }
+export class TaskApiService extends BaseApiService {
 
   getTaskById(taskId: string) {
-    return this.httpClient.get<BoardTask>(this.urlDefiner.combineWithApiUrl(`/BoardTask/${taskId}`)).pipe(
+    return this.getHttpClient().get<BoardTask>(this.combinePathWithApiUrl(`/BoardTask/${taskId}`)).pipe(
       catchError((err) => this.handleError(err))
     );
   }
   createNewTask(task: BoardTask) {
-    return this.httpClient.post<BoardTask>(this.urlDefiner.combineWithApiUrl(`/BoardTask`), task).pipe(
+    return this.getHttpClient().post<BoardTask>(this.combinePathWithApiUrl(`/BoardTask`), task).pipe(
       catchError((err) => this.handleError(err))
     );
   }
   updateTask(task: BoardTask, positionIndex: number) {
-    return this.httpClient.put(this.urlDefiner.combineWithApiUrl(`/BoardTask?positionIndex=${positionIndex}`), task).pipe(
+    return this.getHttpClient().put(this.combinePathWithApiUrl(`/BoardTask?positionIndex=${positionIndex}`), task).pipe(
       catchError((err) => this.handleError(err))
     );
   }
   deleteTask(task: BoardTask) {
-    return this.httpClient.delete(this.urlDefiner.combineWithApiUrl(`/BoardTask/${task.id}`)).pipe(
+    return this.getHttpClient().delete(this.combinePathWithApiUrl(`/BoardTask/${task.id}`)).pipe(
       catchError((err) => this.handleError(err))
     );
-  }
-  private handleError(error: Error) {
-    this.errorHandler.handleError(error);
-    return throwError(() => new Error(error.message));
   }
 }

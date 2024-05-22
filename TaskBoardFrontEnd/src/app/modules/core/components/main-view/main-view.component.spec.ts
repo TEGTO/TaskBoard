@@ -1,25 +1,37 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { By } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of } from 'rxjs';
+import { DevModeService } from '../../../shared';
 import { MainViewComponent } from './main-view.component';
 
 describe('MainViewComponent', () => {
-  let component: MainViewComponent;
-  let fixture: ComponentFixture<MainViewComponent>;
-  let dialog: jasmine.SpyObj<MatDialog>;
-  let debugEl: DebugElement;
+  var component: MainViewComponent;
+  var fixture: ComponentFixture<MainViewComponent>;
+  var debugEl: DebugElement;
+  var mockDialog: jasmine.SpyObj<MatDialog>;
+  var mockRouter: jasmine.SpyObj<Router>;
+  var mockActivatedRoute: jasmine.SpyObj<ActivatedRoute>;
+  var mockDevModeService: jasmine.SpyObj<DevModeService>;
 
   beforeEach(async () => {
-    const dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
+    mockDialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
+    mockRouter = jasmine.createSpyObj<Router>('Router', ['navigate']);
+    mockActivatedRoute = jasmine.createSpyObj<ActivatedRoute>('ActivatedRoute', [], { params: of({}) });
+    mockDevModeService = jasmine.createSpyObj<DevModeService>('DevModeService', ['isDevMode']);
 
     await TestBed.configureTestingModule({
       declarations: [MainViewComponent],
-      providers: [{ provide: MatDialog, useValue: dialogSpy }],
+      providers: [
+        { provide: MatDialog, useValue: mockDialog },
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: DevModeService, useValue: mockDevModeService }
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
-    dialog = TestBed.inject(MatDialog) as jasmine.SpyObj<MatDialog>;
   });
 
   beforeEach(() => {
@@ -32,10 +44,16 @@ describe('MainViewComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should render div with class "root" and task-board component', () => {
-    const rootDiv = debugEl.query(By.css('.root'));
-    expect(rootDiv).toBeTruthy();
-    const taskBoardComponent = debugEl.query(By.css('task-board'));
-    expect(taskBoardComponent).toBeTruthy();
+  it('should navigate to board 1 if in dev mode', () => {
+    mockDevModeService.isDevMode.and.returnValue(true);
+    component.ngOnInit();
+    expect(mockDevModeService.isDevMode).toHaveBeenCalled();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['1'], { relativeTo: mockActivatedRoute });
+  });
+  it('should not navigate to board 1 if not in dev mode', () => {
+    mockDevModeService.isDevMode.and.returnValue(false);
+    component.ngOnInit();
+    expect(mockRouter.navigate).not.toHaveBeenCalled();
+    expect(mockDevModeService.isDevMode).toHaveBeenCalled();
   });
 });

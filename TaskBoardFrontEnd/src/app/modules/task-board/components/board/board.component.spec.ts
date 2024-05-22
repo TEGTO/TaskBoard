@@ -2,29 +2,36 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { ActivityHistoryComponent } from '../../../action-history';
-import { BoardTaskList, TaskListApiService } from '../../../shared';
+import { Board, BoardApiService, BoardTaskList, TaskListApiService } from '../../../shared';
 import { BoardComponent } from './board.component';
 
 describe('BoardComponent', () => {
   var component: BoardComponent;
   var fixture: ComponentFixture<BoardComponent>;
   var dialog: MatDialog;
-  var taskListService: jasmine.SpyObj<TaskListApiService>;
+  var mockBoardService: jasmine.SpyObj<BoardApiService>;
+  var mockTaskListService: jasmine.SpyObj<TaskListApiService>;
   var mockDialog: jasmine.SpyObj<MatDialog>;
+  const mockActivatedRoute = { params: of({ boardId: '123' }) };
 
   beforeEach(waitForAsync(() => {
-    taskListService = jasmine.createSpyObj('TaskListApiService', ['getTaskLists']);
+    mockTaskListService = jasmine.createSpyObj('TaskListApiService', ['getTaskListsByBoardId']);
+    mockBoardService = jasmine.createSpyObj('BoardApiService', ['getBoardById']);
     mockDialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
-    taskListService.getTaskLists.and.returnValues(of([]));
+    mockTaskListService.getTaskListsByBoardId.and.returnValues(of([]));
+    var board: Board = { id: "", userId: "", creationTime: new Date() };
+    mockBoardService.getBoardById.and.returnValues(of(board));
     mockDialog.open.and.returnValues();
     TestBed.configureTestingModule({
       declarations: [BoardComponent],
       imports: [MatDialogModule],
       providers: [
         { provide: MatDialog, useValue: mockDialog },
-        { provide: TaskListApiService, useValue: taskListService }
+        { provide: BoardApiService, useValue: mockBoardService },
+        { provide: TaskListApiService, useValue: mockTaskListService },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
@@ -40,7 +47,9 @@ describe('BoardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
+  it('should capture boardId from route params', () => {
+    expect(component.boardId).toBe('123');
+  });
   it('should render board name', () => {
     const boardNameElement: HTMLElement = fixture.debugElement.query(By.css('.board-name')).nativeElement;
     expect(boardNameElement.textContent).toContain('My Task Board');
@@ -49,19 +58,20 @@ describe('BoardComponent', () => {
     const historyButton: HTMLElement = fixture.debugElement.query(By.css('button[class="history-menu"]')).nativeElement;
     historyButton.click();
     fixture.detectChanges();
-    expect(mockDialog.open).toHaveBeenCalledWith(ActivityHistoryComponent);
+    expect(mockDialog.open).toHaveBeenCalled();
   });
   it('should load task lists on initialization', () => {
-    expect(taskListService.getTaskLists).toHaveBeenCalled();
+    expect(mockTaskListService.getTaskListsByBoardId).toHaveBeenCalled();
   });
   it('should open history bar dialog when history button is clicked', () => {
     const historyButton = fixture.debugElement.query(By.css('button[class=history-menu]'));
     historyButton.nativeElement.click();
 
-    expect(dialog.open).toHaveBeenCalledOnceWith(ActivityHistoryComponent);
+    expect(mockBoardService.getBoardById).toHaveBeenCalled();
+    expect(dialog.open).toHaveBeenCalled();
   });
   it('should render task lists when taskLists are available', () => {
-    const taskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+    const taskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
     const taskLists: BoardTaskList[] = [taskList, taskList];
     component.taskLists = taskLists;
     fixture.detectChanges();

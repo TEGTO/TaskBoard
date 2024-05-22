@@ -30,7 +30,7 @@ describe('TaskListControllerService', () => {
   });
 
   it('should create new task list and call services', () => {
-    const taskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+    const taskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
     const allTaskLists: BoardTaskList[] = [];
     taskListApiService.createNewTaskList.and.returnValue(of(taskList));
 
@@ -56,8 +56,8 @@ describe('TaskListControllerService', () => {
     expect(activityService.createTaskListActivity).not.toHaveBeenCalled();
   });
   it('should update task list and call services', () => {
-    const prevTaskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
-    const taskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+    const prevTaskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+    const taskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
     taskListApiService.getTaskListById.and.returnValue(of(prevTaskList));
     taskListApiService.updateTaskList.and.returnValue(of(taskList));
 
@@ -79,7 +79,7 @@ describe('TaskListControllerService', () => {
     expect(activityService.createTaskListActivity).not.toHaveBeenCalled();
   });
   it('should delete task list and call services', () => {
-    const taskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+    const taskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
     const allTaskLists = [taskList];
     taskListApiService.deleteTaskList.and.returnValue(of(taskList));
 
@@ -93,7 +93,7 @@ describe('TaskListControllerService', () => {
     });
   });
   it('task undefined delete should to nothing', () => {
-    const taskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+    const taskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
     const allTaskLists = [taskList];
     taskListApiService.deleteTaskList.and.returnValue(of(taskList));
 

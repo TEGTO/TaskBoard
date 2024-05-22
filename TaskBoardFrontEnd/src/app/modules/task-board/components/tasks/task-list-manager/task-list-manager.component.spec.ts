@@ -7,7 +7,7 @@ import { BoardTaskList } from '../../../../shared';
 import { TaskListManagerComponent } from './task-list-manager.component';
 
 describe('TaskListManagerComponent', () => {
-  const mockTaskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+  const mockTaskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
   var component: TaskListManagerComponent;
   var fixture: ComponentFixture<TaskListManagerComponent>;
   var dialogRef: jasmine.SpyObj<MatDialogRef<TaskListManagerComponent>>;

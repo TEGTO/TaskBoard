@@ -30,12 +30,12 @@ namespace TaskBoardAPITests.Services
               cancellationToken);
             // Assert
             Assert.That(result.Id, Is.EqualTo("1"));
-            Assert.That(result.UserId, Is.EqualTo("1"));
+            Assert.That(result.BoardId, Is.EqualTo("1"));
             Assert.That(result.ActivityTime, Is.EqualTo(DateTime.MinValue));
             Assert.That(result.Description, Is.EqualTo("Activity1"));
 
             Assert.That(resultTrackable.Id, Is.EqualTo("1"));
-            Assert.That(resultTrackable.UserId, Is.EqualTo("1"));
+            Assert.That(resultTrackable.BoardId, Is.EqualTo("1"));
             Assert.That(resultTrackable.ActivityTime, Is.EqualTo(DateTime.MinValue));
             Assert.That(resultTrackable.Description, Is.EqualTo("Activity1"));
 
@@ -67,17 +67,17 @@ namespace TaskBoardAPITests.Services
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(2));
         }
         [Test]
-        public async Task GetActivitiesOnPageByUserIdAsync_ValidIdSkip2_GetOneValid()
+        public async Task GetActivitiesOnPageByBoardIdAsync_ValidIdSkip2_GetOneValid()
         {
             // Arrange
             var service = CreateService();
-            string userId = "1";
+            string boardId = "1";
             int page = 2;
             int amountObjectsPerPage = 2;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await service.GetActivitiesOnPageByUserIdAsync(
-                userId,
+            var result = await service.GetActivitiesOnPageByBoardIdAsync(
+                boardId,
                 page,
                 amountObjectsPerPage,
                 cancellationToken);
@@ -90,17 +90,17 @@ namespace TaskBoardAPITests.Services
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
         }
         [Test]
-        public async Task GetActivitiesOnPageByUserIdAsync_InvalidId_GetZero()
+        public async Task GetActivitiesOnPageByBoardIdAsync_InvalidId_GetZero()
         {
             // Arrange
             var service = CreateService();
-            string userId = "100";
+            string boardId = "100";
             int page = 2;
             int amountObjectsPerPage = 2;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await service.GetActivitiesOnPageByUserIdAsync(
-                userId,
+            var result = await service.GetActivitiesOnPageByBoardIdAsync(
+                boardId,
                 page,
                 amountObjectsPerPage,
                 cancellationToken);
@@ -111,15 +111,15 @@ namespace TaskBoardAPITests.Services
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
         }
         [Test]
-        public async Task GetBoardActivityAmountByUserIdAsync_ValidId_GetAmountThree()
+        public async Task GetBoardActivityAmountByBoarddAsync_ValidId_GetAmountThree()
         {
             // Arrange
             var service = CreateService();
-            string userId = "1";
+            string boardId = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await service.GetBoardActivityAmountByUserIdAsync(
-                userId,
+            var result = await service.GetBoardActivityAmountByBoardIdAsync(
+                boardId,
                 cancellationToken);
             // Assert
             Assert.That(result, Is.EqualTo(3));
@@ -128,15 +128,15 @@ namespace TaskBoardAPITests.Services
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
         }
         [Test]
-        public async Task GetBoardActivityAmountByUserIdAsync_InvalidId_GetAmountZero()
+        public async Task GetBoardActivityAmountByBoardIdAsync_InvalidId_GetAmountZero()
         {
             // Arrange
             var service = CreateService();
-            string userId = "100";
+            string boardId = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await service.GetBoardActivityAmountByUserIdAsync(
-                userId,
+            var result = await service.GetBoardActivityAmountByBoardIdAsync(
+                boardId,
                 cancellationToken);
             // Assert
             Assert.That(result, Is.EqualTo(0));
@@ -149,7 +149,7 @@ namespace TaskBoardAPITests.Services
         {
             // Arrange
             var service = CreateService();
-            BoardActivity boardActivity = new BoardActivity { Id = "oldId", ActivityTime = DateTime.MinValue, Description = "NewActivity", UserId = "1" };
+            BoardActivity boardActivity = new BoardActivity { Id = "oldId", ActivityTime = DateTime.MinValue, Description = "NewActivity", BoardId = "1" };
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
             var result = await service.CreateBoardActivityAsync(
@@ -160,7 +160,7 @@ namespace TaskBoardAPITests.Services
             Assert.That(result.Id, Is.Not.EqualTo("oldId"));
             Assert.That(result.ActivityTime, Is.Not.EqualTo(DateTime.MinValue));
             Assert.That(result.Description, Is.EqualTo("NewActivity"));
-            Assert.That(result.UserId, Is.EqualTo("1"));
+            Assert.That(result.BoardId, Is.EqualTo("1"));
             Assert.That(testBoardActivities.Count(), Is.EqualTo(4));
             Assert.That(testBoardActivities.Last().Description, Is.EqualTo("NewActivity"));
             mockDbContext.Verify(x => x.AddAsync(boardActivity, cancellationToken), Times.Exactly(1));
@@ -174,7 +174,7 @@ namespace TaskBoardAPITests.Services
             // Arrange
             var service = CreateService();
             BoardActivity nullBoardActivity = null,
-            invalidBoardActivity = new BoardActivity { UserId = "10" }; 
+            invalidBoardActivity = new BoardActivity { BoardId = "10" }; 
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act and Assert
             Assert.ThrowsAsync<NullReferenceException>(async () =>

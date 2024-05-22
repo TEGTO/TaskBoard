@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoardActivity } from '../../../../shared';
-import { ActivityService } from '../../../index';
+import { ActivityPopupData, ActivityService } from '../../../index';
 
 @Component({
   selector: 'app-activity-history',
@@ -13,7 +14,7 @@ export class ActivityHistoryComponent implements OnInit {
   activitiesAmount: number = 0;
   activities: BoardActivity[] = [];
 
-  constructor(private activityService: ActivityService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public popupData: ActivityPopupData, private activityService: ActivityService) { }
 
   ngOnInit(): void {
     this.showMore();
@@ -24,12 +25,12 @@ export class ActivityHistoryComponent implements OnInit {
     this.loadActivities();
   }
   private loadActivities() {
-    this.activityService.getBoardActivitiesOnPage(this.page, this.amountOnPage).subscribe(activities => {
+    this.activityService.getBoardActivitiesOnPageByBoardId(this.popupData.board.id, this.page, this.amountOnPage).subscribe(activities => {
       this.activities = this.activities.concat(activities);
     })
   }
   private getActivitiesAmount() {
-    this.activityService.getBoardActivityAmount().subscribe(amount => {
+    this.activityService.getBoardActivityAmountByBoardId(this.popupData.board.id).subscribe(amount => {
       this.activitiesAmount = amount;
     })
   }

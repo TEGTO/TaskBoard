@@ -9,6 +9,5 @@ namespace TaskBoardAPI.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; } = null!;
-        public List<BoardTaskList> BoardTaskLists { get; set; } = new List<BoardTaskList>();
     }
 }

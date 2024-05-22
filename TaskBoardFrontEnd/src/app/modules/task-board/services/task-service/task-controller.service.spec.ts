@@ -25,7 +25,7 @@ describe('TaskControllerService', () => {
 
   it('should call services to create new task', () => {
     const task: BoardTask = { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low };
-    const allTaskLists: BoardTaskList[] = [{ id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }];
+    const allTaskLists: BoardTaskList[] = [{ id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }];
     mockTaskApiService.createNewTask.and.returnValue(of(task));
     service.createNewTask(task, allTaskLists);
 
@@ -36,8 +36,8 @@ describe('TaskControllerService', () => {
   });
   it('should call services to update task', () => {
     const task: BoardTask = { id: 'task_id', name: "Task", boardTaskListId: 'new_list_id', creationTime: new Date(), priority: Priority.Low };
-    const prevTaskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [task] }
-    const currentTaskList: BoardTaskList = { id: 'new_list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+    const prevTaskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [task] }
+    const currentTaskList: BoardTaskList = { id: 'new_list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
     const currentIndex = 0;
     mockTaskApiService.getTaskById.and.returnValue(of(task));
     mockTaskApiService.updateTask.and.returnValue(of(task));
@@ -52,8 +52,8 @@ describe('TaskControllerService', () => {
   it('should correct update task position', () => {
     var task: BoardTask = { id: 'task_id', name: "Task", boardTaskListId: 'new_list_id', creationTime: new Date(), priority: Priority.Low };
     var task2: BoardTask = { id: 'task_id_2', name: "Task", boardTaskListId: 'new_list_id', creationTime: new Date(), priority: Priority.Low };
-    const firstTaskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [task] }
-    const secondTaskList: BoardTaskList = { id: 'new_list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [task2, task2, task2] }
+    const firstTaskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [task] }
+    const secondTaskList: BoardTaskList = { id: 'new_list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [task2, task2, task2] }
     mockTaskApiService.getTaskById.and.returnValue(of(task));
     mockTaskApiService.updateTask.and.returnValue(of(task));
 
@@ -70,7 +70,7 @@ describe('TaskControllerService', () => {
   });
   it('should delete task', () => {
     var task: BoardTask = { id: 'task_id', name: "Task", boardTaskListId: 'new_list_id', creationTime: new Date(), priority: Priority.Low };
-    const currentTaskList: BoardTaskList = { id: 'new_list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [task] }
+    const currentTaskList: BoardTaskList = { id: 'new_list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [task] }
     mockTaskApiService.deleteTask.and.returnValue(of(task));
     service.deleteTask(task, currentTaskList);
 

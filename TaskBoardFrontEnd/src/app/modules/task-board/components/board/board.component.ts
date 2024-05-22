@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { ActivityHistoryComponent } from '../../../action-history';
-import { BoardTaskList, TaskListApiService } from '../../../shared';
+import { BoardApiService, BoardTaskList, TaskListApiService } from '../../../shared';
 
 @Component({
   selector: 'task-board',
@@ -9,22 +10,32 @@ import { BoardTaskList, TaskListApiService } from '../../../shared';
   styleUrl: './board.component.scss'
 })
 export class BoardComponent implements OnInit {
-
+  boardId!: string;
   taskLists: BoardTaskList[] = [];
 
-  constructor(public dialog: MatDialog, private taskListService: TaskListApiService) { }
+  constructor(private activatedRoute: ActivatedRoute, public dialog: MatDialog, private boardService: BoardApiService, private taskListService: TaskListApiService) { }
 
   ngOnInit(): void {
-    this.getTaskLists();
+    this.activatedRoute.params.subscribe(params => {
+      this.boardId = params['boardId'];
+      this.getTaskLists();
+    });
   }
   getTaskLists() {
-    this.taskListService.getTaskLists().subscribe(lists => {
+    this.taskListService.getTaskListsByBoardId(this.boardId).subscribe(lists => {
       if (lists)
         this.taskLists = lists;
-    }
-    );
+    });
   }
   openHistoryBar() {
-    const dialogRef = this.dialog.open(ActivityHistoryComponent);
+    this.boardService.getBoardById(this.boardId).subscribe((board) => {
+      if (board) {
+        const dialogRef = this.dialog.open(ActivityHistoryComponent, {
+          data: {
+            board: board
+          }
+        });
+      }
+    })
   }
 }

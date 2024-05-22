@@ -1,6 +1,6 @@
 export interface BoardActivity {
     id: string;
-    userId: string;
+    boardId: string;
     activityTime: Date;
     description?: string;
 }

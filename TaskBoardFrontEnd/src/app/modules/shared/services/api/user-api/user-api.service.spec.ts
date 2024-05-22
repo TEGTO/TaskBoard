@@ -57,8 +57,8 @@ describe('UserApiService', () => {
     const newKey = "NEW_KEY";
     const mockUserConfig: UserConfig = { userIdKey: newKey }
     const expectedReq = '/User';
-    service = new UserApiService(mockUserConfig, TestBed.inject(ErrorHandlerService), TestBed.inject(HttpClient), mockLocalStorageService,
-      mockDevModeService, mockUrlDefiner);
+    service = new UserApiService(TestBed.inject(HttpClient), TestBed.inject(ErrorHandlerService), mockUrlDefiner, mockUserConfig, mockLocalStorageService,
+      mockDevModeService);
 
     service.getUser().subscribe();
 

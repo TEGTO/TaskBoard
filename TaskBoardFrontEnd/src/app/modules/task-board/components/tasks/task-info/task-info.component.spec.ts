@@ -26,7 +26,7 @@ describe('TaskInfoComponent', () => {
   };
   const mockTaskList: BoardTaskList = {
     id: '1',
-    userId: '1',
+    boardId: '1',
     creationTime: new Date('2024-05-19'),
     name: 'Test List',
     boardTasks: [mockTask]

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ActivityService } from '../../../action-history';
 import { ActivityType, BoardTaskList, TaskListApiService, copyTaskListValues } from '../../../shared';
 import { TaskListService } from './task-list-service';
@@ -12,8 +13,8 @@ export class TaskListControllerService extends TaskListService {
     super();
   }
 
-  getTaskLists() {
-    return this.taskListApi.getTaskLists();
+  getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {
+    return this.taskListApi.getTaskListsByBoardId(id);
   }
   getTaskListById(id: string) {
     return this.taskListApi.getTaskListById(id);

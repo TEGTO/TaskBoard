@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivityApiService, ActivityType, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, TaskActivityApiService, UserApiService } from '../../../shared';
+import { ActivityApiService, ActivityType, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, TaskActivityApiService } from '../../../shared';
 import { ActivityDescriptionFormatterService, ActivityDescriptions, TaskActivityData, TaskListActivityData } from '../../index';
 import { ActivityService } from './activity-service';
 
@@ -10,24 +10,20 @@ export class ActivityControllerService extends ActivityService {
   private userId: string = "";
 
   constructor(
-    private userService: UserApiService,
     private activityApi: ActivityApiService,
     private takActivityApi: TaskActivityApiService,
     private descriptionFormatter: ActivityDescriptionFormatterService) {
     super();
-    userService.getUser().subscribe(user => {
-      this.userId = user?.id ?? "";
-    })
   }
 
   getTaskActivitiesByTaskId(taskId: string) {
     return this.takActivityApi.getTaskActivitiesByTaskId(taskId);
   }
-  getBoardActivitiesOnPage(page: number, amountOnPage: number) {
-    return this.activityApi.getBoardActivitiesOnPage(page, amountOnPage);
+  getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number) {
+    return this.activityApi.getBoardActivitiesOnPageByBoardId(id, page, amountOnPage);
   }
-  getBoardActivityAmount() {
-    return this.activityApi.getBoardActivitiesAmount();
+  getBoardActivityAmountByBoardId(id: string) {
+    return this.activityApi.getBoardActivitiesAmountByBoardId(id);
   }
   async createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData) {
     try {
@@ -110,7 +106,7 @@ export class ActivityControllerService extends ActivityService {
     const activityDescription = typeof description === 'string' ? description : description.activityDescription;
     const boardActivity: BoardActivity = {
       id: "",
-      userId: this.userId,
+      boardId: this.userId,
       activityTime: new Date(),
       description: activityDescription
     };
