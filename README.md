@@ -19,6 +19,7 @@ npm run coverage
 ```
 
 ## Functionality 
+- Menu for creating/deleting/updating boards
 - Menu for creating/deleting/updating task lists
 - Menu for creating/deleting/updating tasks
 - Task information menu

@@ -97,6 +97,7 @@ describe('TaskInfoComponent', () => {
   });
   it('should show loading state while activities are being fetched', () => {
     component.taskActivities$ = of(undefined);
+    component.updateView();
     fixture.detectChanges();
     expect(debugEl.query(By.css('.activity-body')).nativeElement.textContent).toContain('Loading...');
   });

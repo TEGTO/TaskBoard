@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
@@ -9,7 +9,8 @@ import { TaskManagerComponent, TaskPopupData } from '../../../index';
 @Component({
   selector: 'app-task-info',
   templateUrl: './task-info.component.html',
-  styleUrl: './task-info.component.scss'
+  styleUrl: './task-info.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskInfoComponent {
 
@@ -21,7 +22,8 @@ export class TaskInfoComponent {
     @Inject(MAT_DIALOG_DATA) private data: TaskPopupData,
     private sanitizer: DomSanitizer,
     private activityService: ActivityService,
-    private dateFormater: DateFormaterService) {
+    private dateFormater: DateFormaterService,
+    private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -42,5 +44,8 @@ export class TaskInfoComponent {
   }
   sanitizeHtml(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+  updateView() {
+    this.cdr.markForCheck();
   }
 }

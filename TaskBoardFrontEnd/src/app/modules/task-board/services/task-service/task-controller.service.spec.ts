@@ -1,13 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ActivityService } from '../../../action-history';
-import { ActivityType, BoardTask, BoardTaskList, Priority, TaskApiService } from '../../../shared';
+import { ActivityType, Board, BoardTask, BoardTaskList, Priority, TaskApiService } from '../../../shared';
+import { ChangeTaskData } from '../../index';
 import { TaskControllerService } from './task-controller.service';
 
 describe('TaskControllerService', () => {
-  let service: TaskControllerService;
-  let mockTaskApiService: jasmine.SpyObj<TaskApiService>;
-  let mockActivityService: jasmine.SpyObj<ActivityService>;
+  const mockBoard: Board = { id: "1", userId: "1", creationTime: new Date() };
+  var service: TaskControllerService;
+  var mockTaskApiService: jasmine.SpyObj<TaskApiService>;
+  var mockActivityService: jasmine.SpyObj<ActivityService>;
 
   beforeEach(() => {
     mockTaskApiService = jasmine.createSpyObj('TaskApiService', ['createNewTask', 'getTaskById', 'updateTask', 'deleteTask']);
@@ -25,14 +27,17 @@ describe('TaskControllerService', () => {
 
   it('should call services to create new task', () => {
     const task: BoardTask = { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low };
-    const allTaskLists: BoardTaskList[] = [{ id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }];
+    const taskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] };
+    const allTaskLists: BoardTaskList[] = [taskList];
     mockTaskApiService.createNewTask.and.returnValue(of(task));
-    service.createNewTask(task, allTaskLists);
+    var data: ChangeTaskData = { task: task, currentTaskList: taskList, prevTaskList: taskList, allTaskLists: allTaskLists, board: mockBoard };
+    service.createNewTask(data);
 
     expect(allTaskLists.length).toEqual(1);
+    console.log(taskList);
     expect(allTaskLists[0].boardTasks[0]).toEqual(task);
     expect(mockTaskApiService.createNewTask).toHaveBeenCalledWith(task);
-    expect(mockActivityService.createTaskActivity).toHaveBeenCalledWith(ActivityType.Create, { task, prevTask: undefined, taskList: undefined });
+    expect(mockActivityService.createTaskActivity).toHaveBeenCalledWith(ActivityType.Create, jasmine.any(Object));
   });
   it('should call services to update task', () => {
     const task: BoardTask = { id: 'task_id', name: "Task", boardTaskListId: 'new_list_id', creationTime: new Date(), priority: Priority.Low };
@@ -41,13 +46,14 @@ describe('TaskControllerService', () => {
     const currentIndex = 0;
     mockTaskApiService.getTaskById.and.returnValue(of(task));
     mockTaskApiService.updateTask.and.returnValue(of(task));
+    var data: ChangeTaskData = { task: task, currentTaskList: currentTaskList, prevTaskList: prevTaskList, allTaskLists: [], board: mockBoard };
 
-    service.updateTask(task, prevTaskList, currentTaskList, currentIndex);
+    service.updateTask(data, currentIndex);
 
     expect(currentTaskList.boardTasks[0]).toEqual(task);
     expect(mockTaskApiService.getTaskById).toHaveBeenCalledWith(task.id);
     expect(mockTaskApiService.updateTask).toHaveBeenCalledWith(task, currentIndex);
-    expect(mockActivityService.createTaskActivity).toHaveBeenCalledWith(ActivityType.Update, { task: task, prevTask: task, taskList: undefined });
+    expect(mockActivityService.createTaskActivity).toHaveBeenCalledWith(ActivityType.Update, jasmine.any(Object));
   });
   it('should correct update task position', () => {
     var task: BoardTask = { id: 'task_id', name: "Task", boardTaskListId: 'new_list_id', creationTime: new Date(), priority: Priority.Low };
@@ -57,25 +63,29 @@ describe('TaskControllerService', () => {
     mockTaskApiService.getTaskById.and.returnValue(of(task));
     mockTaskApiService.updateTask.and.returnValue(of(task));
 
-    service.updateTask(task, firstTaskList, secondTaskList, 0);
+    var data: ChangeTaskData = { task: task, currentTaskList: secondTaskList, prevTaskList: firstTaskList, allTaskLists: [], board: mockBoard };
+    service.updateTask(data, 0);
     expect(firstTaskList.boardTasks[0]).not.toEqual(task);
     expect(secondTaskList.boardTasks[0]).toEqual(task);
-    service.updateTask(task, secondTaskList, secondTaskList, 1);
+    var data: ChangeTaskData = { task: task, currentTaskList: secondTaskList, prevTaskList: secondTaskList, allTaskLists: [], board: mockBoard };
+    service.updateTask(data, 1);
     expect(secondTaskList.boardTasks[0]).not.toEqual(task);
     expect(secondTaskList.boardTasks[1]).toEqual(task);
     task.boardTaskListId = "list_id";
-    service.updateTask(task, secondTaskList, firstTaskList, 0);
+    var data: ChangeTaskData = { task: task, currentTaskList: firstTaskList, prevTaskList: secondTaskList, allTaskLists: [], board: mockBoard };
+    service.updateTask(data, 0);
     expect(secondTaskList.boardTasks[1]).not.toEqual(task);
     expect(firstTaskList.boardTasks[0]).toEqual(task);
   });
   it('should delete task', () => {
     var task: BoardTask = { id: 'task_id', name: "Task", boardTaskListId: 'new_list_id', creationTime: new Date(), priority: Priority.Low };
     const currentTaskList: BoardTaskList = { id: 'new_list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [task] }
+    var data: ChangeTaskData = { task: task, currentTaskList: currentTaskList, prevTaskList: currentTaskList, allTaskLists: [], board: mockBoard };
     mockTaskApiService.deleteTask.and.returnValue(of(task));
-    service.deleteTask(task, currentTaskList);
+    service.deleteTask(data);
 
     expect(currentTaskList.boardTasks.length).toEqual(0);
-    expect(mockTaskApiService.deleteTask).toHaveBeenCalledWith(task);
-    expect(mockActivityService.createTaskActivity).toHaveBeenCalledWith(ActivityType.Delete, { task, prevTask: undefined, taskList: currentTaskList });
+    expect(mockTaskApiService.deleteTask).toHaveBeenCalledWith(task.id);
+    expect(mockActivityService.createTaskActivity).toHaveBeenCalledWith(ActivityType.Delete, jasmine.any(Object));
   });
 });

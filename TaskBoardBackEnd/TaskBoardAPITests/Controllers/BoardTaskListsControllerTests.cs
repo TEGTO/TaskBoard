@@ -41,15 +41,16 @@ namespace TaskBoardAPITests.Controllers
                 mockBoardTaskListService.Object,
                 mockMapper.Object);
         }
+
         [Test]
         public async Task GetTaskListsById_ValidId_OkStatusCodeWithData()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             string id = "validId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.GetTaskListById(
+            var result = await controller.GetTaskListById(
                 id,
                 cancellationToken);
             // Assert
@@ -67,11 +68,11 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetTaskListsById_InvalidId_NotFound()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             string id = "inValidId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.GetTaskListById(
+            var result = await controller.GetTaskListById(
                 id,
                 cancellationToken);
             // Assert
@@ -83,11 +84,11 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetTaskListByBoardId_ValidId_OkStatusCodeWithData()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             string id = "validId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.GetTaskListsByBoardId(
+            var result = await controller.GetTaskListsByBoardId(
                 id,
                 cancellationToken);
             // Assert
@@ -106,11 +107,11 @@ namespace TaskBoardAPITests.Controllers
         public async Task GetTaskListByBoardId_InvalidId_OkWithEmptyList()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             string id = "inValidId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.GetTaskListsByBoardId(
+            var result = await controller.GetTaskListsByBoardId(
                 id,
                 cancellationToken);
             // Assert
@@ -129,11 +130,11 @@ namespace TaskBoardAPITests.Controllers
         public async Task CreateTaskList_ValidData_OkStatusCodeWithNewAddedData()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             BoardTaskListDto boardTaskListDto = new BoardTaskListDto();
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.CreateTaskList(
+            var result = await controller.CreateTaskList(
                 boardTaskListDto,
                 cancellationToken);
             // Assert
@@ -152,11 +153,11 @@ namespace TaskBoardAPITests.Controllers
         public async Task CreateTaskList_NullData_OkStatusCodeWithNull()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             BoardTaskListDto boardTaskListDto = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.CreateTaskList(
+            var result = await controller.CreateTaskList(
                 boardTaskListDto,
                 cancellationToken);
             // Assert
@@ -171,11 +172,11 @@ namespace TaskBoardAPITests.Controllers
         public async Task UpdateTaskList_ValidDate_OkStatusCodeWithoutData()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             BoardTaskListDto boardTaskListDto = new BoardTaskListDto();
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.UpdateTaskList(
+            var result = await controller.UpdateTaskList(
                 boardTaskListDto,
                 cancellationToken);
             // Assert
@@ -187,11 +188,11 @@ namespace TaskBoardAPITests.Controllers
         public async Task UpdateTaskList_InvalidDate_OkStatusCodeWithoutData()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             BoardTaskListDto boardTaskListDto = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.UpdateTaskList(
+            var result = await controller.UpdateTaskList(
                 boardTaskListDto,
                 cancellationToken);
             // Assert
@@ -203,11 +204,11 @@ namespace TaskBoardAPITests.Controllers
         public async Task DeleteTaskList_ValidDate_OkStatusCodeWithoutData()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             string id = "validId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.DeleteTaskList(
+            var result = await controller.DeleteTaskList(
                 id,
                 cancellationToken);
             // Assert
@@ -219,11 +220,11 @@ namespace TaskBoardAPITests.Controllers
         public async Task DeleteTaskList_InvalidDate_OkStatusCodeWithoutData()
         {
             // Arrange
-            var boardTaskListsController = CreateController();
+            var controller = CreateController();
             string id = "inValidId";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await boardTaskListsController.DeleteTaskList(
+            var result = await controller.DeleteTaskList(
                 id,
                 cancellationToken);
             // Assert

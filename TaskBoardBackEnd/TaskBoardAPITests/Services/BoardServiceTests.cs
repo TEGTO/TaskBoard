@@ -1,14 +1,10 @@
 ﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaskBoardAPI.Models;
 using TaskBoardAPI.Services;
 
 namespace TaskBoardAPITests.Services
 {
+    [TestFixture]
     internal class BoardServiceTests : BaseServiceTests<BoardService>
     {
         protected override BoardService CreateService()
@@ -88,6 +84,74 @@ namespace TaskBoardAPITests.Services
             // Assert
             Assert.That(result.Count(), Is.EqualTo(0));
             mockDbContext.Verify(x => x.Boards, Times.Exactly(1));
+            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
+            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
+        }
+        [Test]
+        public async Task GetTaskListsAmountByBoardIdAsync_ValidId_ValidResult()
+        {
+            // Arrange
+            var service = CreateService();
+            string id = "1";
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act
+            var result = await service.GetTaskListsAmountAsync(
+                id,
+                cancellationToken);
+            // Assert
+            Assert.That(result, Is.EqualTo(2));
+            mockDbContext.Verify(x => x.BoardTaskLists, Times.Exactly(1));
+            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
+            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
+        }
+        [Test]
+        public async Task GetTaskListsAmountByBoardIdAsync_InvalidId_0Result()
+        {
+            // Arrange
+            var service = CreateService();
+            string id = "100";
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act
+            var result = await service.GetTaskListsAmountAsync(
+                id,
+                cancellationToken);
+            // Assert
+            Assert.That(result, Is.EqualTo(0));
+            mockDbContext.Verify(x => x.BoardTaskLists, Times.Exactly(1));
+            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
+            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
+        }
+        [Test]
+        public async Task GetTasksAmountByBoardIdAsync_ValidId_ValidResult()
+        {
+            // Arrange
+            var service = CreateService();
+            string id = "2";
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act
+            var result = await service.GetTasksAmountAsync(
+                id,
+                cancellationToken);
+            // Assert
+            Assert.That(result, Is.EqualTo(1));
+            mockDbContext.Verify(x => x.BoardTaskLists, Times.Exactly(1));
+            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
+            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
+        }
+        [Test]
+        public async Task GetTasksAmountByBoardIdAsync_InvalidId_0Result()
+        {
+            // Arrange
+            var service = CreateService();
+            string id = "100";
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act
+            var result = await service.GetTasksAmountAsync(
+                id,
+                cancellationToken);
+            // Assert
+            Assert.That(result, Is.EqualTo(0));
+            mockDbContext.Verify(x => x.BoardTaskLists, Times.Exactly(1));
             mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
         }

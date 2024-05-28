@@ -19,6 +19,7 @@ describe('ActivityControllerService', () => {
     mockActivityApi = jasmine.createSpyObj<ActivityApiService>('ActivityApiService', ['getBoardActivitiesAmountByBoardId', 'getBoardActivitiesOnPageByBoardId', 'createActivity']);
     mockActivityApi.createActivity.and.returnValue(of({ id: "", boardId: "", activityTime: new Date(), description: "" }));
     mockDescriptionFormatter.taskCreated.and.returnValue({ activityDescription: "", activityTaskDescription: "" });
+    mockDescriptionFormatter.taskDeleted.and.returnValue({ activityDescription: "", activityTaskDescription: "" });
     TestBed.configureTestingModule({
       providers: [
         ActivityControllerService,
@@ -61,7 +62,8 @@ describe('ActivityControllerService', () => {
     const taskActivityData: TaskActivityData = {
       task: { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low },
       prevTask: undefined,
-      taskList: undefined
+      taskList: undefined,
+      board: mockBoardData
     };
     spyOn<any>(service, 'createBoardActivity');
     spyOn<any>(service, 'createBoardTaskActivity');
@@ -75,7 +77,8 @@ describe('ActivityControllerService', () => {
     const taskActivityData: TaskActivityData = {
       task: { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low },
       prevTask: { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low },
-      taskList: undefined
+      taskList: undefined,
+      board: mockBoardData
     };
     mockDescriptionFormatter.taskUpdated.and.returnValue(Promise.resolve(
       [{ activityDescription: 'description1', activityTaskDescription: 'description1' }]));
@@ -91,10 +94,10 @@ describe('ActivityControllerService', () => {
     const taskActivityData: TaskActivityData = {
       task: { id: 'task_id', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low },
       prevTask: undefined,
-      taskList: { id: 'list_id', boardId: 'user_id', creationTime: new Date(), boardTasks: [] }
+      taskList: { id: 'list_id', boardId: 'user_id', creationTime: new Date(), boardTasks: [] },
+      board: mockBoardData
     };
     spyOn<any>(service, 'createBoardActivity');
-    spyOn<any>(service, 'createBoardTaskActivity');
     service.createTaskActivity(ActivityType.Delete, taskActivityData);
 
     expect(service['createBoardActivity']).toHaveBeenCalled();
@@ -104,6 +107,7 @@ describe('ActivityControllerService', () => {
     const taskListActivityData: TaskListActivityData = {
       taskList: { id: 'task_id', boardId: 'user_id', creationTime: new Date(), boardTasks: [] },
       prevTaskList: undefined,
+      board: mockBoardData
     };
     spyOn<any>(service, 'createBoardActivity');
     spyOn<any>(service, 'createBoardTaskActivity');
@@ -116,6 +120,7 @@ describe('ActivityControllerService', () => {
     const taskListActivityData: TaskListActivityData = {
       taskList: { id: 'task_id', boardId: 'user_id', creationTime: new Date(), boardTasks: [] },
       prevTaskList: { id: 'prev_task_id', boardId: 'user_id', creationTime: new Date(), boardTasks: [] },
+      board: mockBoardData
     };
     mockDescriptionFormatter.taskListUpdate.and.returnValue(['description1']);
     spyOn<any>(service, 'createBoardActivity');
@@ -129,6 +134,7 @@ describe('ActivityControllerService', () => {
     const taskListActivityData: TaskListActivityData = {
       taskList: { id: 'task_id', boardId: 'user_id', creationTime: new Date(), boardTasks: [] },
       prevTaskList: { id: 'prev_task_id', boardId: 'user_id', creationTime: new Date(), boardTasks: [] },
+      board: mockBoardData
     };
     spyOn<any>(service, 'createBoardActivity');
     spyOn<any>(service, 'createBoardTaskActivity');

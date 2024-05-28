@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BoardTaskList } from '../../../shared';
+import { ChangeTaskListData } from '../../index';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { BoardTaskList } from '../../../shared';
 export abstract class TaskListService {
   abstract getTaskListsByBoardId(id: string): Observable<BoardTaskList[]>;
   abstract getTaskListById(id: string): Observable<BoardTaskList | undefined>;
-  abstract createNewTaskList(taskList: BoardTaskList | undefined, allTaskLists: BoardTaskList[]): void;
-  abstract updateTaskList(taskList: BoardTaskList | undefined): void;
-  abstract deleteTaskList(taskList: BoardTaskList | undefined, allTaskLists: BoardTaskList[]): void;
+  abstract createNewTaskList(changeTaskListData: ChangeTaskListData): void;
+  abstract updateTaskList(changeTaskListData: ChangeTaskListData): void;
+  abstract deleteTaskList(data: ChangeTaskListData): void;
 }

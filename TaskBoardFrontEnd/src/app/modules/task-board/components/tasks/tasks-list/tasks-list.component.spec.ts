@@ -92,7 +92,7 @@ describe('TasksListComponent', () => {
 
     newCardButton.nativeElement.click();
 
-    expect(mockDialog.open).toHaveBeenCalledWith(TaskManagerComponent, { data: { task: undefined, currentTaskList: mockTaskList, allTaskLists: mockAllTaskLists } });
+    expect(mockDialog.open).toHaveBeenCalledWith(TaskManagerComponent, { data: { task: undefined, currentTaskList: mockTaskList, allTaskLists: mockAllTaskLists, board: undefined } });
   });
   it('should open the menu when triggered', () => {
     const menuButton = debugEl.query(By.css('.card-header-icon'));

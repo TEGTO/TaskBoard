@@ -60,6 +60,7 @@ describe('TaskListManagerComponent', () => {
   it('should show error message if name is invalid', () => {
     component.taskListForm.get('name')?.setValue('');
     component.taskListForm.get('name')?.markAsDirty();
+    component.updateView();
     fixture.detectChanges();
     const errorMessage = debugEl.query(By.css('.message.is-danger'));
     expect(errorMessage).toBeTruthy();
@@ -67,6 +68,7 @@ describe('TaskListManagerComponent', () => {
   });
   it('should disable save button if form is invalid', () => {
     component.taskListForm.get('name')?.setValue('');
+    component.updateView();
     fixture.detectChanges();
     const saveButton = debugEl.query(By.css('button[type="submit"]'));
     expect(saveButton.nativeElement.disabled).toBeTruthy();

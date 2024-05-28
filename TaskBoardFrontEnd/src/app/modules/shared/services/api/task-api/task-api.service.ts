@@ -13,18 +13,37 @@ export class TaskApiService extends BaseApiService {
     );
   }
   createNewTask(task: BoardTask) {
+    this.validateTask_Create(task);
+    task = { ...task, creationTime: new Date() };
     return this.getHttpClient().post<BoardTask>(this.combinePathWithApiUrl(`/BoardTask`), task).pipe(
       catchError((err) => this.handleError(err))
     );
   }
   updateTask(task: BoardTask, positionIndex: number) {
+    this.validateTask_Update(task);
     return this.getHttpClient().put(this.combinePathWithApiUrl(`/BoardTask?positionIndex=${positionIndex}`), task).pipe(
       catchError((err) => this.handleError(err))
     );
   }
-  deleteTask(task: BoardTask) {
-    return this.getHttpClient().delete(this.combinePathWithApiUrl(`/BoardTask/${task.id}`)).pipe(
+  deleteTask(id: string) {
+    return this.getHttpClient().delete(this.combinePathWithApiUrl(`/BoardTask/${id}`)).pipe(
       catchError((err) => this.handleError(err))
     );
+  }
+  private validateTask_Create(task: BoardTask) {
+    if (!task.boardTaskListId)
+      throw new Error("Task List Id is not set!");
+    else if (task.priority === undefined)
+      throw new Error("Priority is not set!");
+  }
+  private validateTask_Update(task: BoardTask) {
+    if (!task.id)
+      throw new Error("Id is not set!");
+    else if (!task.boardTaskListId)
+      throw new Error("Task List Id is not set!");
+    else if (!task.creationTime)
+      throw new Error("Creation time is not set!");
+    else if (task.priority === undefined)
+      throw new Error("Priority is not set!");
   }
 }

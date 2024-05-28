@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BoardComponent } from '../task-board';
+import { BoardComponent, BoardListComponent } from '../task-board';
 import { MainViewComponent } from './index';
 
 export const routes: Routes = [
   {
     path: "", component: MainViewComponent,
-    children: [{ path: ":boardId", component: BoardComponent }]
+    children: [{ path: ":boardId", component: BoardComponent }, { path: "", component: BoardListComponent }]
   }
 ];
 

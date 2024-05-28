@@ -20,6 +20,33 @@ namespace TaskBoardAPITests.Controllers
         private Mock<IMapper> CreateMockMapper()
         {
             mockMapper = mockRepository.Create<IMapper>();
+
+            mockMapper.Setup(x =>
+            x.Map<UserDto>(It.IsAny<User>()))
+            .Returns<User>((x) =>
+            {
+                return x == null ? null : new UserDto { Id = x.Id };
+            });
+            mockMapper.Setup(x =>
+            x.Map<User>(It.IsAny<UserDto>()))
+            .Returns<UserDto>((x) =>
+            {
+                return x == null ? null : new User { Id = x.Id };
+            });
+
+            mockMapper.Setup(x =>
+            x.Map<BoardDto>(It.IsAny<Board>()))
+            .Returns<Board>((x) =>
+            {
+                return x == null ? null : new BoardDto { Id = x.Id };
+            });
+            mockMapper.Setup(x =>
+            x.Map<Board>(It.IsAny<BoardDto>()))
+            .Returns<BoardDto>((x) =>
+            {
+                return x == null ? null : new Board { Id = x.Id };
+            });
+
             mockMapper.Setup(x =>
             x.Map<BoardActivityDto>(It.IsAny<BoardActivity>()))
             .Returns<BoardActivity>((x) =>
@@ -70,19 +97,6 @@ namespace TaskBoardAPITests.Controllers
             .Returns<BoardTaskListDto>((x) =>
             {
                 return x == null ? null : new BoardTaskList { Id = x.Id };
-            });
-
-            mockMapper.Setup(x =>
-            x.Map<UserDto>(It.IsAny<User>()))
-            .Returns<User>((x) =>
-            {
-                return x == null ? null : new UserDto { Id = x.Id };
-            });
-            mockMapper.Setup(x =>
-            x.Map<User>(It.IsAny<UserDto>()))
-            .Returns<UserDto>((x) =>
-            {
-                return x == null ? null : new User { Id = x.Id };
             });
             return mockMapper;
         }

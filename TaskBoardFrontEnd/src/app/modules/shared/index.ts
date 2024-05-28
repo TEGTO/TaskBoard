@@ -23,6 +23,7 @@ export * from './services/error-handler/custom-error-handler';
 export * from './services/error-handler/error-handler.service';
 export * from './services/local-storage/local-storage.service';
 export * from './services/priority-convertor/priority-convertor.service';
+export * from './services/redirector/redirector.service';
 export * from './services/string-format/string-format.service';
 export * from './services/url-definer/url-definer';
 export * from './services/url-definer/url-definer.service';

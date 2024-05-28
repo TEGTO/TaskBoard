@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using TaskBoardAPI.Data;
 using TaskBoardAPI.Models;
 
@@ -27,6 +26,23 @@ namespace TaskBoardAPI.Services
                   .AsNoTracking());
             }
             return boards;
+        }
+        public async Task<int> GetTaskListsAmountAsync(string id, CancellationToken cancellationToken)
+        {
+            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            {
+                return await dbContext.BoardTaskLists.Where(x => x.BoardId == id).CountAsync();
+            }
+        }
+        public async Task<int> GetTasksAmountAsync(string id, CancellationToken cancellationToken)
+        {
+            using (var dbContext = await CreateDbContextAsync(cancellationToken))
+            {
+                return await dbContext.BoardTaskLists
+                                      .Where(x => x.BoardId == id)
+                                      .SelectMany(x => x.BoardTasks)
+                                      .CountAsync(cancellationToken);
+            }
         }
         public async Task<Board> CreateBoardAsync(Board board, CancellationToken cancellationToken = default)
         {

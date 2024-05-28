@@ -66,12 +66,38 @@ describe('BoardApiService', () => {
     expect(mockUrlDefiner.combineWithApiUrl).toHaveBeenCalledWith(expectedReq);
     req.flush(mockBoards.filter(x => x.id == boardId)[0]);
   });
+  it('should send GET to get task lists amount by board id', () => {
+    const boardId = '1';
+    const expectedReq = `/Board/amount/tasklists/${boardId}`;
+
+    service.getTaskListsAmountByBoardId(boardId).subscribe(amount => {
+      expect(amount).toEqual(1);
+    });
+
+    const req = httpTestingController.expectOne(expectedReq);
+    expect(req.request.method).toBe('GET');
+    expect(mockUrlDefiner.combineWithApiUrl).toHaveBeenCalledWith(expectedReq);
+    req.flush(1);
+  });
+  it('should send GET to get tasks amount by board id', () => {
+    const boardId = '1';
+    const expectedReq = `/Board/amount/tasks/${boardId}`;
+
+    service.getTasksAmountByBoardId(boardId).subscribe(amount => {
+      expect(amount).toEqual(1);
+    });
+
+    const req = httpTestingController.expectOne(expectedReq);
+    expect(req.request.method).toBe('GET');
+    expect(mockUrlDefiner.combineWithApiUrl).toHaveBeenCalledWith(expectedReq);
+    req.flush(1);
+  });
   it('should send POST to create new board when user is available', () => {
     const mockBoard: Board = { id: '1', userId: userMockData.id, creationTime: new Date(), name: 'New Board' };
     const expectedReq = `/Board`;
 
     service.createBoard(mockBoard).subscribe(result => {
-      expect(result).toEqual(mockBoard);
+      expect(result).toEqual({ ...mockBoard, creationTime: result.creationTime });
     });
 
     expect(mockUserApiService.getUser).toHaveBeenCalledTimes(1);
@@ -108,7 +134,7 @@ describe('BoardApiService', () => {
     const mockBoard: Board = { id: '1', userId: userMockData.id, creationTime: new Date(), name: 'New Board' };
     const expectedReq = `/Board/${mockBoard.id}`;
 
-    service.deleteBoard(mockBoard).subscribe();
+    service.deleteBoard(mockBoard.id).subscribe();
 
     const req = httpTestingController.expectOne(expectedReq);
     expect(req.request.method).toEqual('DELETE');

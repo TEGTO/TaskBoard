@@ -1,20 +1,26 @@
+@use 'colors' as colors;
+
 .board {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-
     min-width: 0;
     min-height: 0;
-    padding: 30px;
+    padding: 10px 40px 30px 40px;
 
     .board-bar {
-        padding: 8px 15px;
         display: flex;
         justify-content: space-between;
 
         .board-name {
-            font-size: 40px;
+            font-size: 30px;
             font-weight: 800;
+
+            * {
+                font-size: 25px !important;
+                font-weight: 800;
+                color: inherit !important;
+            }
         }
 
         .history-menu {
@@ -33,21 +39,15 @@
             display: grid;
             width: 100%;
             grid-template-columns: repeat(auto-fill, minmax(423px, 1fr));
-            margin: 0;
-            margin: 20px 0px 50px 0px;
+            margin: 0 0 50px 0;
             row-gap: 50px;
             column-gap: 20px;
             justify-items: center;
 
             .board-column {
-                display: flex;
-                flex-direction: column;
                 height: 700px;
                 width: 100%;
                 max-width: 423px;
-                padding: 25px;
-                border-radius: 7px;
-                background: rgba(white, 0.5);
             }
         }
     }

@@ -27,6 +27,16 @@ export class BoardApiService extends BaseApiService {
       catchError((err) => this.handleError(err))
     );
   }
+  getTaskListsAmountByBoardId(id: string): Observable<number> {
+    return this.getHttpClient().get<number>(this.combinePathWithApiUrl(`/Board/amount/tasklists/${id}`)).pipe(
+      catchError((err) => this.handleError(err))
+    );
+  }
+  getTasksAmountByBoardId(id: string): Observable<number> {
+    return this.getHttpClient().get<number>(this.combinePathWithApiUrl(`/Board/amount/tasks/${id}`)).pipe(
+      catchError((err) => this.handleError(err))
+    );
+  }
   createBoard(board: Board): Observable<Board> {
     return this.userApiService.getUser().pipe(
       switchMap(user => {
@@ -42,8 +52,8 @@ export class BoardApiService extends BaseApiService {
       catchError((err) => this.handleError(err))
     );
   }
-  deleteBoard(board: Board) {
-    return this.getHttpClient().delete(this.combinePathWithApiUrl(`/Board/${board.id}`)).pipe(
+  deleteBoard(id: string) {
+    return this.getHttpClient().delete(this.combinePathWithApiUrl(`/Board/${id}`)).pipe(
       catchError((err) => this.handleError(err))
     );
   }

@@ -36,6 +36,7 @@ describe('ActivityComponent', () => {
     const activity: BoardActivity = { id: "1", boardId: "1", activityTime: new Date(), description: "description" };
     component.activity = activity;
     sanitizer.bypassSecurityTrustHtml.and.returnValue(activity.description!);
+    component.updateView();
     fixture.detectChanges();
 
     const activityDescriptionElement: HTMLElement | null = fixture.nativeElement.querySelector('.activity-description');
@@ -53,6 +54,7 @@ describe('ActivityComponent', () => {
   it('should render activity date with proper formatting', () => {
     const activity: BoardActivity = { id: "1", boardId: "1", activityTime: new Date('2024-05-16T12:00:00Z'), description: "description" };
     component.activity = activity;
+    component.updateView();
     fixture.detectChanges();
 
     const activityDateElement: HTMLElement | null = fixture.nativeElement.querySelector('.activity-date');

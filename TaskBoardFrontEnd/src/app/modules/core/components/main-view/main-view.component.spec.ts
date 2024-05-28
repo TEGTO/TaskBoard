@@ -1,9 +1,10 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { DevModeService } from '../../../shared';
+import { BoardApiService, DevModeService, RedirectorService } from '../../../shared';
 import { MainViewComponent } from './main-view.component';
 
 describe('MainViewComponent', () => {
@@ -14,27 +15,29 @@ describe('MainViewComponent', () => {
   var mockRouter: jasmine.SpyObj<Router>;
   var mockActivatedRoute: jasmine.SpyObj<ActivatedRoute>;
   var mockDevModeService: jasmine.SpyObj<DevModeService>;
+  var mockBoardApiService: jasmine.SpyObj<BoardApiService>;
+  let mockRedirector: jasmine.SpyObj<RedirectorService>;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     mockDialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
     mockRouter = jasmine.createSpyObj<Router>('Router', ['navigate']);
+    mockBoardApiService = jasmine.createSpyObj<BoardApiService>('BoardApiService', ['getBoardsByUserId']);
     mockActivatedRoute = jasmine.createSpyObj<ActivatedRoute>('ActivatedRoute', [], { params: of({}) });
     mockDevModeService = jasmine.createSpyObj<DevModeService>('DevModeService', ['isDevMode']);
+    mockRedirector = jasmine.createSpyObj<RedirectorService>('RedirectorService', ['redirectToHome']);
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [MainViewComponent],
       providers: [
         { provide: MatDialog, useValue: mockDialog },
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: DevModeService, useValue: mockDevModeService }
+        { provide: DevModeService, useValue: mockDevModeService },
+        { provide: BoardApiService, useValue: mockBoardApiService },
+        { provide: RedirectorService, useValue: mockRedirector }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
-
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(MainViewComponent);
     debugEl = fixture.debugElement;
     component = fixture.componentInstance;
@@ -44,16 +47,11 @@ describe('MainViewComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should navigate to board 1 if in dev mode', () => {
-    mockDevModeService.isDevMode.and.returnValue(true);
-    component.ngOnInit();
-    expect(mockDevModeService.isDevMode).toHaveBeenCalled();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['1'], { relativeTo: mockActivatedRoute });
-  });
-  it('should not navigate to board 1 if not in dev mode', () => {
-    mockDevModeService.isDevMode.and.returnValue(false);
-    component.ngOnInit();
-    expect(mockRouter.navigate).not.toHaveBeenCalled();
-    expect(mockDevModeService.isDevMode).toHaveBeenCalled();
+  it('should call redirectToHome on header click', () => {
+    const headerElement = debugEl.query(By.css('.header'));
+    headerElement.triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    expect(mockRedirector.redirectToHome).toHaveBeenCalled();
   });
 });

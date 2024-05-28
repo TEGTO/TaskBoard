@@ -35,7 +35,18 @@ namespace TaskBoardAPI.Controllers
             IEnumerable<Board> boards = await boardService.GetBoardsByUserIdAsync(userId, cancellationToken: cancellationToken);
             return Ok(boards.Select(mapper.Map<BoardDto>));
         }
-
+        [HttpGet("amount/tasklists/{id}")]
+        public async Task<ActionResult<int>> GetBoardTaskListsAmountByBoardId(string id, CancellationToken cancellationToken)
+        {
+           int amount = await boardService.GetTaskListsAmountAsync(id, cancellationToken: cancellationToken);
+            return Ok(amount);
+        }
+        [HttpGet("amount/tasks/{id}")]
+        public async Task<ActionResult<int>> GetBoardTasksAmountByBoardId(string id, CancellationToken cancellationToken)
+        {
+            int amount = await boardService.GetTasksAmountAsync(id, cancellationToken: cancellationToken);
+            return Ok(amount);
+        }
         [HttpPost]
         public async Task<ActionResult<BoardDto>> CreateBoard([FromBody] BoardDto boardDto, CancellationToken cancellationToken)
         {
@@ -52,7 +63,7 @@ namespace TaskBoardAPI.Controllers
             return Ok();
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTaskList(string id, CancellationToken cancellationToken)
+        public async Task<ActionResult> DeleteBoard(string id, CancellationToken cancellationToken)
         {
             await boardService.DeleteBoardAsync(id, cancellationToken);
             return Ok();

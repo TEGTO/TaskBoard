@@ -23,9 +23,9 @@
                     <span>List</span>
                 </div>
                 <div class="param">
-                    <ng-container *ngIf="taskLists; else loading">
-                        <mat-select formControlName="listId">
-                            <ng-container *ngFor="let taskList of taskLists;">
+                    <ng-container *ngIf="allTaskLists; else loading">
+                        <mat-select formControlName="listId" panelClass="dropdown-panel">
+                            <ng-container *ngFor="let taskList of allTaskLists;">
                                 <mat-option [value]="taskList.id">{{taskList.name}}</mat-option>
                             </ng-container>
                         </mat-select>
@@ -45,7 +45,7 @@
                         <div>
                             <input class="input" [matDatepicker]="picker" formControlName="dueDate" [min]="minDate">
                             <p *ngIf="isDateInvalid()" class="help is-danger">
-                                Date must be today or after
+                                Date must be after today
                             </p>
                         </div>
                         <mat-datepicker #picker></mat-datepicker>
