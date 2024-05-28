@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BoardTaskList, copyTaskListValues, getDefaultBoardTaskList } from '../../../../shared';
@@ -6,7 +6,8 @@ import { BoardTaskList, copyTaskListValues, getDefaultBoardTaskList } from '../.
 @Component({
   selector: 'app-task-list-manager',
   templateUrl: './task-list-manager.component.html',
-  styleUrl: './task-list-manager.component.scss'
+  styleUrl: './task-list-manager.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskListManagerComponent implements OnInit {
   taskListForm!: FormGroup;
@@ -15,7 +16,8 @@ export class TaskListManagerComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: BoardTaskList,
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<TaskListManagerComponent>) { }
+    private dialogRef: MatDialogRef<TaskListManagerComponent>,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.cardName = this.data ? "Edit List" : "Create List";
@@ -30,6 +32,9 @@ export class TaskListManagerComponent implements OnInit {
       this.getDataFromForm();
       this.dialogRef.close(this.taskList);
     }
+  }
+  updateView() {
+    this.cdr.markForCheck();
   }
   private assignTaskList() {
     this.taskList = this.data ? this.data : getDefaultBoardTaskList();

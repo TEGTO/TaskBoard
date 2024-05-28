@@ -7,7 +7,7 @@ describe('ActivityComponent', () => {
   let component: ActivityComponent;
   let fixture: ComponentFixture<ActivityComponent>;
   let sanitizer: jasmine.SpyObj<DomSanitizer>;
-  let mockActivity: BoardActivity = { id: "1", userId: "1", activityTime: new Date() }
+  let mockActivity: BoardActivity = { id: "1", boardId: "1", activityTime: new Date() }
 
   beforeEach(async () => {
     sanitizer = jasmine.createSpyObj<DomSanitizer>('DomSanitizer', ['bypassSecurityTrustHtml']);
@@ -33,9 +33,10 @@ describe('ActivityComponent', () => {
   });
 
   it('should render activity description if it exists', () => {
-    const activity: BoardActivity = { id: "1", userId: "1", activityTime: new Date(), description: "description" };
+    const activity: BoardActivity = { id: "1", boardId: "1", activityTime: new Date(), description: "description" };
     component.activity = activity;
     sanitizer.bypassSecurityTrustHtml.and.returnValue(activity.description!);
+    component.updateView();
     fixture.detectChanges();
 
     const activityDescriptionElement: HTMLElement | null = fixture.nativeElement.querySelector('.activity-description');
@@ -51,8 +52,9 @@ describe('ActivityComponent', () => {
   });
 
   it('should render activity date with proper formatting', () => {
-    const activity: BoardActivity = { id: "1", userId: "1", activityTime: new Date('2024-05-16T12:00:00Z'), description: "description" };
+    const activity: BoardActivity = { id: "1", boardId: "1", activityTime: new Date('2024-05-16T12:00:00Z'), description: "description" };
     component.activity = activity;
+    component.updateView();
     fixture.detectChanges();
 
     const activityDateElement: HTMLElement | null = fixture.nativeElement.querySelector('.activity-date');

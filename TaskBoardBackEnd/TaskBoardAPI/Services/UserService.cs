@@ -13,13 +13,11 @@ namespace TaskBoardAPI.Services
                 User? user;
                 if (isTrackable)
                 {
-                    user = await dbContext.Users
-                    .Include(x => x.BoardTaskLists).ThenInclude(y => y.BoardTasks).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+                    user = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
                 }
                 else
                 {
-                    user = await dbContext.Users.AsNoTracking()
-                    .Include(x => x.BoardTaskLists).ThenInclude(y => y.BoardTasks).FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+                    user = await dbContext.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
                 }
                 return user;
             }

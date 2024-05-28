@@ -1,44 +1,26 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, switchMap, throwError } from 'rxjs';
-import { BoardActivity, CustomErrorHandler, URLDefiner, UserApiService } from '../../../index';
+import { catchError } from 'rxjs';
+import { BoardActivity } from '../../../index';
+import { BaseApiService } from '../base-api/base-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ActivityApiService {
+export class ActivityApiService extends BaseApiService {
 
-  constructor(private httpClient: HttpClient, private userService: UserApiService, private errorHandler: CustomErrorHandler, private urlDefiner: URLDefiner) { }
-
-  getBoardActivitiesOnPage(page: number, amountOnPage: number) {
-    return this.userService.getUser().pipe(
-      switchMap((user) => {
-        if (!user)
-          return new Observable<BoardActivity[]>(observer => observer.next([]));
-        return this.httpClient.get<BoardActivity[]>(this.urlDefiner.combineWithApiUrl(`/BoardActivity/userActivitiesOnPage/${user.id}?page=${page}&amountOnPage=${amountOnPage}`)).pipe(
-          catchError((err) => this.handleError(err))
-        );
-      })
-    );
+  getBoardActivitiesAmountByBoardId(id: string) {
+    return this.getHttpClient().get<number>(this.combinePathWithApiUrl(`/BoardActivity/board/${id}/amount`)).pipe(
+      catchError((err) => this.handleError(err)));
+  }
+  getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number) {
+    return this.getHttpClient().get<BoardActivity[]>(this.combinePathWithApiUrl
+      (`/BoardActivity/board/${id}/onpage?page=${page}&amountOnPage=${amountOnPage}`)).pipe(
+        catchError((err) => this.handleError(err))
+      );
   }
   createActivity(acitvity: BoardActivity) {
-    return this.httpClient.post<BoardActivity>(this.urlDefiner.combineWithApiUrl(`/BoardActivity`), acitvity).pipe(
+    return this.getHttpClient().post<BoardActivity>(this.combinePathWithApiUrl(`/BoardActivity`), acitvity).pipe(
       catchError((err) => this.handleError(err))
     );
-  }
-  getBoardActivitiesAmount() {
-    return this.userService.getUser().pipe(
-      switchMap((user) => {
-        if (!user)
-          return new Observable<number>(observer => observer.next(0));
-        return this.httpClient.get<number>(this.urlDefiner.combineWithApiUrl(`/BoardActivity/userActivitiesOnPage/${user.id}/amount`)).pipe(
-          catchError((err) => this.handleError(err))
-        );
-      })
-    );
-  }
-  private handleError(error: Error) {
-    this.errorHandler.handleError(error);
-    return throwError(() => new Error(error.message));
   }
 }

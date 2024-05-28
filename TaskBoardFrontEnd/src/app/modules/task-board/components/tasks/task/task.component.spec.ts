@@ -4,13 +4,16 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { BoardTask, BoardTaskList, DATE_CONFIG, DateFormaterService, Priority } from '../../../../shared';
-import { TaskInfoComponent, TaskManagerComponent, TaskService } from '../../../index';
+import { Board, BoardTask, BoardTaskList, DATE_CONFIG, DateFormaterService, Priority } from '../../../../shared';
+import { TaskComponentData, TaskInfoComponent, TaskManagerComponent, TaskService } from '../../../index';
 import { TaskComponent } from './task.component';
 
 describe('TaskComponent', () => {
   const mockTask: BoardTask = { id: 'task_id', name: 'task', boardTaskListId: 'list_id', creationTime: new Date(), dueTime: new Date(), priority: Priority.Low, description: 'desc' };
-  const mockTaskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [mockTask] }
+  const mockTaskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [mockTask] }
+  const mockTaskLists: BoardTaskList[] = [mockTaskList];
+  const mockBoard: Board = { id: "1", userId: "1", creationTime: new Date() };
+  const mockTaskComponentData: TaskComponentData = { currentTaskList: mockTaskList, allTaskLists: [mockTaskList], board: mockBoard }
   var component: TaskComponent;
   var fixture: ComponentFixture<TaskComponent>;
   var dialog: MatDialog;
@@ -38,7 +41,7 @@ describe('TaskComponent', () => {
     debugEl = fixture.debugElement;
     component = fixture.componentInstance;
     component.task = mockTask;
-    component.taskList = mockTaskList;
+    component.componentData = mockTaskComponentData;
     fixture.detectChanges();
   }));
 
@@ -81,6 +84,12 @@ describe('TaskComponent', () => {
     const deleteButton: HTMLElement = debugEl.queryAll(By.css('button'))[3].nativeElement;
     deleteButton.click();
     fixture.detectChanges();
-    expect(mockTaskService.deleteTask).toHaveBeenCalledWith(mockTask, mockTaskList);
+    expect(mockTaskService.deleteTask).toHaveBeenCalledWith({
+      task: mockTask,
+      currentTaskList: mockTaskList,
+      prevTaskList: mockTaskList,
+      allTaskLists: mockTaskLists,
+      board: mockBoard
+    });
   });
 });

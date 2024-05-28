@@ -126,7 +126,7 @@ export class ActivityDescriptionManagerService extends ActivityDescriptionFormat
       taskParams.taskName_Activity, taskParams.taskName_TaskActivity));
   }
   private taskUpdate_Name(taskParams: TaskUpdateActivityData) {
-    var prevName = this.getFormattedSecondName(taskParams.prevTask.name);
+    var prevName = this.getFormattedMainName(taskParams.prevTask.name);
     taskParams.updatedElemets.push(this.getActivityDescForStr(`You changed name from ${prevName} to {0}`,
       taskParams.taskName_Activity, taskParams.taskName_Activity));
   }

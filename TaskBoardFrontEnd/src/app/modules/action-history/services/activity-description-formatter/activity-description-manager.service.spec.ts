@@ -60,8 +60,8 @@ describe('ActivityDescriptionManagerService', () => {
   it('should return description for updated elements of board task', async () => {
     const prevTask: BoardTask = { id: '1', name: 'Task Prev', dueTime: new Date("1"), boardTaskListId: 'prev_list_id', creationTime: new Date(), priority: Priority.Low };
     const currentTask: BoardTask = { id: '1', name: 'Task Name', dueTime: new Date("2"), boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.High, description: "" };
-    const prevList: BoardTaskList = { id: 'prev_list_id', name: 'List1', userId: 'user_id', creationTime: new Date(), boardTasks: [] };
-    const list: BoardTaskList = { id: 'list_id', name: 'List2', userId: 'user_id', creationTime: new Date(), boardTasks: [] };
+    const prevList: BoardTaskList = { id: 'prev_list_id', name: 'List1', boardId: 'user_id', creationTime: new Date(), boardTasks: [] };
+    const list: BoardTaskList = { id: 'list_id', name: 'List2', boardId: 'user_id', creationTime: new Date(), boardTasks: [] };
     mockTaskListApiService.getTaskListById.withArgs("list_id").and.returnValue(of(list));
     mockTaskListApiService.getTaskListById.withArgs("prev_list_id").and.returnValue(of(prevList));
 
@@ -76,7 +76,7 @@ describe('ActivityDescriptionManagerService', () => {
   });
   it('should return description for task activity type of "Delete"', () => {
     const task: BoardTask = { id: '1', name: 'Task Name', boardTaskListId: 'list_id', creationTime: new Date(), priority: Priority.Low };
-    const list: BoardTaskList = { id: 'list_id', name: 'List2', userId: 'user_id', creationTime: new Date(), boardTasks: [] };
+    const list: BoardTaskList = { id: 'list_id', name: 'List2', boardId: 'user_id', creationTime: new Date(), boardTasks: [] };
     const expectedDescription = {
       activityDescription: `You removed ${formatMainName("Task Name")} from ${formatSecondName("List2")}`,
       activityTaskDescription: `You removed this task from ${formatSecondName("List2")}`
@@ -86,20 +86,20 @@ describe('ActivityDescriptionManagerService', () => {
     expect(description).toEqual(expectedDescription);
   });
   it('should return description for task list activity type of "Create"', () => {
-    const list: BoardTaskList = { id: 'list_id', name: 'List2', userId: 'user_id', creationTime: new Date(), boardTasks: [] };
+    const list: BoardTaskList = { id: 'list_id', name: 'List2', boardId: 'user_id', creationTime: new Date(), boardTasks: [] };
     const description = service.taskListCreated(list);
 
     expect(description).toEqual(`You created ${formatSecondName("List2")}`);
   });
   it('should return description for task list activity type of "Update"', () => {
-    const prevList: BoardTaskList = { id: 'list_id', name: 'List', userId: 'user_id', creationTime: new Date(), boardTasks: [] };
-    const list: BoardTaskList = { id: 'list_id', name: 'List2', userId: 'user_id', creationTime: new Date(), boardTasks: [] };
+    const prevList: BoardTaskList = { id: 'list_id', name: 'List', boardId: 'user_id', creationTime: new Date(), boardTasks: [] };
+    const list: BoardTaskList = { id: 'list_id', name: 'List2', boardId: 'user_id', creationTime: new Date(), boardTasks: [] };
     const description = service.taskListUpdate(list, prevList);
 
     expect(description).toEqual([`You changed name from ${formatSecondName("List")} to ${formatSecondName("List2")}`]);
   });
   it('should return description for task list activity type of "Delete"', () => {
-    const list: BoardTaskList = { id: 'list_id', name: 'List2', userId: 'user_id', creationTime: new Date(), boardTasks: [] };
+    const list: BoardTaskList = { id: 'list_id', name: 'List2', boardId: 'user_id', creationTime: new Date(), boardTasks: [] };
     const description = service.taskListDeleted(list);
 
     expect(description).toEqual(`You removed ${formatSecondName("List2")}`);

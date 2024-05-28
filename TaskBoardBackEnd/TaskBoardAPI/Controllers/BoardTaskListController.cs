@@ -8,19 +8,19 @@ namespace TaskBoardAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class BoardTaskListsController : ControllerBase
+    public class BoardTaskListController : ControllerBase
     {
         private readonly IBoardTaskListService boardTaskListService;
         private readonly IMapper mapper;
 
-        public BoardTaskListsController(IBoardTaskListService boardTaskListService, IMapper mapper)
+        public BoardTaskListController(IBoardTaskListService boardTaskListService, IMapper mapper)
         {
             this.boardTaskListService = boardTaskListService;
             this.mapper = mapper;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BoardTaskListDto>> GetTaskListsByUserId(string id, CancellationToken cancellationToken)
+        public async Task<ActionResult<BoardTaskListDto>> GetTaskListById(string id, CancellationToken cancellationToken)
         {
             BoardTaskList? boardTaskList = await boardTaskListService.GetTaskListByIdAsync(id, cancellationToken: cancellationToken);
             if (boardTaskList == null)
@@ -28,10 +28,10 @@ namespace TaskBoardAPI.Controllers
             BoardTaskListDto boardTaskListDto = mapper.Map<BoardTaskListDto>(boardTaskList);
             return Ok(boardTaskListDto);
         }
-        [HttpGet("user/{userId}")]
-        public async Task<ActionResult<IEnumerable<BoardTaskListDto>>> GetTaskListById(string userId, CancellationToken cancellationToken)
+        [HttpGet("board/{boardId}")]
+        public async Task<ActionResult<IEnumerable<BoardTaskListDto>>> GetTaskListsByBoardId(string boardId, CancellationToken cancellationToken)
         {
-            IEnumerable<BoardTaskList> boardTaskLists = await boardTaskListService.GetTaskListsByUserIdAsync(userId, cancellationToken: cancellationToken);
+            IEnumerable<BoardTaskList> boardTaskLists = await boardTaskListService.GetTaskListsByBoardIdAsync(boardId, cancellationToken: cancellationToken);
             return Ok(boardTaskLists.Select(mapper.Map<BoardTaskListDto>));
         }
         [HttpPost]

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ActivityService } from '../../../action-history';
 import { ActivityType, BoardTaskList, TaskListApiService, copyTaskListValues } from '../../../shared';
+import { ChangeTaskListData } from '../../index';
 import { TaskListService } from './task-list-service';
 
 @Injectable({
@@ -12,50 +14,52 @@ export class TaskListControllerService extends TaskListService {
     super();
   }
 
-  getTaskLists() {
-    return this.taskListApi.getTaskLists();
+  getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {
+    return this.taskListApi.getTaskListsByBoardId(id);
   }
   getTaskListById(id: string) {
     return this.taskListApi.getTaskListById(id);
   }
-  createNewTaskList(taskList: BoardTaskList | undefined, allTaskLists: BoardTaskList[]) {
-    if (taskList) {
-      this.taskListApi.createNewTaskList(taskList).subscribe(res => {
-        copyTaskListValues(taskList, res);
-        allTaskLists.push(taskList);
-        this.activityService.createTaskListActivity(ActivityType.Create, {
-          taskList: taskList,
-          prevTaskList: undefined
-        });
+  createNewTaskList(data: ChangeTaskListData) {
+    data.taskList.boardId = data.board.id;
+    this.taskListApi.createNewTaskList(data.taskList).subscribe(res => {
+      copyTaskListValues(data.taskList, res);
+      data.allTaskLists.push(data.taskList);
+      this.activityService.createTaskListActivity(ActivityType.Create, {
+        taskList: data.taskList,
+        prevTaskList: undefined,
+        board: data.board
       });
-    }
+    });
   }
-  updateTaskList(taskList: BoardTaskList | undefined) {
-    if (taskList) {
-      this.getTaskListById(taskList.id).subscribe(prevTaskList => {
-        this.taskListApi.updateTaskList(taskList).subscribe(() => {
+  updateTaskList(data: ChangeTaskListData) {
+    this.getTaskListById(data.taskList.id).subscribe(taskListInApi => {
+      if (taskListInApi) {
+        this.taskListApi.updateTaskList(data.taskList).subscribe(() => {
           this.activityService.createTaskListActivity(ActivityType.Update, {
-            taskList: taskList,
-            prevTaskList: prevTaskList
+            taskList: data.taskList,
+            prevTaskList: taskListInApi,
+            board: data.board
           });
         });
-      });
-    }
+      }
+    });
   }
-  deleteTaskList(taskList: BoardTaskList | undefined, allTaskLists: BoardTaskList[]) {
-    if (taskList) {
-      this.taskListApi.deleteTaskList(taskList).subscribe(() => {
-        this.deleteTaskListFromArray(taskList, allTaskLists);
+  deleteTaskList(data: ChangeTaskListData) {
+    if (data.taskList.id) {
+      this.taskListApi.deleteTaskList(data.taskList.id).subscribe(() => {
+        this.deleteTaskListFromArray(data);
         this.activityService.createTaskListActivity(ActivityType.Delete, {
-          taskList: taskList,
-          prevTaskList: undefined
+          taskList: data.taskList,
+          prevTaskList: undefined,
+          board: data.board
         });
       });
     }
   }
-  private deleteTaskListFromArray(taskList: BoardTaskList, allTaskLists: BoardTaskList[]) {
-    const index: number = allTaskLists.indexOf(taskList);
+  private deleteTaskListFromArray(data: ChangeTaskListData) {
+    const index: number = data.allTaskLists.indexOf(data.taskList);
     if (index !== -1)
-      allTaskLists.splice(index, 1);
+      data.allTaskLists.splice(index, 1);
   }
 }

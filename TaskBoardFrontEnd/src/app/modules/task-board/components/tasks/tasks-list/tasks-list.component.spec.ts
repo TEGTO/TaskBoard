@@ -10,7 +10,7 @@ import { BoardTaskList } from '../../../../shared';
 import { TaskListManagerComponent, TaskListService, TaskManagerComponent, TasksListComponent } from '../../../index';
 
 describe('TasksListComponent', () => {
-  const mockTaskList: BoardTaskList = { id: '1', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+  const mockTaskList: BoardTaskList = { id: '1', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
   const mockAllTaskLists: BoardTaskList[] = [mockTaskList]
   var component: TasksListComponent;
   var fixture: ComponentFixture<TasksListComponent>;
@@ -43,7 +43,7 @@ describe('TasksListComponent', () => {
   it('should render task list correctly', () => {
     const taskList: BoardTaskList = {
       id: '1',
-      userId: '1',
+      boardId: '1',
       creationTime: new Date(),
       name: 'Test List',
       boardTasks: [
@@ -70,7 +70,7 @@ describe('TasksListComponent', () => {
   it('should render task count correctly', () => {
     const taskList: BoardTaskList = {
       id: '1',
-      userId: '1',
+      boardId: '1',
       creationTime: new Date(),
       name: 'Test List',
       boardTasks: [
@@ -92,7 +92,7 @@ describe('TasksListComponent', () => {
 
     newCardButton.nativeElement.click();
 
-    expect(mockDialog.open).toHaveBeenCalledWith(TaskManagerComponent, { data: { task: undefined, currentTaskList: mockTaskList, allTaskLists: mockAllTaskLists } });
+    expect(mockDialog.open).toHaveBeenCalledWith(TaskManagerComponent, { data: { task: undefined, currentTaskList: mockTaskList, allTaskLists: mockAllTaskLists, board: undefined } });
   });
   it('should open the menu when triggered', () => {
     const menuButton = debugEl.query(By.css('.card-header-icon'));
@@ -152,7 +152,7 @@ describe('TasksListComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(mockTaskList) });
     dialogRefSpyObj.afterClosed.and.returnValue(of(mockTaskList));
     mockDialog.open.and.returnValue(dialogRefSpyObj);
-    component.taskList = { id: 'new list', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] };
+    component.taskList = { id: 'new list', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] };
 
     component.openListManagerMenu();
 

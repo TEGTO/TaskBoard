@@ -39,7 +39,7 @@ namespace TaskBoardAPITests.Services
                 cancellationToken);
             // Assert
             Assert.That(result.Id, Is.EqualTo("1"));
-            Assert.That(result.UserId, Is.EqualTo("1"));
+            Assert.That(result.BoardId, Is.EqualTo("1"));
             Assert.That(result.CreationTime, Is.EqualTo(DateTime.MinValue));
             Assert.That(result.Name, Is.EqualTo("List1"));
             Assert.That(result.BoardTasks.Count(), Is.EqualTo(1));
@@ -68,20 +68,20 @@ namespace TaskBoardAPITests.Services
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
         }
         [Test]
-        public async Task GetTaskListsByUserIdAsync_ValidId_ValidTwoLists()
+        public async Task GetTaskListsByBoardIdAsync_ValidId_ValidTwoLists()
         {
             // Arrange
             var service = CreateService();
-            string userId = "1";
+            string id = "1";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await service.GetTaskListsByUserIdAsync(
-                userId,
+            var result = await service.GetTaskListsByBoardIdAsync(
+                id,
                 cancellationToken);
             // Assert
             Assert.That(result.Count(), Is.EqualTo(2));
             Assert.That(result.First().Id, Is.EqualTo("1"));
-            Assert.That(result.First().UserId, Is.EqualTo("1"));
+            Assert.That(result.First().BoardId, Is.EqualTo("1"));
             Assert.That(result.First().CreationTime, Is.EqualTo(DateTime.MinValue));
             Assert.That(result.First().Name, Is.EqualTo("List1"));
             Assert.That(result.First().BoardTasks.Count(), Is.EqualTo(1));
@@ -92,15 +92,15 @@ namespace TaskBoardAPITests.Services
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
         }
         [Test]
-        public async Task GetTaskListsByUserIdAsync_InvalidId_EmptyList()
+        public async Task GetTaskListsByBoardIdAsync_InvalidId_EmptyList()
         {
             // Arrange
             var service = CreateService();
-            string userId = "100";
+            string id = "100";
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
-            var result = await service.GetTaskListsByUserIdAsync(
-                userId,
+            var result = await service.GetTaskListsByBoardIdAsync(
+                id,
                 cancellationToken);
             // Assert
             Assert.That(result.Count(), Is.EqualTo(0));
@@ -117,7 +117,7 @@ namespace TaskBoardAPITests.Services
             BoardTaskList taskList = new BoardTaskList
             {
                 Id = "oldId",
-                UserId = "1",
+                BoardId = "1",
                 CreationTime = DateTime.MinValue,
                 Name = "List4",
                 BoardTasks =
@@ -137,7 +137,7 @@ namespace TaskBoardAPITests.Services
                 cancellationToken);
             // Assert
             Assert.That(result.Id, Is.Not.EqualTo("oldId"));
-            Assert.That(result.UserId, Is.EqualTo("1"));
+            Assert.That(result.BoardId, Is.EqualTo("1"));
             Assert.That(result.CreationTime, Is.Not.EqualTo(DateTime.MinValue));
             Assert.That(result.Name, Is.EqualTo("List4"));
             Assert.That(result.BoardTasks.Count(), Is.EqualTo(1));
@@ -155,7 +155,7 @@ namespace TaskBoardAPITests.Services
         {
             // Arrange
             var service = CreateService();
-            BoardTaskList nullList = null, invalidList = new BoardTaskList { UserId = "100" };
+            BoardTaskList nullList = null, invalidList = new BoardTaskList { BoardId = "100" };
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act and Assert
             Assert.ThrowsAsync<NullReferenceException>(async () =>
@@ -170,6 +170,97 @@ namespace TaskBoardAPITests.Services
             mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Never());
             mockDbContext.Verify(x => x.Dispose(), Times.Exactly(2));
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(2));
+        }
+        [Test]
+        public async Task UpdateTaskListAsync_ValidData_UpdatesList()
+        {
+            // Arrange
+            var service = CreateService();
+            BoardTaskList taskList = new BoardTaskList
+            {
+                Id = "1",
+                BoardId = "10",
+                CreationTime = DateTime.MaxValue,
+                Name = "NewList",
+                BoardTasks = null
+            };
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act + Assert
+            BoardTaskList? taskListInDb = await service.GetTaskListByIdAsync("1", cancellationToken);
+            Assert.That(taskListInDb.Id, Is.EqualTo("1"));
+            Assert.That(taskListInDb.BoardId, Is.Not.EqualTo("10"));
+            Assert.That(taskListInDb.CreationTime, Is.Not.EqualTo(DateTime.MaxValue));
+            Assert.That(taskListInDb.Name, Is.Not.EqualTo("NewList"));
+            Assert.That(taskListInDb.BoardTasks.Count(), Is.EqualTo(1));
+            await service.UpdateTaskListAsync(
+                taskList,
+                cancellationToken);
+
+            mockDbContext.Verify(x => x.BoardTaskLists, Times.Exactly(2));
+            mockBoardTaskService.Verify(x => x.GetTasksByListIdAsync("1", cancellationToken), Times.Exactly(2));
+            mockDbContext.Verify(x => x.Update(It.IsAny<BoardTaskList>()), Times.Exactly(1));
+            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Exactly(1));
+            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(3));
+            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(3));
+
+            taskListInDb = await service.GetTaskListByIdAsync("1", cancellationToken);
+            Assert.That(taskListInDb.Id, Is.EqualTo("1"));
+            Assert.That(taskListInDb.BoardId, Is.EqualTo("10"));
+            Assert.That(taskListInDb.CreationTime, Is.EqualTo(DateTime.MaxValue));
+            Assert.That(taskListInDb.Name, Is.EqualTo("NewList"));
+            Assert.That(taskListInDb.BoardTasks.Count(), Is.EqualTo(1)); // Won't change
+        }
+        [Test]
+        public void UpdateTaskListAsync_NullData_ThrowsException()
+        {
+            // Arrange
+            var service = CreateService();
+            BoardTaskList taskList = null;
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act + Assert
+            Assert.ThrowsAsync<NullReferenceException>(async () =>
+            {
+                await service.UpdateTaskListAsync(taskList, cancellationToken);
+            });
+            mockDbContext.Verify(x => x.BoardTaskLists, Times.Never());
+            mockBoardTaskService.Verify(x => x.GetTasksByListIdAsync("1", cancellationToken), Times.Never());
+            mockDbContext.Verify(x => x.Update(It.IsAny<BoardTaskList>()), Times.Never());
+            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Never());
+            mockDbContext.Verify(x => x.Dispose(), Times.Never());
+            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Never());
+        }
+        [Test]
+        public async Task UpdateTaskListAsync_ListNotExists_WontUpdateList()
+        {
+            // Arrange
+            var service = CreateService();
+            BoardTaskList taskList = new BoardTaskList
+            {
+                Id = "100",
+                BoardId = "10",
+                CreationTime = DateTime.MaxValue,
+                Name = "NewList",
+                BoardTasks = null
+            };
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act
+            await service.UpdateTaskListAsync(
+                taskList,
+                cancellationToken);
+            // Assert
+            mockDbContext.Verify(x => x.BoardTaskLists, Times.Exactly(1));
+            mockBoardTaskService.Verify(x => x.GetTasksByListIdAsync("1", cancellationToken), Times.Never());
+            mockDbContext.Verify(x => x.Update(It.IsAny<BoardTaskList>()), Times.Never());
+            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Never());
+            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
+            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
+
+            BoardTaskList? taskListInDb = await service.GetTaskListByIdAsync("1", cancellationToken);
+            Assert.That(taskListInDb.Id, Is.EqualTo("1"));
+            Assert.That(taskListInDb.BoardId, Is.EqualTo("1"));
+            Assert.That(taskListInDb.CreationTime, Is.EqualTo(DateTime.MinValue));
+            Assert.That(taskListInDb.Name, Is.EqualTo("List1"));
+            Assert.That(taskListInDb.BoardTasks.Count(), Is.EqualTo(1));
         }
         [Test]
         public async Task DeleteTaskListAsync_ValidId_DeletesList()
@@ -212,97 +303,6 @@ namespace TaskBoardAPITests.Services
             mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Never());
             mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
-        }
-        [Test]
-        public async Task UpdateTaskListAsync_ValidData_UpdatesList()
-        {
-            // Arrange
-            var service = CreateService();
-            BoardTaskList taskList = new BoardTaskList
-            {
-                Id = "1",
-                UserId = "10",
-                CreationTime = DateTime.MaxValue,
-                Name = "NewList",
-                BoardTasks = null
-            };
-            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
-            // Act + Assert
-            BoardTaskList? taskListInDb = await service.GetTaskListByIdAsync("1", cancellationToken);
-            Assert.That(taskListInDb.Id, Is.EqualTo("1"));
-            Assert.That(taskListInDb.UserId, Is.Not.EqualTo("10"));
-            Assert.That(taskListInDb.CreationTime, Is.Not.EqualTo(DateTime.MaxValue));
-            Assert.That(taskListInDb.Name, Is.Not.EqualTo("NewList"));
-            Assert.That(taskListInDb.BoardTasks.Count(), Is.EqualTo(1));
-            await service.UpdateTaskListAsync(
-                taskList,
-                cancellationToken);
-
-            mockDbContext.Verify(x => x.BoardTaskLists, Times.Exactly(2));
-            mockBoardTaskService.Verify(x => x.GetTasksByListIdAsync("1", cancellationToken), Times.Exactly(2));
-            mockDbContext.Verify(x => x.Update(It.IsAny<BoardTaskList>()), Times.Exactly(1));
-            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Exactly(1));
-            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(3));
-            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(3));
-
-            taskListInDb = await service.GetTaskListByIdAsync("1", cancellationToken);
-            Assert.That(taskListInDb.Id, Is.EqualTo("1"));
-            Assert.That(taskListInDb.UserId, Is.EqualTo("10"));
-            Assert.That(taskListInDb.CreationTime, Is.EqualTo(DateTime.MaxValue));
-            Assert.That(taskListInDb.Name, Is.EqualTo("NewList"));
-            Assert.That(taskListInDb.BoardTasks.Count(), Is.EqualTo(1)); // Won't change
-        }
-        [Test]
-        public void UpdateTaskListAsync_NullData_ThrowsException()
-        {
-            // Arrange
-            var service = CreateService();
-            BoardTaskList taskList = null;
-            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
-            // Act + Assert
-            Assert.ThrowsAsync<NullReferenceException>(async () =>
-            {
-                await service.UpdateTaskListAsync(taskList, cancellationToken);
-            });
-            mockDbContext.Verify(x => x.BoardTaskLists, Times.Never());
-            mockBoardTaskService.Verify(x => x.GetTasksByListIdAsync("1", cancellationToken), Times.Never());
-            mockDbContext.Verify(x => x.Update(It.IsAny<BoardTaskList>()), Times.Never());
-            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Never());
-            mockDbContext.Verify(x => x.Dispose(), Times.Never());
-            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Never());
-        }
-        [Test]
-        public async Task UpdateTaskListAsync_ListNotExists_WontUpdateList()
-        {
-            // Arrange
-            var service = CreateService();
-            BoardTaskList taskList = new BoardTaskList
-            {
-                Id = "100",
-                UserId = "10",
-                CreationTime = DateTime.MaxValue,
-                Name = "NewList",
-                BoardTasks = null
-            };
-            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
-            // Act
-            await service.UpdateTaskListAsync(
-                taskList,
-                cancellationToken);
-            // Assert
-            mockDbContext.Verify(x => x.BoardTaskLists, Times.Exactly(1));
-            mockBoardTaskService.Verify(x => x.GetTasksByListIdAsync("1", cancellationToken), Times.Never());
-            mockDbContext.Verify(x => x.Update(It.IsAny<BoardTaskList>()), Times.Never());
-            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Never());
-            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
-            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
-
-            BoardTaskList? taskListInDb = await service.GetTaskListByIdAsync("1", cancellationToken);
-            Assert.That(taskListInDb.Id, Is.EqualTo("1"));
-            Assert.That(taskListInDb.UserId, Is.EqualTo("1"));
-            Assert.That(taskListInDb.CreationTime, Is.EqualTo(DateTime.MinValue));
-            Assert.That(taskListInDb.Name, Is.EqualTo("List1"));
-            Assert.That(taskListInDb.BoardTasks.Count(), Is.EqualTo(1));
         }
     }
 }

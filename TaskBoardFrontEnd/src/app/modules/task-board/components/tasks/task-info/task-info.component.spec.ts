@@ -26,7 +26,7 @@ describe('TaskInfoComponent', () => {
   };
   const mockTaskList: BoardTaskList = {
     id: '1',
-    userId: '1',
+    boardId: '1',
     creationTime: new Date('2024-05-19'),
     name: 'Test List',
     boardTasks: [mockTask]
@@ -97,6 +97,7 @@ describe('TaskInfoComponent', () => {
   });
   it('should show loading state while activities are being fetched', () => {
     component.taskActivities$ = of(undefined);
+    component.updateView();
     fixture.detectChanges();
     expect(debugEl.query(By.css('.activity-body')).nativeElement.textContent).toContain('Loading...');
   });

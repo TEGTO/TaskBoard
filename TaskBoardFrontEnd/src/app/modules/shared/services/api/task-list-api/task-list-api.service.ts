@@ -1,54 +1,50 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, switchMap, throwError } from 'rxjs';
-import { BoardTaskList, CustomErrorHandler, URLDefiner, UserApiService } from '../../../index';
+import { Observable, catchError } from 'rxjs';
+import { BaseApiService, BoardTaskList } from '../../../index';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskListApiService {
+export class TaskListApiService extends BaseApiService {
 
-  constructor(private httpClient: HttpClient, private userApiService: UserApiService, private errorHandler: CustomErrorHandler, private urlDefiner: URLDefiner) {
-  }
-
-  getTaskLists(): Observable<BoardTaskList[]> {
-    return this.userApiService.getUser().pipe(
-      switchMap(user => {
-        if (!user)
-          return new Observable<BoardTaskList[]>(observer => observer.next([]));
-        return this.httpClient.get<BoardTaskList[]>(this.urlDefiner.combineWithApiUrl(`/BoardTaskLists/user/${user.id}`)).pipe(
-          catchError((err) => this.handleError(err))
-        );
-      }));
+  getTaskListsByBoardId(boardId: string): Observable<BoardTaskList[]> {
+    return this.getHttpClient().get<BoardTaskList[]>(this.combinePathWithApiUrl(`/BoardTaskList/board/${boardId}`)).pipe(
+      catchError((err) => this.handleError(err)));
   }
   getTaskListById(id: string): Observable<BoardTaskList | undefined> {
-    return this.httpClient.get<BoardTaskList>(this.urlDefiner.combineWithApiUrl(`/BoardTaskLists/${id}`)).pipe(
+    return this.getHttpClient().get<BoardTaskList>(this.combinePathWithApiUrl(`/BoardTaskList/${id}`)).pipe(
       catchError((err) => this.handleError(err))
     );
   }
   createNewTaskList(taskList: BoardTaskList) {
-    return this.userApiService.getUser().pipe(
-      switchMap(user => {
-        if (!user)
-          return new Observable<BoardTaskList>(observer => observer.next());
-        taskList = { ...taskList, userId: user.id, creationTime: new Date(), boardTasks: [] };
-        return this.httpClient.post<BoardTaskList>(this.urlDefiner.combineWithApiUrl(`/BoardTaskLists`), taskList).pipe(
-          catchError((err) => this.handleError(err))
-        );
-      }));
+    taskList = { ...taskList, creationTime: new Date(), boardTasks: [] };
+    this.validateTaskList_Create(taskList);
+    return this.getHttpClient().post<BoardTaskList>(this.combinePathWithApiUrl(`/BoardTaskList`), taskList).pipe(
+      catchError((err) => this.handleError(err)));
   }
   updateTaskList(taskList: BoardTaskList) {
-    return this.httpClient.put(this.urlDefiner.combineWithApiUrl(`/BoardTaskLists`), taskList).pipe(
+    this.validateTaskList_Update(taskList);
+    return this.getHttpClient().put(this.combinePathWithApiUrl(`/BoardTaskList`), taskList).pipe(
       catchError((err) => this.handleError(err))
     );
   }
-  deleteTaskList(taskList: BoardTaskList) {
-    return this.httpClient.delete(this.urlDefiner.combineWithApiUrl(`/BoardTaskLists/${taskList.id}`)).pipe(
+  deleteTaskList(id: string) {
+    return this.getHttpClient().delete(this.combinePathWithApiUrl(`/BoardTaskList/${id}`)).pipe(
       catchError((err) => this.handleError(err))
     );
   }
-  private handleError(error: Error) {
-    this.errorHandler.handleError(error);
-    return throwError(() => new Error(error.message));
+  private validateTaskList_Create(taskList: BoardTaskList) {
+    if (!taskList.boardId)
+      throw new Error("Board Id is not set!");
+  }
+  private validateTaskList_Update(taskList: BoardTaskList) {
+    if (!taskList.id)
+      throw new Error("Id is not set!");
+    else if (!taskList.creationTime)
+      throw new Error("Creation time is not set!");
+    else if (!taskList.boardTasks)
+      throw new Error("Board tasks is not set!");
+    else if (!taskList.boardId)
+      throw new Error("Board Id is not set!");
   }
 }

@@ -158,45 +158,6 @@ namespace TaskBoardAPITests.Services
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(2));
         }
         [Test]
-        public async Task DeleteTaskAsync_ValidId_DeletesTask()
-        {
-            // Arrange
-            var service = CreateService();
-            string id = "1";
-            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
-            // Act
-            await service.DeleteTaskAsync(
-                id,
-                cancellationToken);
-            // Assert
-            Assert.That(testBoardTasks.Count(), Is.EqualTo(3));
-            Assert.That(testBoardTasks.FirstOrDefault(x => x.Id == "1"), Is.Null);
-            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Exactly(1));
-            mockDbContext.Verify(x => x.Remove(It.IsAny<BoardTask>()), Times.Exactly(1));
-            mockDbContext.Verify(x => x.BoardTasks, Times.Exactly(3));
-            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(2));
-            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(2));
-        }
-        [Test]
-        public async Task DeleteTaskAsync_InvalidId_WontDeletek()
-        {
-            // Arrange
-            var service = CreateService();
-            string id = "100";
-            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
-            // Act
-            await service.DeleteTaskAsync(
-                id,
-                cancellationToken);
-            // Assert
-            Assert.That(testBoardTasks.Count(), Is.EqualTo(4));
-            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Never());
-            mockDbContext.Verify(x => x.Remove(It.IsAny<BoardTask>()), Times.Never());
-            mockDbContext.Verify(x => x.BoardTasks, Times.Exactly(1));
-            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
-            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
-        }
-        [Test]
         public async Task UpdateTaskAsync_ValidData_UpdatesListTask()
         {
             // Arrange
@@ -263,6 +224,45 @@ namespace TaskBoardAPITests.Services
             //Assert
             mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Never());
             mockDbContext.Verify(x => x.Update(It.IsAny<BoardTask>()), Times.Never());
+            mockDbContext.Verify(x => x.BoardTasks, Times.Exactly(1));
+            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
+            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));
+        }
+        [Test]
+        public async Task DeleteTaskAsync_ValidId_DeletesTask()
+        {
+            // Arrange
+            var service = CreateService();
+            string id = "1";
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act
+            await service.DeleteTaskAsync(
+                id,
+                cancellationToken);
+            // Assert
+            Assert.That(testBoardTasks.Count(), Is.EqualTo(3));
+            Assert.That(testBoardTasks.FirstOrDefault(x => x.Id == "1"), Is.Null);
+            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Exactly(1));
+            mockDbContext.Verify(x => x.Remove(It.IsAny<BoardTask>()), Times.Exactly(1));
+            mockDbContext.Verify(x => x.BoardTasks, Times.Exactly(3));
+            mockDbContext.Verify(x => x.Dispose(), Times.Exactly(2));
+            mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(2));
+        }
+        [Test]
+        public async Task DeleteTaskAsync_InvalidId_WontDeletek()
+        {
+            // Arrange
+            var service = CreateService();
+            string id = "100";
+            CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
+            // Act
+            await service.DeleteTaskAsync(
+                id,
+                cancellationToken);
+            // Assert
+            Assert.That(testBoardTasks.Count(), Is.EqualTo(4));
+            mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Never());
+            mockDbContext.Verify(x => x.Remove(It.IsAny<BoardTask>()), Times.Never());
             mockDbContext.Verify(x => x.BoardTasks, Times.Exactly(1));
             mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));
             mockDbContextFactory.Verify(x => x.CreateDbContextAsync(cancellationToken), Times.Exactly(1));

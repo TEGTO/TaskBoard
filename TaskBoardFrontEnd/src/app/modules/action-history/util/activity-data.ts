@@ -1,12 +1,16 @@
-import { BoardTaskList } from "../../shared/models/board-task-list.model";
-import { BoardTask } from "../../shared/models/board-task.model";
+import { Board, BoardTask, BoardTaskList } from "../../shared";
 
+export interface ActivityPopupData {
+    board: Board;
+}
 export interface TaskActivityData {
     task: BoardTask;
     prevTask: BoardTask | undefined;
     taskList: BoardTaskList | undefined;
+    board: Board;
 }
 export interface TaskListActivityData {
     taskList: BoardTaskList;
     prevTaskList: BoardTaskList | undefined;
+    board: Board;
 }

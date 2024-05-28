@@ -50,6 +50,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IBoardService, BoardService>();
 builder.Services.AddSingleton<IBoardTaskListService, BoardTaskListService>();
 builder.Services.AddSingleton<IBoardTaskService, BoardTaskService>();
 builder.Services.AddSingleton<IBoardActivityService, BoardActivityService>();

@@ -1,8 +1,6 @@
 @use '@angular/material' as mat;
+@use 'colors' as colors;
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,700|Lato:400,800,900");
-
-@include mat.core();
-
 
 $light-theme: mat.define-light-theme((color: (primary: mat.define-palette(mat.$indigo-palette),
                 accent: mat.define-palette(mat.$green-palette),
@@ -28,6 +26,14 @@ html {
     background-size: cover;
     background-attachment: fixed;
     overflow-y: auto !important;
+}
+
+input[type=text]:focus {
+    outline: 2px solid colors.$outline-input;
+}
+
+.dropdown-panel {
+    min-width: fit-content !important;
 }
 
 * {

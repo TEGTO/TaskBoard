@@ -4,8 +4,8 @@ import { TaskActivityData, TaskListActivityData } from '../../index';
 
 export abstract class ActivityService {
   abstract getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]>;
-  abstract getBoardActivitiesOnPage(page: number, amountOnPage: number): Observable<BoardActivity[]>;
-  abstract getBoardActivityAmount(): Observable<number>;
+  abstract getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]>;
+  abstract getBoardActivityAmountByBoardId(id: string): Observable<number>;
   abstract createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): Promise<void>;
   abstract createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void;
 }

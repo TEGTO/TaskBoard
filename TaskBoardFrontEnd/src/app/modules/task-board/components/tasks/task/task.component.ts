@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BoardTask, BoardTaskList, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
-import { TaskInfoComponent, TaskManagerComponent, TaskPopupData, TaskService } from '../../../index';
+import { BoardTask, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
+import { ChangeTaskData, TaskComponentData, TaskInfoComponent, TaskManagerComponent, TaskPopupData, TaskService } from '../../../index';
 
 @Component({
   selector: 'task',
@@ -9,9 +9,8 @@ import { TaskInfoComponent, TaskManagerComponent, TaskPopupData, TaskService } f
   styleUrl: './task.component.scss'
 })
 export class TaskComponent {
-  @Input({ required: true }) task: BoardTask | undefined;
-  @Input({ required: true }) taskList!: BoardTaskList;
-  @Input({ required: true }) allTaskLists!: BoardTaskList[];
+  @Input({ required: true }) task!: BoardTask;
+  @Input({ required: true }) componentData!: TaskComponentData;
 
   constructor(public dialog: MatDialog, private dateFormater: DateFormaterService,
     private taskService: TaskService) { }
@@ -27,7 +26,7 @@ export class TaskComponent {
     });
   }
   deleteButton() {
-    this.taskService.deleteTask(this.task!, this.taskList);
+    this.taskService.deleteTask(this.createChangeTaskData());
   }
   getPriorityString(priority: Priority): string {
     return PriorityConvertorService.getPriorityString(priority);
@@ -38,9 +37,20 @@ export class TaskComponent {
   private getPopupData() {
     const taskPopupData: TaskPopupData = {
       task: this.task,
-      currentTaskList: this.taskList,
-      allTaskLists: this.allTaskLists
+      currentTaskList: this.componentData.currentTaskList,
+      allTaskLists: this.componentData.allTaskLists,
+      board: this.componentData.board
     }
     return taskPopupData;
+  }
+  private createChangeTaskData() {
+    var data: ChangeTaskData = {
+      task: this.task,
+      currentTaskList: this.componentData.currentTaskList,
+      prevTaskList: this.componentData.currentTaskList,
+      allTaskLists: this.componentData.allTaskLists,
+      board: this.componentData.board
+    }
+    return data;
   }
 }

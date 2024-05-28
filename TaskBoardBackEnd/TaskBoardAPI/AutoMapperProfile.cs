@@ -12,6 +12,8 @@ namespace TaskBoardAPI
         {
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+            CreateMap<Board, BoardDto>();
+            CreateMap<BoardDto, Board>();
             CreateMap<BoardTaskList, BoardTaskListDto>();
             CreateMap<BoardTaskListDto, BoardTaskList>();
             CreateMap<BoardTask, BoardTaskDto>();

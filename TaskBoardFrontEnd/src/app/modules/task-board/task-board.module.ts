@@ -12,7 +12,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ActionHistoryModule } from '../action-history/action-history.module';
-import { BoardComponent, TaskComponent, TaskInfoComponent, TaskListManagerComponent, TaskManagerComponent, TasksListComponent } from './index';
+import { BoardComponent, BoardListComponent, TaskComponent, TaskInfoComponent, TaskListManagerComponent, TaskManagerComponent, TasksListComponent } from './index';
+import { BoardItemComponent } from './components/boards/board-item/board-item.component';
+import { BoardManagerComponent } from './components/boards/board-manager/board-manager.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,10 @@ import { BoardComponent, TaskComponent, TaskInfoComponent, TaskListManagerCompon
     TaskListManagerComponent,
     TaskInfoComponent,
     TaskManagerComponent,
-    BoardComponent
+    BoardComponent,
+    BoardListComponent,
+    BoardItemComponent,
+    BoardManagerComponent
   ],
   imports: [
     CommonModule,

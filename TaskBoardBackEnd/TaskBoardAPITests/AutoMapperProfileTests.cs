@@ -23,7 +23,7 @@ namespace TaskBoardAPITests
         public void UserToUserDto_ValidData_ValidResult()
         {
             // Arrange
-            var user = new User { Id = "1", BoardTaskLists = new List<BoardTaskList>() };
+            var user = new User { Id = "1" };
             // Act
             var userDto = mapper.Map<UserDto>(user);
             // Assert
@@ -33,7 +33,7 @@ namespace TaskBoardAPITests
         public void UserToUserDto_NullData_NullResult()
         {
             // Arrange
-            User user = null;
+            User? user = null;
             // Act 
             var userDto = mapper.Map<UserDto>(user);
             // Assert
@@ -48,17 +48,74 @@ namespace TaskBoardAPITests
             var user = mapper.Map<User>(userDto);
             // Assert
             Assert.That(user.Id, Is.EqualTo(userDto.Id));
-            Assert.That(user.BoardTaskLists.Count(), Is.EqualTo(0));
         }
         [Test]
         public void UserDtoToUser_NullData_NullResult()
         {
             // Arrange
-            UserDto userDto = null;
+            UserDto? userDto = null;
             // Act
             var user = mapper.Map<User>(userDto);
             //Assert
             Assert.That(user, Is.Null);
+        }
+        [Test]
+        public void BoardToBoardDto_ValidData_ValidResult()
+        {
+            // Arrange
+            var board = new Board
+            {
+                Id = "1",
+                UserId = "1",
+                CreationTime = DateTime.MinValue,
+                Name = "Board1"
+            };
+            // Act
+            var boardDto = mapper.Map<BoardDto>(board);
+            // Assert
+            Assert.That(boardDto.Id, Is.EqualTo(board.Id));
+            Assert.That(boardDto.UserId, Is.EqualTo(board.UserId));
+            Assert.That(boardDto.CreationTime, Is.EqualTo(board.CreationTime));
+            Assert.That(boardDto.Name, Is.EqualTo(board.Name));
+        }
+        [Test]
+        public void BoardToBoardDto_NullData_NullResult()
+        {
+            // Arrange
+            Board? board = null;
+            // Act
+            var boardDto = mapper.Map<BoardDto>(board);
+            // Assert
+            Assert.That(boardDto, Is.Null);
+        }
+        [Test]
+        public void BoardDtoToBoard_ValidData_ValidResult()
+        {
+            // Arrange
+            var boardDto = new BoardDto
+            {
+                Id = "1",
+                UserId = "1",
+                CreationTime = DateTime.MinValue,
+                Name = "Board1"
+            };
+            // Act
+            var board = mapper.Map<Board>(boardDto);
+            // Assert
+            Assert.That(board.Id, Is.EqualTo(boardDto.Id));
+            Assert.That(board.UserId, Is.EqualTo(boardDto.UserId));
+            Assert.That(board.CreationTime, Is.EqualTo(boardDto.CreationTime));
+            Assert.That(board.Name, Is.EqualTo(boardDto.Name));
+        }
+        [Test]
+        public void BoardDtoToBoard_NullData_NullResult()
+        {
+            // Arrange
+            BoardDto? boardDto = null;
+            // Act
+            var board = mapper.Map<Board>(boardDto);
+            // Assert
+            Assert.That(board, Is.Null);
         }
         [Test]
         public void BoardTaskListToBoardTaskListDto_ValidData_ValidResult()
@@ -67,7 +124,7 @@ namespace TaskBoardAPITests
             var boardTaskList = new BoardTaskList
             {
                 Id = "1",
-                UserId = "2",
+                BoardId = "2",
                 CreationTime = DateTime.Now,
                 Name = "Task List",
                 BoardTasks = new List<BoardTask>()
@@ -76,7 +133,7 @@ namespace TaskBoardAPITests
             var boardTaskListDto = mapper.Map<BoardTaskListDto>(boardTaskList);
             // Assert
             Assert.That(boardTaskListDto.Id, Is.EqualTo(boardTaskList.Id));
-            Assert.That(boardTaskListDto.UserId, Is.EqualTo(boardTaskList.UserId));
+            Assert.That(boardTaskListDto.BoardId, Is.EqualTo(boardTaskList.BoardId));
             Assert.That(boardTaskListDto.CreationTime, Is.EqualTo(boardTaskList.CreationTime));
             Assert.That(boardTaskListDto.Name, Is.EqualTo(boardTaskList.Name));
             Assert.That(boardTaskListDto.BoardTasks.Count, Is.EqualTo(boardTaskList.BoardTasks.Count));
@@ -85,7 +142,7 @@ namespace TaskBoardAPITests
         public void BoardTaskListToBoardTaskListDto_NullData_NullResult()
         {
             // Arrange
-            BoardTaskList boardTaskList = null;
+            BoardTaskList? boardTaskList = null;
             // Act
             var boardTaskListDto = mapper.Map<BoardTaskListDto>(boardTaskList);
             // Assert
@@ -98,7 +155,7 @@ namespace TaskBoardAPITests
             var boardTaskListDto = new BoardTaskListDto
             {
                 Id = "1",
-                UserId = "2",
+                BoardId = "2",
                 CreationTime = DateTime.Now,
                 Name = "Task List",
                 BoardTasks = new List<BoardTaskDto>()
@@ -107,7 +164,7 @@ namespace TaskBoardAPITests
             var boardTaskList = mapper.Map<BoardTaskList>(boardTaskListDto);
             // Assert
             Assert.That(boardTaskList.Id, Is.EqualTo(boardTaskListDto.Id));
-            Assert.That(boardTaskList.UserId, Is.EqualTo(boardTaskListDto.UserId));
+            Assert.That(boardTaskList.BoardId, Is.EqualTo(boardTaskListDto.BoardId));
             Assert.That(boardTaskList.CreationTime, Is.EqualTo(boardTaskListDto.CreationTime));
             Assert.That(boardTaskList.Name, Is.EqualTo(boardTaskListDto.Name));
             Assert.That(boardTaskList.BoardTasks.Count, Is.EqualTo(boardTaskListDto.BoardTasks.Count));
@@ -116,7 +173,7 @@ namespace TaskBoardAPITests
         public void BoardTaskListDtoToBoardTaskList_NullData_NullResult()
         {
             // Arrange
-            BoardTaskListDto boardTaskListDto = null;
+            BoardTaskListDto? boardTaskListDto = null;
             // Act
             var boardTaskList = mapper.Map<BoardTaskList>(boardTaskListDto);
             // Assert
@@ -151,7 +208,7 @@ namespace TaskBoardAPITests
         public void BoardTaskToBoardTaskDto_NulldData_NullResult()
         {
             // Arrange
-            BoardTask boardTask = null;
+            BoardTask? boardTask = null;
             // Act
             var boardTaskDto = mapper.Map<BoardTaskDto>(boardTask);
             // Assert
@@ -188,7 +245,7 @@ namespace TaskBoardAPITests
         public void BoardTaskDtoToBoardTask_NullData_NullResult()
         {
             // Arrange
-            BoardTaskDto boardTaskDto = null;
+            BoardTaskDto? boardTaskDto = null;
             // Act
             var boardTask = mapper.Map<BoardTask>(boardTaskDto);
             // Assert
@@ -217,7 +274,7 @@ namespace TaskBoardAPITests
         public void BoardTaskActivityToBoardTaskActivityDto_NullData_NullResult()
         {
             // Arrange
-            BoardTaskActivity boardTaskActivity = null;
+            BoardTaskActivity? boardTaskActivity = null;
             // Act
             var boardTaskActivityDto = mapper.Map<BoardTaskActivityDto>(boardTaskActivity);
             // Assert
@@ -246,7 +303,7 @@ namespace TaskBoardAPITests
         public void BoardTaskActivityDtoToBoardTaskActivity_NulldData_NullResult()
         {
             // Arrange
-            BoardTaskActivityDto boardTaskActivityDto = null;
+            BoardTaskActivityDto? boardTaskActivityDto = null;
             // Act
             var boardTaskActivity = mapper.Map<BoardTaskActivity>(boardTaskActivityDto);
             // Assert
@@ -259,7 +316,7 @@ namespace TaskBoardAPITests
             var boardActivity = new BoardActivity
             {
                 Id = "1",
-                UserId = "2",
+                BoardId = "2",
                 ActivityTime = DateTime.Now,
                 Description = "Activity Description"
             };
@@ -267,7 +324,7 @@ namespace TaskBoardAPITests
             var boardActivityDto = mapper.Map<BoardActivityDto>(boardActivity);
             // Assert
             Assert.That(boardActivityDto.Id, Is.EqualTo(boardActivity.Id));
-            Assert.That(boardActivityDto.UserId, Is.EqualTo(boardActivity.UserId));
+            Assert.That(boardActivityDto.BoardId, Is.EqualTo(boardActivity.BoardId));
             Assert.That(boardActivityDto.ActivityTime, Is.EqualTo(boardActivity.ActivityTime));
             Assert.That(boardActivityDto.Description, Is.EqualTo(boardActivity.Description));
         }
@@ -275,7 +332,7 @@ namespace TaskBoardAPITests
         public void BoardActivityToBoardActivityDto_NulldData_NullResult()
         {
             // Arrange
-            BoardActivity boardActivity = null;
+            BoardActivity? boardActivity = null;
             // Act
             var boardActivityDto = mapper.Map<BoardActivityDto>(boardActivity);
             // Assert
@@ -288,7 +345,7 @@ namespace TaskBoardAPITests
             var boardActivityDto = new BoardActivityDto
             {
                 Id = "1",
-                UserId = "2",
+                BoardId = "2",
                 ActivityTime = DateTime.Now,
                 Description = "Activity Description"
             };
@@ -296,7 +353,7 @@ namespace TaskBoardAPITests
             var boardActivity = mapper.Map<BoardActivity>(boardActivityDto);
             // Assert
             Assert.That(boardActivity.Id, Is.EqualTo(boardActivityDto.Id));
-            Assert.That(boardActivity.UserId, Is.EqualTo(boardActivityDto.UserId));
+            Assert.That(boardActivity.BoardId, Is.EqualTo(boardActivityDto.BoardId));
             Assert.That(boardActivity.ActivityTime, Is.EqualTo(boardActivityDto.ActivityTime));
             Assert.That(boardActivity.Description, Is.EqualTo(boardActivityDto.Description));
         }
@@ -304,7 +361,7 @@ namespace TaskBoardAPITests
         public void BoardActivityDtoToBoardActivity_NulldData_NullResult()
         {
             // Arrange
-            BoardActivityDto boardActivityDto = null;
+            BoardActivityDto? boardActivityDto = null;
             // Act
             var boardActivity = mapper.Map<BoardActivity>(boardActivityDto);
             // Assert

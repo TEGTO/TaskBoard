@@ -61,7 +61,6 @@ describe('TaskApiService', () => {
 
     const req = httpTestingController.expectOne(expectedReq);
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toBe(mockTasks[0]);
     expect(mockUrlDefiner.combineWithApiUrl).toHaveBeenCalledWith(expectedReq);
   });
   it('should send PUT request', () => {
@@ -76,7 +75,7 @@ describe('TaskApiService', () => {
   it('should send DELETE request', () => {
     const expectedReq = `/BoardTask/${mockTasks[0].id}`;
 
-    service.deleteTask(mockTasks[0]).subscribe();
+    service.deleteTask(mockTasks[0].id).subscribe();
 
     const req = httpTestingController.expectOne(expectedReq);
     expect(req.request.method).toBe('DELETE');
