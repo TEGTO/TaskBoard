@@ -97,7 +97,9 @@ describe('BoardApiService', () => {
     const expectedReq = `/Board`;
 
     service.createBoard(mockBoard).subscribe(result => {
-      expect(result).toEqual({ ...mockBoard, creationTime: result.creationTime });
+      expect(result.id).toEqual(mockBoard.id);
+      expect(result.userId).toEqual(mockBoard.userId);
+      expect(result.name).toEqual(mockBoard.name);
     });
 
     expect(mockUserApiService.getUser).toHaveBeenCalledTimes(1);

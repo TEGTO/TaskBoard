@@ -85,7 +85,8 @@ export class TaskManagerComponent implements OnInit {
     copyTaskValues(this.task, buffer);
   }
   private createNewTask() {
-    var changeData = this.createChangeTaskData(this.taskList, this.taskList);
+    var currentTaskList = this.allTaskLists.find(x => x.id == this.task.boardTaskListId)!;
+    var changeData = this.createChangeTaskData(currentTaskList, currentTaskList);
     this.taskService.createNewTask(changeData);
   }
   private updateTask() {
