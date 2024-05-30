@@ -24,7 +24,7 @@ namespace TaskBoardAPI.Services
             {
                 boardTaskLists.AddRange(dbContext.BoardTaskLists
                   .Where(x => x.BoardId == id)
-                  .OrderBy(x => x.CreationTime.Date).ThenBy(c => c.CreationTime.TimeOfDay)
+                  .OrderBy(x => x.CreationTime)
                   .AsNoTracking());
                 await Task.WhenAll(boardTaskLists.Select(async list =>
                 {

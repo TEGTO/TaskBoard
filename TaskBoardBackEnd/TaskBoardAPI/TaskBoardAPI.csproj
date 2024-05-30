@@ -31,5 +31,7 @@
   <ItemGroup>
     <Folder Include="certificates\" />
   </ItemGroup>
-
+	<ItemGroup>
+		<InternalsVisibleTo Include="TaskBoardIntegrationTests"/>
+	</ItemGroup>
 </Project>

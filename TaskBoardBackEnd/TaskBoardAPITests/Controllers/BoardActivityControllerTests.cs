@@ -28,7 +28,7 @@ namespace TaskBoardAPITests.Controllers
             mockService.Setup(x => x.GetActivitiesOnPageByBoardIdAsync("validId", It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => new List<BoardActivity>());
             mockService.Setup(x => x.GetActivitiesOnPageByBoardIdAsync(It.Is<string>(x => x != "validId"), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => null);
+                .ReturnsAsync(() => new List<BoardActivity>());
             mockService.Setup(x => x.CreateBoardActivityAsync(It.IsNotNull<BoardActivity>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => new BoardActivity());
             mockService.Setup(x => x.CreateBoardActivityAsync(It.Is<BoardActivity>(x => x == null), It.IsAny<CancellationToken>()))
@@ -84,11 +84,11 @@ namespace TaskBoardAPITests.Controllers
         {
             // Arrange
             var boardActivityController = CreateController();
-            string userId = null;
+            string boardId = null;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
             var result = await boardActivityController.GetBoardActivityAmount(
-                userId,
+                boardId,
                 cancellationToken);
             // Assert
             Assert.That(result, Is.Not.Null);
@@ -98,7 +98,7 @@ namespace TaskBoardAPITests.Controllers
             Assert.That(okResult.Value, Is.InstanceOf<int>());
             var value = (int)okResult.Value;
             Assert.That(value, Is.EqualTo(0));
-            mockBoardActivityService.Verify(x => x.GetBoardActivityAmountByBoardIdAsync(userId, cancellationToken), Times.Exactly(1));
+            mockBoardActivityService.Verify(x => x.GetBoardActivityAmountByBoardIdAsync(boardId, cancellationToken), Times.Exactly(1));
         }
 
         [Test]
@@ -106,13 +106,13 @@ namespace TaskBoardAPITests.Controllers
         {
             // Arrange
             var boardActivityController = CreateController();
-            string userId = "validId";
+            string boardId = "validId";
             int page = 0;
             int amountOnPage = 0;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
             var result = await boardActivityController.GetBoardActivityOnPage(
-                userId,
+                boardId,
                 page,
                 amountOnPage,
                 cancellationToken);
@@ -125,28 +125,34 @@ namespace TaskBoardAPITests.Controllers
             Assert.IsInstanceOf<IEnumerable<BoardActivityDto>>(okResult.Value);
             var boardActivityDto = okResult.Value as IEnumerable<BoardActivityDto>;
             Assert.That(boardActivityDto, Is.Not.Null);
-            mockBoardActivityService.Verify(x => x.GetActivitiesOnPageByBoardIdAsync(userId,
+            mockBoardActivityService.Verify(x => x.GetActivitiesOnPageByBoardIdAsync(boardId,
                 page, amountOnPage, cancellationToken), Times.Exactly(1));
         }
         [Test]
-        public async Task GetBoardActivityOnPage_InvalidId_NotFound()
+        public async Task GetBoardActivityOnPage_InvalidId_OkStatusCodeEmptyList()
         {
             // Arrange
             var boardActivityController = CreateController();
-            string userId = "invalidId";
+            string boardId = "invalidId";
             int page = 0;
             int amountOnPage = 0;
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
             var result = await boardActivityController.GetBoardActivityOnPage(
-                userId,
+                boardId,
                 page,
                 amountOnPage,
                 cancellationToken);
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Result, Is.InstanceOf<NotFoundResult>());
-            mockBoardActivityService.Verify(x => x.GetActivitiesOnPageByBoardIdAsync(userId,
+            Assert.IsInstanceOf<OkObjectResult>(result.Result);
+            var okResult = result.Result as OkObjectResult;
+            Assert.That(okResult, Is.Not.Null);
+            Assert.That(okResult.Value, Is.Not.Null);
+            Assert.IsInstanceOf<IEnumerable<BoardActivityDto>>(okResult.Value);
+            var boardActivityDto = okResult.Value as IEnumerable<BoardActivityDto>;
+            Assert.That(boardActivityDto, Is.Not.Null);
+            mockBoardActivityService.Verify(x => x.GetActivitiesOnPageByBoardIdAsync(boardId,
                 page, amountOnPage, cancellationToken), Times.Exactly(1));
         }
         [Test]

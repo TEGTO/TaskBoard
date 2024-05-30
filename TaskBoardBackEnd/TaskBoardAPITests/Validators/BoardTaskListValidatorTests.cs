@@ -1,6 +1,4 @@
 ﻿using FluentValidation.TestHelper;
-using Moq;
-using NUnit.Framework;
 using TaskBoardAPI.Models.Dto;
 using TaskBoardAPI.Validators;
 
@@ -27,7 +25,7 @@ namespace TaskBoardAPITests.Validators
             result.ShouldHaveValidationErrorFor(x => x.Id);
         }
         [Test]
-        public void Validate_WhenUserIdIsNull_ShouldHaveValidationErrorForUserId()
+        public void Validate_WhenBoardIsNull_ShouldHaveValidationErrorForUserId()
         {
             // Arrange
             var boardTaskListDto = new BoardTaskListDto { Id = "1", BoardId = null, BoardTasks = new List<BoardTaskDto>() };
@@ -47,7 +45,7 @@ namespace TaskBoardAPITests.Validators
             result.ShouldHaveValidationErrorFor(x => x.BoardTasks);
         }
         [Test]
-        public void Validate_WhenIdAndUserIdAndBoardTasksAreNotNull_ShouldNotHaveValidationErrors()
+        public void Validate_WhenIdAndBoardIdAndBoardTasksAreNotNull_ShouldNotHaveValidationErrors()
         {
             // Arrange
             var boardTaskListDto = new BoardTaskListDto { Id = "1", BoardId = "1", BoardTasks = new List<BoardTaskDto>() };
