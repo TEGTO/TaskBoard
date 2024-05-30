@@ -22,7 +22,7 @@ namespace TaskBoardAPI.Services
             {
                 boards.AddRange(dbContext.Boards
                   .Where(x => x.UserId == userId)
-                  .OrderBy(x => x.CreationTime.Date).ThenBy(c => c.CreationTime.TimeOfDay)
+                  .OrderBy(x => x.CreationTime)
                   .AsNoTracking());
             }
             return boards;

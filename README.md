@@ -45,6 +45,9 @@ npm start
 # unit tests
 dotnet build TaskBoardAPITests
 dotnet test "TaskBoardAPITests\bin\Debug\net8.0\TaskBoardAPITests.dll"
+# integration tests
+dotnet build TaskBoardIntegrationTests
+dotnet test "TaskBoardIntegrationTests\bin\Debug\net8.0\TaskBoardIntegrationTests.dll"
 ```
 #### Frontend (inside TaskBoardFrontEnd)
 ```bash

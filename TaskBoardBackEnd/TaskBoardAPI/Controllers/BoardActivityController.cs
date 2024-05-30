@@ -39,8 +39,6 @@ namespace TaskBoardAPI.Controllers
             [FromQuery] int page, [FromQuery] int amountOnPage, CancellationToken cancellationToken)
         {
             IEnumerable<BoardActivity> boardActivities = await boardActivityService.GetActivitiesOnPageByBoardIdAsync(boardId, page, amountOnPage, cancellationToken);
-            if (boardActivities == null)
-                return NotFound();
             return Ok(boardActivities.Select(mapper.Map<BoardActivityDto>));
         }
         [HttpPost]
