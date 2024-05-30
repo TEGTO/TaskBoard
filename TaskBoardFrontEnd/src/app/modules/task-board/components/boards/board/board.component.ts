@@ -17,8 +17,11 @@ export class BoardComponent implements OnInit {
   boards$!: Observable<Board[] | undefined>;
   taskLists$!: Observable<BoardTaskList[]>;
 
-  constructor(private activatedRoute: ActivatedRoute, public dialog: MatDialog, private boardService: BoardService,
-    private taskListService: TaskListApiService, private redirector: RedirectorService) { }
+  constructor(private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
+    private boardService: BoardService,
+    private taskListService: TaskListApiService,
+    private redirector: RedirectorService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {

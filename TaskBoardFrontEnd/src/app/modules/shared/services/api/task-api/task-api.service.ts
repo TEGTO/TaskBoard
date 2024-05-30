@@ -12,6 +12,11 @@ export class TaskApiService extends BaseApiService {
       catchError((err) => this.handleError(err))
     );
   }
+  getTasksByListId(id: string) {
+    return this.getHttpClient().get<BoardTask[]>(this.combinePathWithApiUrl(`/BoardTask/list/${id}`)).pipe(
+      catchError((err) => this.handleError(err))
+    );
+  }
   createNewTask(task: BoardTask) {
     this.validateTask_Create(task);
     task = { ...task, creationTime: new Date() };
