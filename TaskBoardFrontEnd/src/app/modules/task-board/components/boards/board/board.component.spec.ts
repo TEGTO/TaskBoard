@@ -4,8 +4,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { Board, BoardTaskList, RedirectorService, TaskListApiService } from '../../../../shared';
-import { BoardService } from '../../../index';
+import { Board, BoardTaskList, RedirectorService } from '../../../../shared';
+import { BoardService, TaskListService } from '../../../index';
 import { BoardComponent } from './board.component';
 
 describe('BoardComponent', () => {
@@ -16,12 +16,12 @@ describe('BoardComponent', () => {
   var fixture: ComponentFixture<BoardComponent>;
   var dialog: MatDialog;
   var mockBoardService: jasmine.SpyObj<BoardService>;
-  var mockTaskListService: jasmine.SpyObj<TaskListApiService>;
+  var mockTaskListService: jasmine.SpyObj<TaskListService>;
   var mockDialog: jasmine.SpyObj<MatDialog>;
   var mockRedirector: jasmine.SpyObj<RedirectorService>;
 
   beforeEach(waitForAsync(() => {
-    mockTaskListService = jasmine.createSpyObj<TaskListApiService>('TaskListApiService', ['getTaskListsByBoardId']);
+    mockTaskListService = jasmine.createSpyObj<TaskListService>('TaskListService', ['getTaskListsByBoardId']);
     mockBoardService = jasmine.createSpyObj<BoardService>('BoardService', ['getBoardsByUserId', 'getBoardById']);
     mockRedirector = jasmine.createSpyObj<RedirectorService>('RedirectorService', ['redirectToBoard']);
     mockBoardService.getBoardById.and.returnValue(of(mockBoard));
@@ -37,7 +37,7 @@ describe('BoardComponent', () => {
       providers: [
         { provide: MatDialog, useValue: mockDialog },
         { provide: BoardService, useValue: mockBoardService },
-        { provide: TaskListApiService, useValue: mockTaskListService },
+        { provide: TaskListService, useValue: mockTaskListService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: RedirectorService, useValue: mockRedirector }
       ],

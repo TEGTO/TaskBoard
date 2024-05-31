@@ -27,7 +27,7 @@
                     </span>
                     <span>List</span>
                 </div>
-                <div class="param">{{currentTaskList.name}}</div>
+                <div class="param" *ngIf="currentTaskList$ | async as currentTaskList">{{ currentTaskList.name }}</div>
                 <div class="param-header">
                     <span class="icon">
                         <i class="fas fa-calendar-alt"></i>

@@ -10,8 +10,6 @@ import { BoardManagerComponent, BoardService } from '../../../index';
 })
 export class BoardItemComponent implements OnInit {
   @Input({ required: true }) board: Board | undefined;
-  @Input({ required: true }) allBoards: Board[] = [];
-
   taskListsAmount: number = 0;
   tasksAmount: number = 0;
 
@@ -34,8 +32,9 @@ export class BoardItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const isNew = this.board == undefined;
-        if (isNew)
+        if (isNew) {
           this.boardService.createBoard(result);
+        }
         else {
           this.boardService.updateBoard(result);
         }

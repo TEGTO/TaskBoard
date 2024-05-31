@@ -86,13 +86,12 @@ describe('TasksListComponent', () => {
     expect(taskCountElement.nativeElement.textContent).toContain(taskList.boardTasks.length);
   });
   it('should open task manager dialog when "Add New Card" button is clicked', () => {
-    component.allTaskLists = mockAllTaskLists;
     component.taskList = mockTaskList;
     const newCardButton = debugEl.query(By.css('.new-card-button'));
 
     newCardButton.nativeElement.click();
 
-    expect(mockDialog.open).toHaveBeenCalledWith(TaskManagerComponent, { data: { task: undefined, currentTaskList: mockTaskList, allTaskLists: mockAllTaskLists, board: undefined } });
+    expect(mockDialog.open).toHaveBeenCalledWith(TaskManagerComponent, { data: { task: undefined, taskListId: mockTaskList.id, boardId: undefined } });
   });
   it('should open the menu when triggered', () => {
     const menuButton = debugEl.query(By.css('.card-header-icon'));
@@ -152,7 +151,7 @@ describe('TasksListComponent', () => {
     const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of(mockTaskList) });
     dialogRefSpyObj.afterClosed.and.returnValue(of(mockTaskList));
     mockDialog.open.and.returnValue(dialogRefSpyObj);
-    component.taskList = { id: 'new list', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] };
+    component.taskList = mockTaskList;
 
     component.openListManagerMenu();
 

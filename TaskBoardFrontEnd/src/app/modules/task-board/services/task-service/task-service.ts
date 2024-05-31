@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ChangeTaskData } from '../../index';
+import { BoardTask, BoardTaskList } from '../../../shared';
 
 @Injectable({
   providedIn: 'root'
 })
 export abstract class TaskService {
-  abstract createNewTask(data: ChangeTaskData): void;
-  abstract updateTask(data: ChangeTaskData, currentIndex: number): void;
-  abstract deleteTask(data: ChangeTaskData): void;
+  abstract createNewTask(task: BoardTask): void;
+  abstract updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void;
+  abstract deleteTask(task: BoardTask): void;
 }

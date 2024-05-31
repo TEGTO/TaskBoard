@@ -1,6 +1,7 @@
+import { moveItemInArray } from "@angular/cdk/drag-drop";
 import { createReducer, on } from "@ngrx/store";
-import { BoardTaskList } from "../../../shared";
-import { createNewTaskFailure, createNewTaskSuccess, createTaskListFailure, createTaskListSuccess, deleteTaskFailure, deleteTaskSuccess, getTaskListsByBoardIdFailure, getTaskListsByBoardIdSuccess, removeTaskListFailure, removeTaskListSuccess, updateTaskFailure, updateTaskListFailure, updateTaskListSuccess, updateTaskSuccess } from "../../index";
+import { BoardTask, BoardTaskList } from "../../../shared";
+import { createNewTaskFailure, createNewTaskSuccess, createTaskListFailure, createTaskListSuccess, deleteTaskFailure, deleteTaskSuccess, getTaskListsByBoardIdFailure, getTaskListsByBoardIdSuccess, removeTaskListFailure, removeTaskListSuccess, updateTask, updateTaskFailure, updateTaskListFailure, updateTaskListSuccess } from "../../index";
 
 export interface TaskListState {
     taskLists: BoardTaskList[];
@@ -70,29 +71,17 @@ export const taskReducer = createReducer(
         ...state,
         error
     })),
-    on(updateTaskSuccess, (state, { task }) => {
+    on(updateTask, (state, { prevTaskList, task, posIndex }) => {
         const taskListIndex = state.taskLists.findIndex(list => list.id === task.boardTaskListId);
-        if (taskListIndex >= 0) {
-            const taskIndex = state.taskLists[taskListIndex].boardTasks.findIndex(t => t.id === task.id);
-            if (taskIndex >= 0) {
-                const updatedTaskList = {
-                    ...state.taskLists[taskListIndex],
-                    boardTasks: [
-                        ...state.taskLists[taskListIndex].boardTasks.slice(0, taskIndex),
-                        task,
-                        ...state.taskLists[taskListIndex].boardTasks.slice(taskIndex + 1)
-                    ]
-                };
-                const updatedTaskLists = [...state.taskLists];
-                updatedTaskLists[taskListIndex] = updatedTaskList;
-                return {
-                    ...state,
-                    taskLists: updatedTaskLists,
-                    error: null
-                };
-            }
+        if (taskListIndex === -1) {
+            return state;
         }
-        return state;
+        const currentTaskList = state.taskLists[taskListIndex];
+        if (currentTaskList.id === prevTaskList.id) {
+            return updateTaskInSameList(task, state, posIndex);
+        } else {
+            return updateTaskInDifferentList(task, state, posIndex, prevTaskList);
+        }
     }),
     on(updateTaskFailure, (state, { error }) => ({
         ...state,
@@ -120,3 +109,56 @@ export const taskReducer = createReducer(
         error
     }))
 );
+function updateTaskInSameList(task: BoardTask, state: TaskListState, posIndex: number) {
+    const taskListIndex = state.taskLists.findIndex(list => list.id === task.boardTaskListId);
+    const currentTaskList = state.taskLists[taskListIndex];
+    const taskIndex = currentTaskList.boardTasks.findIndex(t => t.id === task.id);
+
+    if (taskIndex !== -1) {
+        const updatedTasks = [...currentTaskList.boardTasks];
+        updatedTasks.splice(posIndex, 1, task);
+        moveItemInArray(updatedTasks, taskIndex, posIndex);
+        const updatedTaskList = {
+            ...currentTaskList,
+            boardTasks: updatedTasks
+        };
+        const updatedTaskLists = [...state.taskLists];
+        updatedTaskLists[taskListIndex] = updatedTaskList;
+        return {
+            ...state,
+            taskLists: updatedTaskLists,
+            error: null
+        };
+    }
+    return state;
+}
+function updateTaskInDifferentList(task: BoardTask, state: TaskListState, posIndex: number, prevTaskList: BoardTaskList) {
+    const taskListIndex = state.taskLists.findIndex(list => list.id === task.boardTaskListId);
+    const prevTaskListIndex = state.taskLists.findIndex(list => list.id === prevTaskList.id);
+    const currentTaskList = state.taskLists[taskListIndex];
+    const prevTaskIndex = prevTaskList.boardTasks.findIndex(t => t.id === task.id);
+
+    if (prevTaskIndex !== -1) {
+        const updatedPrevTasks = [...prevTaskList.boardTasks];
+        const updatedCurrentTasks = [...currentTaskList.boardTasks];
+        updatedPrevTasks.splice(prevTaskIndex, 1);
+        updatedCurrentTasks.splice(posIndex, 0, task);
+        const updatedPrevTaskList = {
+            ...prevTaskList,
+            boardTasks: updatedPrevTasks
+        };
+        const updatedCurrentTaskList = {
+            ...currentTaskList,
+            boardTasks: updatedCurrentTasks
+        };
+        const updatedTaskLists = [...state.taskLists];
+        updatedTaskLists[prevTaskListIndex] = updatedPrevTaskList;
+        updatedTaskLists[taskListIndex] = updatedCurrentTaskList;
+        return {
+            ...state,
+            taskLists: updatedTaskLists,
+            error: null
+        };
+    }
+    return state;
+}

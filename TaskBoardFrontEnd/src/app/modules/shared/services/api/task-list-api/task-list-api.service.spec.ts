@@ -70,7 +70,9 @@ describe('TaskListApiService', () => {
 
     const req = httpTestingController.expectOne(expectedReq);
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(mockTaskList);
+    expect(req.request.body.id).toEqual(mockTaskList.id);
+    expect(req.request.body.boardId).toEqual(mockTaskList.boardId);
+    expect(req.request.body.name).toEqual(mockTaskList.name);
     req.flush(mockTaskList);
   });
   it('should send PUT request to update task list', () => {

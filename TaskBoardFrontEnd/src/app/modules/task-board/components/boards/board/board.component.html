@@ -23,11 +23,9 @@
         <div class="board-wrapper">
             <div class="board-columns" *ngIf="taskLists$ | async as taskLists; else loading" cdkDropListGroup>
                 @for (taskList of taskLists; track taskList) {
-                <tasks-list class="board-column" [taskList]="taskList" [board]="board"
-                    [allTaskLists]="taskLists"></tasks-list>
+                <tasks-list class="board-column" [taskList]="taskList" [boardId]="boardId"></tasks-list>
                 }
-                <tasks-list class="board-column" id="create-task-list" [board]="board"
-                    [allTaskLists]="taskLists"></tasks-list>
+                <tasks-list class="board-column" id="create-task-list" [boardId]="boardId"></tasks-list>
             </div>
         </div>
     </ng-container>

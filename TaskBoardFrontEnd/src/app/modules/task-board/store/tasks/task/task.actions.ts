@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { BoardTask } from "../../../../shared";
+import { BoardTask, BoardTaskList } from "../../../../shared";
 
 export const createNewTask = createAction(
     '[Task] Create New Task',
@@ -16,11 +16,11 @@ export const createNewTaskFailure = createAction(
 
 export const updateTask = createAction(
     '[Task] Update Task',
-    props<{ task: BoardTask; posIndex: number }>()
+    props<{ prevTaskList: BoardTaskList, task: BoardTask; posIndex: number }>()
 );
 export const updateTaskSuccess = createAction(
     '[Task] Update Task Success',
-    props<{ task: BoardTask }>()
+    props<{ prevTaskList: BoardTaskList, task: BoardTask; posIndex: number }>()
 );
 export const updateTaskFailure = createAction(
     '[Task] Update Task Failure',
@@ -29,7 +29,7 @@ export const updateTaskFailure = createAction(
 
 export const deleteTask = createAction(
     '[Task] Delete Task',
-    props<{ task: BoardTask }>()
+    props<{ taskId: string }>()
 );
 export const deleteTaskSuccess = createAction(
     '[Task] Delete Task Success',

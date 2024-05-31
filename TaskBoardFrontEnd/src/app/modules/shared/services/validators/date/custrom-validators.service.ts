@@ -7,8 +7,11 @@ import { DateValidator } from './date-validators';
 })
 export class CustomDatePickerValidatorService extends DateValidator {
 
-  dateMinimum(minDate: Date): ValidatorFn {
+  dateMinimum(minDate: any): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
+      if (!(minDate instanceof Date)) {
+        minDate = new Date(minDate);
+      }
       if (control.value instanceof Date && typeof control.value.getTime === 'function') {
         // Normalize both dates to midnight
         const selectedDate = new Date(control.value);

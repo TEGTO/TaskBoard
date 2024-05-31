@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { BoardTask, BoardTaskList, DateValidator, Priority, PriorityConvertorService, copyTaskValues, getDefaultBoardTask } from '../../../../shared';
-import { ChangeTaskData, TaskPopupData, TaskService } from '../../../index';
+import { BoardTask, BoardTaskList, DateValidator, Priority, PriorityConvertorService, getDefaultBoardTask } from '../../../../shared';
+import { TaskListService, TaskPopupData, TaskService } from '../../../index';
 
 @Component({
   selector: 'app-task-manager',
@@ -12,22 +12,23 @@ import { ChangeTaskData, TaskPopupData, TaskService } from '../../../index';
 })
 export class TaskManagerComponent implements OnInit {
   taskForm!: FormGroup;
-  cardName: string = "";
-  minDate = new Date();
+  cardName!: string;
+  minDate!: Date;
+  isNewTask!: boolean;
   allTaskLists!: BoardTaskList[];
-  isNew: boolean = false;
   private task!: BoardTask;
-  private taskList!: BoardTaskList;
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: TaskPopupData,
-    private formBuilder: FormBuilder, private dialogRef: MatDialogRef<TaskManagerComponent>,
-    private taskService: TaskService, private dateValidator: DateValidator) {
+    private taskListService: TaskListService,
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<TaskManagerComponent>,
+    private taskService: TaskService,
+    private dateValidator: DateValidator) {
   }
 
   ngOnInit(): void {
-    this.taskList = this.data.currentTaskList!;
-    this.cardName = this.data.task ? "Edit Task" : "Create Task";
-    this.isNew = this.data.task == undefined;
+    this.isNewTask = this.data.task == undefined;
+    this.cardName = this.isNewTask ? "Create Task" : "Edit Task";
     this.setMinDate();
     this.getTaskLists();
     this.assignTask();
@@ -38,12 +39,12 @@ export class TaskManagerComponent implements OnInit {
   }
   onSubmit(): void {
     if (this.taskForm.valid) {
-      this.getTaskFromForm();
-      if (this.isNew)
-        this.createNewTask();
+      var taskInForm = this.getTaskFromForm();
+      if (this.isNewTask)
+        this.createNewTask(taskInForm);
       else
-        this.updateTask();
-      this.dialogRef.close(this.task);
+        this.updateTask(taskInForm);
+      this.dialogRef.close(taskInForm);
     }
   }
   isDateInvalid() {
@@ -53,17 +54,17 @@ export class TaskManagerComponent implements OnInit {
     return this.taskForm.get("name")?.invalid && (this.taskForm.get("name")?.dirty || this.taskForm.get("name")?.touched);
   }
   private setMinDate() {
-    var date = this.isNew || !this.task ? new Date().getDate() : this.task.dueTime?.getDate()!;
-    this.minDate.setDate(date);
+    var date = this.isNewTask ? new Date() : this.data.task?.dueTime ?? new Date();
+    this.minDate = date;
   }
   private getTaskLists() {
-    this.allTaskLists = this.data.allTaskLists ? this.data.allTaskLists : [];
+    this.taskListService.getTaskListsByBoardId(this.data.boardId).subscribe((lists) => { this.allTaskLists = lists });
   }
   private assignTask() {
     this.task = this.data.task ? this.data.task : getDefaultBoardTask();
   }
   private initForm(): void {
-    const firstListId = this.taskList ? this.taskList.id : "";
+    const firstListId = this.allTaskLists.length > 0 ? this.allTaskLists[0] : "";
     this.taskForm = this.formBuilder.group({
       name: [this.task?.name || '', Validators.required],
       listId: [this.task?.boardTaskListId || firstListId, Validators.required],
@@ -82,29 +83,20 @@ export class TaskManagerComponent implements OnInit {
       priority: formValue.priority,
       description: formValue.description,
     };
-    copyTaskValues(this.task, buffer);
+    return buffer;
   }
-  private createNewTask() {
-    var currentTaskList = this.allTaskLists.find(x => x.id == this.task.boardTaskListId)!;
-    var changeData = this.createChangeTaskData(currentTaskList, currentTaskList);
-    this.taskService.createNewTask(changeData);
+  private createNewTask(task: BoardTask) {
+    this.taskService.createNewTask({ ...task, boardTaskListId: this.data.taskListId });
   }
-  private updateTask() {
-    var newIndex = 0;
-    var currentTaskList = this.allTaskLists.find(x => x.id == this.task.boardTaskListId)!;
-    if (currentTaskList.id == this.taskList.id)
-      newIndex = this.taskList.boardTasks.findIndex((element) => element.id === this.task.id)
-    var changeData = this.createChangeTaskData(currentTaskList, this.taskList);
-    this.taskService.updateTask(changeData, newIndex);
-  }
-  private createChangeTaskData(currentTaskList: BoardTaskList, prevTaskList: BoardTaskList) {
-    var data: ChangeTaskData = {
-      task: this.task,
-      currentTaskList: currentTaskList,
-      prevTaskList: prevTaskList,
-      allTaskLists: this.allTaskLists,
-      board: this.data.board
-    }
-    return data;
+  private updateTask(task: BoardTask) {
+    this.taskListService.getTaskListById(this.task.boardTaskListId).subscribe(
+      (list) => {
+        if (list) {
+          var currentTaskList = this.allTaskLists.find(x => x.id == task.boardTaskListId)!;
+          var newIndex = currentTaskList.id == task.boardTaskListId ? list.boardTasks.findIndex((element) => element.id === this.task.id) : 0;
+          this.taskService.updateTask(list, task, newIndex);
+        }
+      }
+    );
   }
 }
