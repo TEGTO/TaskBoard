@@ -31,7 +31,6 @@ describe('DateFormaterService', () => {
   });
   it('should return current date if input is undefined', () => {
     const formattedDate = service.formatDate(undefined);
-    const currentDate = Date.now();
-    expect(formattedDate).toBe(currentDate);
+    expect(formattedDate).toBe(Date.now());
   });
 });

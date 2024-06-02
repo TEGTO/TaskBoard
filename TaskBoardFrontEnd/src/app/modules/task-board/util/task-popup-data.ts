@@ -1,8 +1,7 @@
-import { Board, BoardTask, BoardTaskList } from "../../shared";
+import { BoardTask } from "../../shared";
 
 export interface TaskPopupData {
     task: BoardTask | undefined;
-    currentTaskList: BoardTaskList | undefined;
-    allTaskLists: BoardTaskList[] | undefined;
-    board: Board;
+    taskListId: string;
+    boardId: string;
 }

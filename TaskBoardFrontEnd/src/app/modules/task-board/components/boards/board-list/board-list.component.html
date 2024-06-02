@@ -3,9 +3,9 @@
         <div class="board-list-wrapper">
             <div class="list-columns">
                 @for (board of boards; track board;) {
-                <board-item [board]="board" [allBoards]="boards" class="list-column"></board-item>
+                <board-item [board]="board" class="list-column"></board-item>
                 }
-                <board-item [board]="undefined" [allBoards]="boards" class="list-column"></board-item>
+                <board-item [board]="undefined" class="list-column"></board-item>
             </div>
         </div>
     </ng-container>

@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ActivityHistoryComponent } from '../../../../action-history';
-import { Board, BoardTaskList, RedirectorService, TaskListApiService } from '../../../../shared';
-import { BoardService } from '../../../services/board-service/board-service';
+import { Board, BoardTaskList, RedirectorService } from '../../../../shared';
+import { BoardService, TaskListService } from '../../../index';
 
 @Component({
   selector: 'task-board',
@@ -17,8 +17,11 @@ export class BoardComponent implements OnInit {
   boards$!: Observable<Board[] | undefined>;
   taskLists$!: Observable<BoardTaskList[]>;
 
-  constructor(private activatedRoute: ActivatedRoute, public dialog: MatDialog, private boardService: BoardService,
-    private taskListService: TaskListApiService, private redirector: RedirectorService) { }
+  constructor(private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
+    private boardService: BoardService,
+    private taskListService: TaskListService,
+    private redirector: RedirectorService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {

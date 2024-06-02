@@ -11,10 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { provideEffects } from '@ngrx/effects';
+import { provideState, provideStore } from '@ngrx/store';
 import { ActionHistoryModule } from '../action-history/action-history.module';
-import { BoardComponent, BoardListComponent, TaskComponent, TaskInfoComponent, TaskListManagerComponent, TaskManagerComponent, TasksListComponent } from './index';
-import { BoardItemComponent } from './components/boards/board-item/board-item.component';
-import { BoardManagerComponent } from './components/boards/board-manager/board-manager.component';
+import { BoardComponent, BoardEffects as BoardEffect, BoardItemComponent, BoardListComponent, BoardManagerComponent, TaskComponent, TaskInfoComponent, TaskListEffect, TaskListManagerComponent, TaskManagerComponent, TasksListComponent, boardReducer, taskReducer } from './index';
+import { TaskEffect } from './store/tasks/task/task.effect';
 
 @NgModule({
   declarations: [
@@ -46,5 +47,13 @@ import { BoardManagerComponent } from './components/boards/board-manager/board-m
     ActionHistoryModule
   ],
   exports: [BoardComponent],
+  providers: [
+    provideStore(),
+    provideState({ name: "tasks", reducer: taskReducer }),
+    provideState({ name: "boards", reducer: boardReducer }),
+    provideEffects(TaskEffect),
+    provideEffects(TaskListEffect),
+    provideEffects(BoardEffect),
+  ]
 })
 export class TaskBoardModule { }

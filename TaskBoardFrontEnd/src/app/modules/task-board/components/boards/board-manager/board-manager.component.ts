@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Board, copyBoardValues, getDefaultBoard } from '../../../../shared';
+import { Board, getDefaultBoard } from '../../../../shared';
 
 @Component({
   selector: 'app-board-manager',
@@ -21,22 +21,22 @@ export class BoardManagerComponent {
 
   ngOnInit(): void {
     this.cardName = this.data ? "Edit Board" : "Create Board";
-    this.assignTaskList();
+    this.assignBoard();
     this.initForm();
-  }
-  isNameInvalid() {
-    return this.boardFormGroup.get("name")?.invalid && this.boardFormGroup.get("name")?.dirty;
-  }
-  onSubmit(): void {
-    if (this.boardFormGroup.valid) {
-      this.getDataFromForm();
-      this.dialogRef.close(this.board);
-    }
   }
   updateView() {
     this.cdr.markForCheck();
   }
-  private assignTaskList() {
+  onSubmit(): void {
+    if (this.boardFormGroup.valid) {
+      var boardFromForm = this.getDataFromForm();
+      this.dialogRef.close(boardFromForm);
+    }
+  }
+  isNameInvalid() {
+    return this.boardFormGroup.get("name")?.invalid && this.boardFormGroup.get("name")?.dirty;
+  }
+  private assignBoard() {
     this.board = this.data ? this.data : getDefaultBoard();
   }
   private initForm(): void {
@@ -47,6 +47,6 @@ export class BoardManagerComponent {
   private getDataFromForm() {
     const formValue = this.boardFormGroup.value;
     const buffer = { ...this.board, name: formValue.name };
-    copyBoardValues(this.board, buffer)
+    return buffer;
   }
 }

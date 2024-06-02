@@ -4,7 +4,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { ActivityService } from '../../../../action-history';
 import { BoardTask, BoardTaskActivity, BoardTaskList, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
-import { TaskManagerComponent, TaskPopupData } from '../../../index';
+import { TaskListService, TaskManagerComponent, TaskPopupData } from '../../../index';
 
 @Component({
   selector: 'app-task-info',
@@ -13,13 +13,13 @@ import { TaskManagerComponent, TaskPopupData } from '../../../index';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskInfoComponent {
-
-  taskActivities$!: Observable<BoardTaskActivity[] | undefined>;
   task!: BoardTask;
-  currentTaskList!: BoardTaskList;
+  currentTaskList$!: Observable<BoardTaskList | undefined>;
+  taskActivities$!: Observable<BoardTaskActivity[] | undefined>;
 
   constructor(public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) private data: TaskPopupData,
+    private taskListService: TaskListService,
     private sanitizer: DomSanitizer,
     private activityService: ActivityService,
     private dateFormater: DateFormaterService,
@@ -28,7 +28,7 @@ export class TaskInfoComponent {
 
   ngOnInit(): void {
     this.task = this.data.task!;
-    this.currentTaskList = this.data.currentTaskList!;
+    this.currentTaskList$ = this.taskListService.getTaskListById(this.task.boardTaskListId!);
     this.taskActivities$ = this.activityService.getTaskActivitiesByTaskId(this.task.id);
   }
   openEditMenu() {

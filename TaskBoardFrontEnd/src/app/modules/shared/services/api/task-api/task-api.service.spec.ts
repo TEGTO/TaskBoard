@@ -55,7 +55,7 @@ describe('TaskApiService', () => {
   it('should send POST request', () => {
     const expectedReq = `/BoardTask`;
 
-    service.createNewTask(mockTasks[0]).subscribe(task => {
+    service.createTask(mockTasks[0]).subscribe(task => {
       expect(task).toEqual(mockTasks[0]);
     });
 

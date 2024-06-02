@@ -39,7 +39,6 @@ describe('BoardItemComponent', () => {
     fixture = TestBed.createComponent(BoardItemComponent);
     component = fixture.componentInstance;
     component.board = mockBoard;
-    component.allBoards = mockBoards;
     mockBoardService.getTaskListsAmountByBoardId.and.returnValue(of(5));
     mockBoardService.getTasksAmountByBoardId.and.returnValue(of(10));
     fixture.detectChanges();

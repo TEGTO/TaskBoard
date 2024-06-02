@@ -105,7 +105,9 @@ describe('BoardApiService', () => {
     expect(mockUserApiService.getUser).toHaveBeenCalledTimes(1);
     const req = httpTestingController.expectOne(expectedReq);
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(mockBoard);
+    expect(req.request.body.id).toEqual(mockBoard.id);
+    expect(req.request.body.userId).toEqual(mockBoard.userId);
+    expect(req.request.body.name).toEqual(mockBoard.name);
     expect(mockUrlDefiner.combineWithApiUrl).toHaveBeenCalledWith(expectedReq);
     req.flush(mockBoard);
   });

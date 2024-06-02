@@ -1,113 +1,85 @@
 import { TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { Board, BoardApiService } from '../../../shared';
-import { ChangeBoardData } from '../../index';
+import { createBoard, deleteBoard, getBoardsByUserId, updateBoard } from '../../store/board/board.actions';
 import { BoardControllerService } from './board-controller.service';
 
 describe('BoardControllerService', () => {
+  var mockBoardApiService: jasmine.SpyObj<BoardApiService>;
+  var mockStore: jasmine.SpyObj<Store>;
   var service: BoardControllerService;
-  var apiService: jasmine.SpyObj<BoardApiService>;
 
   beforeEach(() => {
-    apiService = jasmine.createSpyObj('BoardApiService', ['getBoardsByUserId', 'getBoardById', 'getTaskListsAmountByBoardId',
-      'getTasksAmountByBoardId', 'createBoard', 'updateBoard', 'deleteBoard'
-    ]);
+    mockBoardApiService = jasmine.createSpyObj<BoardApiService>('BoardApiService', ['getBoardById', 'getTaskListsAmountByBoardId', 'getTasksAmountByBoardId']);
+    mockStore = jasmine.createSpyObj<Store>('Store', ['dispatch', 'select']);
 
     TestBed.configureTestingModule({
-      providers: [{ provide: BoardApiService, useValue: apiService },]
+      providers: [
+        BoardControllerService,
+        { provide: BoardApiService, useValue: mockBoardApiService },
+        { provide: Store, useValue: mockStore },
+      ]
     });
     service = TestBed.inject(BoardControllerService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-  it('should get boards by user id ', () => {
-    const board: Board = { id: '1', userId: "boardId", creationTime: new Date(), name: 'Board 1' }
-    const board1: Board = { id: '2', userId: "boardId", creationTime: new Date(), name: 'Board 2' }
-    const allBoards: Board[] = [board, board1];
-    apiService.getBoardsByUserId.and.returnValue(of(allBoards));
+  it('should dispatch getBoardsByUserId and return boards$', () => {
+    const boardsMock = of([]);
+    mockStore.select.and.returnValue(boardsMock);
 
-    service.getBoardsByUserId().subscribe(
-      (result) => {
-        expect(result.length).toBe(2);
-        expect(result[0]).toBe(board);
-        expect(apiService.getBoardsByUserId).toHaveBeenCalled();
-      }
-    );
-  });
-  it('should get board by id', () => {
-    const board: Board = { id: '1', userId: "boardId", creationTime: new Date(), name: 'Board 1' }
-    const allBoards: Board[] = [board];
-    apiService.getBoardById.and.callFake((id: string) => {
-      const filteredBoard = allBoards.find(x => x.id === id);
-      return of(filteredBoard);
+    const result = service.getBoardsByUserId();
+    expect(mockStore.dispatch).toHaveBeenCalledWith(getBoardsByUserId());
+    result.subscribe(boards => {
+      expect(boards).toEqual([]);
     });
-
-    service.getBoardById(board.id).subscribe(
-      (result) => {
-        expect(result).toBe(board);
-        expect(apiService.getBoardById).toHaveBeenCalledWith(board.id);
-      }
-    );
   });
-  it('should get task lists amount by board id', () => {
-    const board: Board = { id: '1', userId: "boardId", creationTime: new Date(), name: 'Board 1' }
-    const taskListsAmount = 10;
-    apiService.getTaskListsAmountByBoardId.and.returnValue(of(taskListsAmount));
+  it('should call getBoardById from BoardApiService', () => {
+    const boardId = '123';
+    const boardMock = { id: '123', userId: 'user1', creationTime: new Date() };
+    mockBoardApiService.getBoardById.and.returnValue(of(boardMock));
 
-    service.getTaskListsAmountByBoardId(board.id).subscribe(
-      (result) => {
-        expect(result).toBe(taskListsAmount);
-        expect(apiService.getTaskListsAmountByBoardId).toHaveBeenCalledWith(board.id);
-      }
-    );
+    service.getBoardById(boardId).subscribe(board => {
+      expect(board).toEqual(boardMock);
+    });
+    expect(mockBoardApiService.getBoardById).toHaveBeenCalledWith(boardId);
   });
-  it('should get tasks amount by board id', () => {
-    const board: Board = { id: '1', userId: "boardId", creationTime: new Date(), name: 'Board 1' }
-    const tasksAmount = 10;
-    apiService.getTasksAmountByBoardId.and.returnValue(of(tasksAmount));
+  it('should call getTaskListsAmountByBoardId from BoardApiService', () => {
+    const boardId = '123';
+    const taskListsAmountMock = of(5);
+    mockBoardApiService.getTaskListsAmountByBoardId.and.returnValue(taskListsAmountMock);
 
-    service.getTasksAmountByBoardId(board.id).subscribe(
-      (result) => {
-        expect(result).toBe(tasksAmount);
-        expect(apiService.getTasksAmountByBoardId).toHaveBeenCalledWith(board.id);
-      }
-    );
+    service.getTaskListsAmountByBoardId(boardId).subscribe(amount => {
+      expect(amount).toEqual(5);
+    });
+    expect(mockBoardApiService.getTaskListsAmountByBoardId).toHaveBeenCalledWith(boardId);
   });
-  it('should create board', () => {
-    const board: Board = { id: '1', userId: "1", creationTime: new Date(), name: 'board1' }
-    const allBoards: Board[] = [];
-    apiService.createBoard.and.returnValue(of(board));
-    var data: ChangeBoardData = { board: board, allBoards: allBoards };
+  it('should call getTasksAmountByBoardId from BoardApiService', () => {
+    const boardId = '123';
+    const tasksAmountMock = of(10);
+    mockBoardApiService.getTasksAmountByBoardId.and.returnValue(tasksAmountMock);
 
-    service.createBoard(data);
-
-    expect(allBoards.length).toBe(1);
-    expect(allBoards[0]).toEqual(board);
-    expect(apiService.createBoard).toHaveBeenCalledWith(board);
+    service.getTasksAmountByBoardId(boardId).subscribe(amount => {
+      expect(amount).toEqual(10);
+    });
+    expect(mockBoardApiService.getTasksAmountByBoardId).toHaveBeenCalledWith(boardId);
   });
-  it('should update board', () => {
-    const board: Board = { id: '1', userId: "boardId", creationTime: new Date(), name: 'Board 1' }
-    const allBoards: Board[] = [board];
-    apiService.getBoardById.and.returnValue(of(board));
-    apiService.updateBoard.and.returnValue(of(board));
-    var data: ChangeBoardData = { board: board, allBoards: allBoards };
+  it('should dispatch createBoard', () => {
+    const board: Board = { id: '123', userId: 'user1', creationTime: new Date() };
 
-    service.updateBoard(data);
-
-    expect(apiService.getBoardById).toHaveBeenCalledWith(board.id);
-    expect(apiService.updateBoard).toHaveBeenCalledWith(board);
+    service.createBoard(board);
+    expect(mockStore.dispatch).toHaveBeenCalledWith(createBoard({ board }));
   });
-  it('should delete board', () => {
-    const board: Board = { id: '1', userId: "boardId", creationTime: new Date(), name: 'Board 1' }
-    const allBoards: Board[] = [board];
-    apiService.deleteBoard.and.returnValue(of(board));
-    var data: ChangeBoardData = { board: board, allBoards: allBoards };
+  it('should dispatch updateBoard', () => {
+    const board: Board = { id: '123', userId: 'user1', creationTime: new Date() };
 
-    service.deleteBoard(data);
+    service.updateBoard(board);
+    expect(mockStore.dispatch).toHaveBeenCalledWith(updateBoard({ board }));
+  });
+  it('should dispatch removeBoard', () => {
+    const board: Board = { id: '123', userId: 'user1', creationTime: new Date() };
 
-    expect(allBoards.length).toBe(0);
-    expect(apiService.deleteBoard).toHaveBeenCalledWith(board.id);
+    service.deleteBoard(board);
+    expect(mockStore.dispatch).toHaveBeenCalledWith(deleteBoard({ boardId: board.id }));
   });
 });

@@ -8,6 +8,10 @@ import { TaskListManagerComponent } from './task-list-manager.component';
 
 describe('TaskListManagerComponent', () => {
   const mockTaskList: BoardTaskList = { id: 'list_id', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
+  const mmockPopupTaskListData = {
+    taskList: mockTaskList,
+    boardId: mockTaskList.boardId
+  }
   var component: TaskListManagerComponent;
   var fixture: ComponentFixture<TaskListManagerComponent>;
   var dialogRef: jasmine.SpyObj<MatDialogRef<TaskListManagerComponent>>;
@@ -24,7 +28,7 @@ describe('TaskListManagerComponent', () => {
       declarations: [TaskListManagerComponent],
       imports: [ReactiveFormsModule, MatDialogModule],
       providers: [
-        { provide: MAT_DIALOG_DATA, useValue: mockTaskList },
+        { provide: MAT_DIALOG_DATA, useValue: mmockPopupTaskListData },
         { provide: MatDialogRef, useValue: dialogRef },
         { provide: MatDialog, useValue: mockDialog },
         { provide: FormBuilder, useValue: formBuilder }

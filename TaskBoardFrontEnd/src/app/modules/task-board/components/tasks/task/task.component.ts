@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BoardTask, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
-import { ChangeTaskData, TaskComponentData, TaskInfoComponent, TaskManagerComponent, TaskPopupData, TaskService } from '../../../index';
+import { TaskInfoComponent, TaskManagerComponent, TaskPopupData, TaskService } from '../../../index';
 
 @Component({
   selector: 'task',
@@ -10,9 +10,10 @@ import { ChangeTaskData, TaskComponentData, TaskInfoComponent, TaskManagerCompon
 })
 export class TaskComponent {
   @Input({ required: true }) task!: BoardTask;
-  @Input({ required: true }) componentData!: TaskComponentData;
+  @Input({ required: true }) boardId!: string;
 
-  constructor(public dialog: MatDialog, private dateFormater: DateFormaterService,
+  constructor(public dialog: MatDialog,
+    private dateFormater: DateFormaterService,
     private taskService: TaskService) { }
 
   openInfoMenu() {
@@ -26,7 +27,7 @@ export class TaskComponent {
     });
   }
   deleteButton() {
-    this.taskService.deleteTask(this.createChangeTaskData());
+    this.taskService.deleteTask(this.task);
   }
   getPriorityString(priority: Priority): string {
     return PriorityConvertorService.getPriorityString(priority);
@@ -37,20 +38,9 @@ export class TaskComponent {
   private getPopupData() {
     const taskPopupData: TaskPopupData = {
       task: this.task,
-      currentTaskList: this.componentData.currentTaskList,
-      allTaskLists: this.componentData.allTaskLists,
-      board: this.componentData.board
+      taskListId: this.task.boardTaskListId,
+      boardId: this.boardId
     }
     return taskPopupData;
-  }
-  private createChangeTaskData() {
-    var data: ChangeTaskData = {
-      task: this.task,
-      currentTaskList: this.componentData.currentTaskList,
-      prevTaskList: this.componentData.currentTaskList,
-      allTaskLists: this.componentData.allTaskLists,
-      board: this.componentData.board
-    }
-    return data;
   }
 }

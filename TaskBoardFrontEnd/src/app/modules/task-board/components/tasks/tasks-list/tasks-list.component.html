@@ -41,7 +41,7 @@
 
     <body class="tasks-container" cdkDropList [cdkDropListData]="taskList" (cdkDropListDropped)="onTaskDrop($event)">
         @for (task of taskList.boardTasks; track task) {
-        <task class="task-box" [task]="task" [componentData]="getTaskComponentData()" cdkDrag [cdkDragData]="task">
+        <task class="task-box" [task]="task" [boardId]="taskList.boardId" cdkDrag [cdkDragData]="task">
         </task>
         }
     </body>
