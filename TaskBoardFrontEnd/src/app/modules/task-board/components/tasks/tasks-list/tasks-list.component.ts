@@ -32,7 +32,7 @@ export class TasksListComponent {
       if (result) {
         const isNew = this.taskList == undefined;
         if (isNew) {
-          this.taskListService.createNewTaskList(result);
+          this.taskListService.createTaskList(result);
         }
         else {
           this.taskListService.updateTaskList(result);

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap, of } from "rxjs";
 import { Board, BoardApiService } from "../../../shared";
-import { createBoard, createBoardSuccess, createNewTaskFailure, getBoardsByUserId, getBoardsByUserIdFailure, getBoardsByUserIdSuccess, removeBoard, removeBoardSuccess, removeTaskListFailure, updateBoard, updateBoardSuccess, updateTaskListFailure } from "../../index";
+import { createBoard, createBoardFailure, createBoardSuccess, deleteBoard, deleteBoardFailure, deleteBoardSuccess, getBoardsByUserId, getBoardsByUserIdFailure, getBoardsByUserIdSuccess, updateBoard, updateBoardFailure, updateBoardSuccess } from "../../index";
 
 @Injectable()
 export class BoardEffects {
@@ -26,7 +26,7 @@ export class BoardEffects {
             mergeMap(action =>
                 this.apiService.createBoard(action.board).pipe(
                     map((board: Board) => createBoardSuccess({ board: board })),
-                    catchError(error => of(createNewTaskFailure({ error })))
+                    catchError(error => of(createBoardFailure({ error })))
                 )
             )
         )
@@ -37,18 +37,18 @@ export class BoardEffects {
             mergeMap(action =>
                 this.apiService.updateBoard(action.board).pipe(
                     map(() => updateBoardSuccess({ board: action.board })),
-                    catchError(error => of(updateTaskListFailure({ error })))
+                    catchError(error => of(updateBoardFailure({ error })))
                 )
             )
         )
     );
-    removeBoard$ = createEffect(() =>
+    deleteBoard$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(removeBoard),
+            ofType(deleteBoard),
             mergeMap(action =>
                 this.apiService.deleteBoard(action.boardId).pipe(
-                    map(() => removeBoardSuccess({ boardId: action.boardId })),
-                    catchError(error => of(removeTaskListFailure({ error })))
+                    map(() => deleteBoardSuccess({ boardId: action.boardId })),
+                    catchError(error => of(deleteBoardFailure({ error })))
                 )
             )
         )

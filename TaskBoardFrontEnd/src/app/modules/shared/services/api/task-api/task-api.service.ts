@@ -17,7 +17,7 @@ export class TaskApiService extends BaseApiService {
       catchError((err) => this.handleError(err))
     );
   }
-  createNewTask(task: BoardTask) {
+  createTask(task: BoardTask) {
     this.validateTask_Create(task);
     task = { ...task, creationTime: new Date() };
     return this.getHttpClient().post<BoardTask>(this.combinePathWithApiUrl(`/BoardTask`), task).pipe(

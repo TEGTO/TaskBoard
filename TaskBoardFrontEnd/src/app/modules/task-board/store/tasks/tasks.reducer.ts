@@ -1,7 +1,7 @@
 import { moveItemInArray } from "@angular/cdk/drag-drop";
 import { createReducer, on } from "@ngrx/store";
 import { BoardTask, BoardTaskList } from "../../../shared";
-import { createNewTaskFailure, createNewTaskSuccess, createTaskListFailure, createTaskListSuccess, deleteTaskFailure, deleteTaskSuccess, getTaskListsByBoardIdFailure, getTaskListsByBoardIdSuccess, removeTaskListFailure, removeTaskListSuccess, updateTask, updateTaskFailure, updateTaskListFailure, updateTaskListSuccess } from "../../index";
+import { createTaskFailure, createTaskListFailure, createTaskListSuccess, createTaskSuccess, deleteTaskFailure, deleteTaskListFailure, deleteTaskListSuccess, deleteTaskSuccess, getTaskListsByBoardIdFailure, getTaskListsByBoardIdSuccess, updateTask, updateTaskFailure, updateTaskListFailure, updateTaskListSuccess } from "../../index";
 
 export interface TaskListState {
     taskLists: BoardTaskList[];
@@ -41,16 +41,16 @@ export const taskReducer = createReducer(
         ...state,
         error
     })),
-    on(removeTaskListSuccess, (state, { listId }) => ({
+    on(deleteTaskListSuccess, (state, { listId }) => ({
         ...state,
         taskLists: state.taskLists.filter(taskList => taskList.id !== listId),
         error: null
     })),
-    on(removeTaskListFailure, (state, { error }) => ({
+    on(deleteTaskListFailure, (state, { error }) => ({
         ...state,
         error
     })),
-    on(createNewTaskSuccess, (state, { task }) => {
+    on(createTaskSuccess, (state, { task }) => {
         const taskListIndex = state.taskLists.findIndex(list => list.id === task.boardTaskListId);
         if (taskListIndex >= 0) {
             const updatedTaskList = {
@@ -67,7 +67,7 @@ export const taskReducer = createReducer(
         }
         return state;
     }),
-    on(createNewTaskFailure, (state, { error }) => ({
+    on(createTaskFailure, (state, { error }) => ({
         ...state,
         error
     })),

@@ -16,7 +16,7 @@ export class TaskListApiService extends BaseApiService {
       catchError((err) => this.handleError(err))
     );
   }
-  createNewTaskList(taskList: BoardTaskList) {
+  createTaskList(taskList: BoardTaskList) {
     taskList = { ...taskList, creationTime: new Date(), boardTasks: [] };
     this.validateTaskList_Create(taskList);
     return this.getHttpClient().post<BoardTaskList>(this.combinePathWithApiUrl(`/BoardTaskList`), taskList).pipe(

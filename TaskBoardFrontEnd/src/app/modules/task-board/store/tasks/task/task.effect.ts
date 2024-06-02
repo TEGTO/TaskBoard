@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, forkJoin, map, mergeMap, of, switchMap } from "rxjs";
 import { ActivityService, TaskActivityData } from "../../../../action-history";
 import { ActivityType, Board, BoardTask, BoardTaskList, TaskApiService, TaskListApiService, getDefaultBoard } from "../../../../shared";
-import { createNewTask, createNewTaskFailure, createNewTaskSuccess, deleteTask, deleteTaskFailure, deleteTaskSuccess, updateTask, updateTaskFailure, updateTaskSuccess } from "../../../index";
+import { createTask, createTaskFailure, createTaskSuccess, deleteTask, deleteTaskFailure, deleteTaskSuccess, updateTask, updateTaskFailure, updateTaskSuccess } from "../../../index";
 
 @Injectable()
 export class TaskEffect {
@@ -12,16 +12,16 @@ export class TaskEffect {
         private taskListApiService: TaskListApiService,
         private activityService: ActivityService) { }
 
-    createNewTask$ = createEffect(() =>
+    createTask$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(createNewTask),
+            ofType(createTask),
             mergeMap(action =>
-                this.taskApiService.createNewTask(action.task).pipe(
+                this.taskApiService.createTask(action.task).pipe(
                     map((task: BoardTask) => {
                         this.createActivity_Create(task);
-                        return createNewTaskSuccess({ task: task });
+                        return createTaskSuccess({ task: task });
                     }),
-                    catchError(error => of(createNewTaskFailure({ error }))))
+                    catchError(error => of(createTaskFailure({ error }))))
             )
         )
     );

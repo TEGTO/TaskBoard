@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BoardTaskList, TaskListApiService } from '../../../shared';
-import { createTaskList, getTaskListsByBoardId, removeTaskList, selectAllTaskLists, updateTaskList } from '../../index';
+import { createTaskList, deleteTaskList, getTaskListsByBoardId, selectAllTaskLists, updateTaskList } from '../../index';
 import { TaskListService } from './task-list-service';
 
 @Injectable({
@@ -21,13 +21,13 @@ export class TaskListControllerService implements TaskListService {
   getTaskListById(id: string) {
     return this.taskListApi.getTaskListById(id);
   }
-  createNewTaskList(taskList: BoardTaskList) {
+  createTaskList(taskList: BoardTaskList) {
     this.store.dispatch(createTaskList({ taskList }));
   }
   updateTaskList(taskList: BoardTaskList) {
     this.store.dispatch(updateTaskList({ taskList }));
   }
   deleteTaskList(taskList: BoardTaskList) {
-    this.store.dispatch(removeTaskList({ listId: taskList.id }));
+    this.store.dispatch(deleteTaskList({ listId: taskList.id }));
   }
 }

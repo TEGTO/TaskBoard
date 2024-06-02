@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { ActivityService } from '../../../action-history';
 import { BoardTask, BoardTaskList, Priority, TaskApiService } from '../../../shared';
-import { createNewTask, deleteTask, updateTask } from '../../store/tasks/task/task.actions';
+import { createTask, deleteTask, updateTask } from '../../store/tasks/task/task.actions';
 import { TaskControllerService } from './task-controller.service';
 
 describe('TaskControllerService', () => {
@@ -30,8 +30,8 @@ describe('TaskControllerService', () => {
 
   it('should dispatch createNewTask action', () => {
     const task: BoardTask = { id: '1', boardTaskListId: '1', creationTime: new Date(), name: 'Test Task', description: 'Description', priority: Priority.Low };
-    service.createNewTask(task);
-    expect(mockStore.dispatch).toHaveBeenCalledWith(createNewTask({ task }));
+    service.createTask(task);
+    expect(mockStore.dispatch).toHaveBeenCalledWith(createTask({ task }));
   });
   it('should dispatch updateTask action', () => {
     const prevTaskList: BoardTaskList = { id: '1', boardId: '1', creationTime: new Date(), boardTasks: [{ id: '1', boardTaskListId: '1', creationTime: new Date(), name: 'Old Name', description: 'Old Description', priority: Priority.Low }] };

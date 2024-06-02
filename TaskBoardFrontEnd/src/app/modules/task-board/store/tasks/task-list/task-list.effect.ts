@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap, of } from "rxjs";
 import { ActivityService, TaskListActivityData } from "../../../../action-history";
 import { ActivityType, Board, BoardTaskList, TaskListApiService, getDefaultBoard } from "../../../../shared";
-import { createNewTaskFailure, createTaskList, createTaskListSuccess, getTaskListsByBoardId, getTaskListsByBoardIdFailure, getTaskListsByBoardIdSuccess, removeTaskList, removeTaskListFailure, removeTaskListSuccess, updateTaskList, updateTaskListFailure, updateTaskListSuccess } from "../../../index";
+import { createTaskList, createTaskListFailure, createTaskListSuccess, deleteTaskList, deleteTaskListFailure, deleteTaskListSuccess, getTaskListsByBoardId, getTaskListsByBoardIdFailure, getTaskListsByBoardIdSuccess, updateTaskList, updateTaskListFailure, updateTaskListSuccess } from "../../../index";
 
 @Injectable()
 export class TaskListEffect {
@@ -22,16 +22,16 @@ export class TaskListEffect {
             )
         )
     );
-    createNewTaskList$ = createEffect(() =>
+    createTaskList$ = createEffect(() =>
         this.actions$.pipe(
             ofType(createTaskList),
             mergeMap(action =>
-                this.apiService.createNewTaskList(action.taskList).pipe(
+                this.apiService.createTaskList(action.taskList).pipe(
                     map((taskList: BoardTaskList) => {
                         this.createActivity_Create(taskList);
                         return createTaskListSuccess({ taskList: taskList });
                     }),
-                    catchError(error => of(createNewTaskFailure({ error })))
+                    catchError(error => of(createTaskListFailure({ error })))
                 ))
         )
     );
@@ -46,14 +46,14 @@ export class TaskListEffect {
             })
         )
     );
-    removeTaskList$ = createEffect(() =>
+    deleteTaskList$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(removeTaskList),
+            ofType(deleteTaskList),
             mergeMap(action => {
-                this.createActivity_Remove(action.listId);
+                this.createActivity_Delete(action.listId);
                 return this.apiService.deleteTaskList(action.listId).pipe(
-                    map(() => removeTaskListSuccess({ listId: action.listId })),
-                    catchError(error => of(removeTaskListFailure({ error })))
+                    map(() => deleteTaskListSuccess({ listId: action.listId })),
+                    catchError(error => of(deleteTaskListFailure({ error })))
                 )
             })
         )
@@ -71,7 +71,7 @@ export class TaskListEffect {
             }
         });
     }
-    private createActivity_Remove(taskListId: string) {
+    private createActivity_Delete(taskListId: string) {
         this.apiService.getTaskListById(taskListId).subscribe(taskList => {
             if (taskList) {
                 this.activityService.createTaskListActivity(ActivityType.Delete,

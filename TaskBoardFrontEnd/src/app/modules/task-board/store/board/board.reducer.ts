@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { Board } from "../../../shared";
-import { createBoardFailure, createBoardSuccess, getBoardsByUserIdFailure, getBoardsByUserIdSuccess, removeBoardFailure, removeBoardSuccess, updateBoardFailure, updateBoardSuccess } from "../../index";
+import { createBoardFailure, createBoardSuccess, deleteBoardFailure, deleteBoardSuccess, getBoardsByUserIdFailure, getBoardsByUserIdSuccess, updateBoardFailure, updateBoardSuccess } from "../../index";
 
 export interface BoardState {
     boards: Board[];
@@ -40,12 +40,12 @@ export const boardReducer = createReducer(
         ...state,
         error
     })),
-    on(removeBoardSuccess, (state, { boardId }) => ({
+    on(deleteBoardSuccess, (state, { boardId }) => ({
         ...state,
         boards: state.boards.filter(board => board.id !== boardId),
         error: null
     })),
-    on(removeBoardFailure, (state, { error }) => ({
+    on(deleteBoardFailure, (state, { error }) => ({
         ...state,
         error
     }))

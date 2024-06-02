@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { BoardTaskList, TaskListApiService } from '../../../shared';
-import { createTaskList, getTaskListsByBoardId, removeTaskList, updateTaskList } from '../../store/tasks/task-list/task-list.actions';
+import { createTaskList, deleteTaskList, getTaskListsByBoardId, updateTaskList } from '../../store/tasks/task-list/task-list.actions';
 import { TaskListControllerService } from './task-list-controller.service';
 
 describe('TaskListControllerService', () => {
@@ -37,7 +37,7 @@ describe('TaskListControllerService', () => {
   });
   it('should dispatch createTaskList action', () => {
     const taskList: BoardTaskList = { id: '1', boardId: '1', creationTime: new Date(), name: 'Test Task List', boardTasks: [] };
-    service.createNewTaskList(taskList);
+    service.createTaskList(taskList);
     expect(mockStore.dispatch).toHaveBeenCalledWith(createTaskList({ taskList }));
   });
   it('should dispatch updateTaskList action', () => {
@@ -48,6 +48,6 @@ describe('TaskListControllerService', () => {
   it('should dispatch removeTaskList action', () => {
     const taskList: BoardTaskList = { id: '1', boardId: '1', creationTime: new Date(), name: 'Task List to Delete', boardTasks: [] };
     service.deleteTaskList(taskList);
-    expect(mockStore.dispatch).toHaveBeenCalledWith(removeTaskList({ listId: taskList.id }));
+    expect(mockStore.dispatch).toHaveBeenCalledWith(deleteTaskList({ listId: taskList.id }));
   });
 });

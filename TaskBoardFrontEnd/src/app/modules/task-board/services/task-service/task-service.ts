@@ -5,7 +5,7 @@ import { BoardTask, BoardTaskList } from '../../../shared';
   providedIn: 'root'
 })
 export abstract class TaskService {
-  abstract createNewTask(task: BoardTask): void;
+  abstract createTask(task: BoardTask): void;
   abstract updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void;
   abstract deleteTask(task: BoardTask): void;
 }

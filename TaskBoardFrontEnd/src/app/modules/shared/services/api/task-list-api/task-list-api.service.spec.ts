@@ -64,7 +64,7 @@ describe('TaskListApiService', () => {
     const mockTaskList: BoardTaskList = { id: '1', boardId: boardMockData.id, creationTime: new Date(), name: 'New List', boardTasks: [] };
     const expectedReq = `/BoardTaskList`;
 
-    service.createNewTaskList(mockTaskList).subscribe(result => {
+    service.createTaskList(mockTaskList).subscribe(result => {
       expect(result).toEqual(mockTaskList);
     });
 
@@ -128,7 +128,7 @@ describe('TaskListApiService', () => {
     const expectedReq = `/BoardTaskList`;
     const errorMessage = 'Http failure response for /BoardTaskList: 500 Internal Server Error';
 
-    service.createNewTaskList(mockTaskList).subscribe(
+    service.createTaskList(mockTaskList).subscribe(
       () => fail('expected an error, not a task list'),
       error => expect(error.message).toBe(errorMessage)
     );

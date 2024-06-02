@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { Board, BoardApiService } from '../../../shared';
-import { createBoard, getBoardsByUserId, removeBoard, updateBoard } from '../../store/board/board.actions';
+import { createBoard, deleteBoard, getBoardsByUserId, updateBoard } from '../../store/board/board.actions';
 import { BoardControllerService } from './board-controller.service';
 
 describe('BoardControllerService', () => {
@@ -80,6 +80,6 @@ describe('BoardControllerService', () => {
     const board: Board = { id: '123', userId: 'user1', creationTime: new Date() };
 
     service.deleteBoard(board);
-    expect(mockStore.dispatch).toHaveBeenCalledWith(removeBoard({ boardId: board.id }));
+    expect(mockStore.dispatch).toHaveBeenCalledWith(deleteBoard({ boardId: board.id }));
   });
 });

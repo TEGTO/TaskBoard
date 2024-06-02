@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Board, BoardApiService } from '../../../shared';
-import { createBoard, getBoardsByUserId, removeBoard, selectAllBoards, updateBoard } from '../../index';
+import { createBoard, deleteBoard, getBoardsByUserId, selectAllBoards, updateBoard } from '../../index';
 import { BoardService } from './board-service';
 
 @Injectable({
@@ -32,6 +32,6 @@ export class BoardControllerService implements BoardService {
     this.store.dispatch(updateBoard({ board }));
   }
   deleteBoard(board: Board) {
-    this.store.dispatch(removeBoard({ boardId: board.id }));
+    this.store.dispatch(deleteBoard({ boardId: board.id }));
   }
 }

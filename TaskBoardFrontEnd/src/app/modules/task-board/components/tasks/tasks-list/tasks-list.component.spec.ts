@@ -20,7 +20,7 @@ describe('TasksListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockDialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
-    mockTaskListService = jasmine.createSpyObj<TaskListService>('TaskListService', ['createNewTaskList', 'deleteTaskList', 'updateTaskList']);
+    mockTaskListService = jasmine.createSpyObj<TaskListService>('TaskListService', ['createTaskList', 'deleteTaskList', 'updateTaskList']);
     TestBed.configureTestingModule({
       imports: [MatMenuModule, CdkDropList, CdkDrag],
       declarations: [TasksListComponent, TaskManagerComponent, TaskListManagerComponent],
@@ -168,6 +168,6 @@ describe('TasksListComponent', () => {
     component.openListManagerMenu();
 
     expect(mockDialog.open).toHaveBeenCalled();
-    expect(mockTaskListService.createNewTaskList).toHaveBeenCalled();
+    expect(mockTaskListService.createTaskList).toHaveBeenCalled();
   });
 });

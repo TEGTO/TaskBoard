@@ -1,16 +1,16 @@
 import { createAction, props } from "@ngrx/store";
 import { BoardTask, BoardTaskList } from "../../../../shared";
 
-export const createNewTask = createAction(
-    '[Task] Create New Task',
+export const createTask = createAction(
+    '[Task] Create Task',
     props<{ task: BoardTask }>()
 );
-export const createNewTaskSuccess = createAction(
-    '[Task] Create New Task Success',
+export const createTaskSuccess = createAction(
+    '[Task] Create Task Success',
     props<{ task: BoardTask }>()
 );
-export const createNewTaskFailure = createAction(
-    '[Task] Create New Task Failure',
+export const createTaskFailure = createAction(
+    '[Task] Create Task Failure',
     props<{ error: any }>()
 );
 

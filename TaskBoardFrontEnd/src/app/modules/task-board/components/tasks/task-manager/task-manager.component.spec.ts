@@ -40,7 +40,7 @@ describe('TaskManagerComponent', () => {
   beforeEach(waitForAsync(() => {
     dialogRef = jasmine.createSpyObj<MatDialogRef<TaskManagerComponent>>('MatDialogRef', ['close']);
     mockDialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
-    mockTaskService = jasmine.createSpyObj<TaskService>('TaskService', ['createNewTask', 'updateTask']);
+    mockTaskService = jasmine.createSpyObj<TaskService>('TaskService', ['createTask', 'updateTask']);
     mockTaskListService = jasmine.createSpyObj<TaskListService>('TaskListService', ['getTaskListsByBoardId', 'getTaskListById']);
     mockDateValidator = jasmine.createSpyObj<DateValidator>('DateValidator', ['dateMinimum']);
     mockDateValidator.dateMinimum.and.returnValue(() => null as unknown as ValidatorFn);
@@ -147,7 +147,7 @@ describe('TaskManagerComponent', () => {
     component.isNewTask = true;
     component.taskForm.get('name')?.setValue('New Task Name');
     component.onSubmit();
-    expect(mockTaskService.createNewTask).toHaveBeenCalled();
+    expect(mockTaskService.createTask).toHaveBeenCalled();
   });
   it('should call updateTask when updating an existing task', () => {
     component.isNewTask = false;

@@ -86,7 +86,7 @@ export class TaskManagerComponent implements OnInit {
     return buffer;
   }
   private createNewTask(task: BoardTask) {
-    this.taskService.createNewTask({ ...task, boardTaskListId: this.data.taskListId });
+    this.taskService.createTask({ ...task, boardTaskListId: this.data.taskListId });
   }
   private updateTask(task: BoardTask) {
     this.taskListService.getTaskListById(this.task.boardTaskListId).subscribe(

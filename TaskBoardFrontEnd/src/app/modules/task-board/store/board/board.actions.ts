@@ -2,52 +2,52 @@ import { createAction, props } from "@ngrx/store";
 import { Board } from "../../../shared";
 
 export const getBoardsByUserId = createAction(
-    '[Task] Get Boards By User Id'
+    '[Board] Get Boards By User Id'
 );
 export const getBoardsByUserIdSuccess = createAction(
-    '[Task] Get Boards By User Id Success',
+    '[Board] Get Boards By User Id Success',
     props<{ boards: Board[] }>()
 );
 export const getBoardsByUserIdFailure = createAction(
-    '[Task] Get Boards By User Id Failure',
+    '[Board] Get Boards By User Id Failure',
     props<{ error: any }>()
 );
 
 export const createBoard = createAction(
-    '[Task] Add Board',
+    '[Board] Add Board',
     props<{ board: Board }>()
 );
 export const createBoardSuccess = createAction(
-    '[Task] Add Board Success',
+    '[Board] Add Board Success',
     props<{ board: Board }>()
 );
 export const createBoardFailure = createAction(
-    '[Task] Add Board Failure',
+    '[Board] Add Board Failure',
     props<{ error: any }>()
 );
 
 export const updateBoard = createAction(
-    '[Task] Update Board',
+    '[Board] Update Board',
     props<{ board: Board }>()
 );
 export const updateBoardSuccess = createAction(
-    '[Task] Update Board Success',
+    '[Board] Update Board Success',
     props<{ board: Board }>()
 );
 export const updateBoardFailure = createAction(
-    '[Task] Update Board Failure',
+    '[Board] Update Board Failure',
     props<{ error: any }>()
 );
 
-export const removeBoard = createAction(
-    '[Task] Remove Board',
+export const deleteBoard = createAction(
+    '[Board] Delete Board',
     props<{ boardId: string }>()
 );
-export const removeBoardSuccess = createAction(
-    '[Task] Remove Board Success',
+export const deleteBoardSuccess = createAction(
+    '[Board] Delete Board Success',
     props<{ boardId: string }>()
 );
-export const removeBoardFailure = createAction(
-    '[Task] Remove Board Failure',
+export const deleteBoardFailure = createAction(
+    '[Board] Delete Board Failure',
     props<{ error: any }>()
 );
