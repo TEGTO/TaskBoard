@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Board, DateFormaterService, RedirectorService } from '../../../../shared';
 import { BoardManagerComponent, BoardService } from '../../../index';
 
+/**A board container that redirects to board component. Can add or edit a board data.*/
 @Component({
   selector: 'board-item',
   templateUrl: './board-item.component.html',

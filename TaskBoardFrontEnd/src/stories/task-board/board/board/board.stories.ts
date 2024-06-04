@@ -10,15 +10,15 @@ import { provideAnimationsAsync } from "@angular/platform-browser/animations/asy
 import { ActivatedRoute } from "@angular/router";
 import { Meta, StoryObj, applicationConfig, moduleMetadata } from "@storybook/angular";
 import { of } from "rxjs";
-import { ActivityService } from "../../../../app/modules/action-history";
-import { APP_DATE_CONFIG, CustomDatePickerValidatorService, DATE_CONFIG, DateFormaterService, DateValidator, PriorityConvertorService, RedirectorContollerService, RedirectorService, StandartDateFormaterService } from "../../../../app/modules/shared";
+import { ActivityComponent, ActivityHistoryComponent, ActivityService } from "../../../../app/modules/action-history";
+import { APP_DATE_CONFIG, CustomDatePickerValidatorService, DATE_CONFIG, DateFormaterService, DateValidator, PriorityConvertorService, RedirectorService, StandartDateFormaterService } from "../../../../app/modules/shared";
 import { BoardComponent, BoardService, TaskComponent, TaskInfoComponent, TaskListComponent, TaskListManagerComponent, TaskListService, TaskManagerComponent, TaskService } from "../../../../app/modules/task-board";
-import { MockActivityService, MockBoardService, MockTaskListService, MockTaskService, mockBoard } from "../../tasks/mockServices";
+import { MockActivityService, MockBoardService, MockRedirectorService, MockTaskListService, MockTaskService, mockBoard } from "../../tasks/mockServices";
 
 const meta: Meta<BoardComponent> = {
     title: 'Task/BoardComponent',
     component: BoardComponent,
-    subcomponents: { TaskListComponent },
+    subcomponents: { TaskListComponent, ActivityHistoryComponent },
     decorators: [
         moduleMetadata({
             imports: [
@@ -37,14 +37,19 @@ const meta: Meta<BoardComponent> = {
             providers: [
                 MatDialog,
                 PriorityConvertorService,
-                { provide: RedirectorService, useClass: RedirectorContollerService },
+                { provide: RedirectorService, useClass: MockRedirectorService },
                 { provide: BoardService, useClass: MockBoardService },
                 { provide: DateValidator, useClass: CustomDatePickerValidatorService },
-                { provide: ActivityService, useClass: MockActivityService },
-                { provide: DateFormaterService, useClass: StandartDateFormaterService },
-                { provide: DATE_CONFIG, useValue: APP_DATE_CONFIG },
             ],
-            declarations: [TaskListComponent, TaskComponent, TaskListManagerComponent, TaskInfoComponent, TaskManagerComponent]
+            declarations: [
+                TaskListComponent,
+                TaskComponent,
+                ActivityHistoryComponent,
+                TaskListManagerComponent,
+                TaskInfoComponent,
+                TaskManagerComponent,
+                ActivityComponent
+            ]
         }),
         applicationConfig({
             providers: [
@@ -52,6 +57,9 @@ const meta: Meta<BoardComponent> = {
                 { provide: DateValidator, useClass: CustomDatePickerValidatorService },
                 { provide: TaskListService, useClass: MockTaskListService },
                 { provide: TaskService, useClass: MockTaskService },
+                { provide: ActivityService, useClass: MockActivityService },
+                { provide: DateFormaterService, useClass: StandartDateFormaterService },
+                { provide: DATE_CONFIG, useValue: APP_DATE_CONFIG },
             ]
         }),
     ],

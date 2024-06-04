@@ -65,10 +65,18 @@ const meta: Meta<TaskListComponent> = {
 export default meta;
 type Story = StoryObj<TaskListComponent>;
 
-export const Default: Story =
+export const Edit: Story =
 {
     args: {
         taskList: mockTaskList,
+        boardId: '1',
+    }
+}
+
+export const Create: Story =
+{
+    args: {
+        taskList: undefined,
         boardId: '1',
     }
 }

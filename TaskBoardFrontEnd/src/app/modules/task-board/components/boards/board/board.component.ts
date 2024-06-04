@@ -6,6 +6,7 @@ import { ActivityHistoryComponent } from '../../../../action-history';
 import { Board, BoardTaskList, RedirectorService } from '../../../../shared';
 import { BoardService, TaskListService } from '../../../index';
 
+/**The component that represents a board data. Contains task lists and the board history.*/
 @Component({
   selector: 'task-board',
   templateUrl: './board.component.html',

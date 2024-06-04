@@ -9,7 +9,7 @@ import { Meta, StoryObj, applicationConfig, moduleMetadata } from "@storybook/an
 import { ActivityService } from "../../../../app/modules/action-history";
 import { APP_DATE_CONFIG, CustomDatePickerValidatorService, DATE_CONFIG, DateFormaterService, DateValidator, StandartDateFormaterService } from "../../../../app/modules/shared";
 import { TaskListService, TaskManagerComponent, TaskPopupData, TaskService } from "../../../../app/modules/task-board";
-import { MockActivityService, MockMatDialogRef, MockTaskListService, MockTaskService, mockTask, mockTaskLotOfText } from "../mockServices";
+import { MockActivityService, MockMatDialogRef, MockTaskListService, MockTaskService, mockTask, mockTaskLongText } from "../mockServices";
 
 const meta: Meta<TaskManagerComponent> = {
     title: 'Task/TaskManagerComponent',
@@ -46,7 +46,7 @@ const createDialogDataDecorator = (data: TaskPopupData) => moduleMetadata({
 
 type Story = StoryObj<TaskManagerComponent>;
 
-export const EditDefault: Story = {
+export const Edit: Story = {
     decorators: [
         createDialogDataDecorator({
             task: mockTask,
@@ -55,19 +55,19 @@ export const EditDefault: Story = {
         })
     ]
 };
-export const CreateDefault: Story = {
+export const EditWithLongText: Story = {
     decorators: [
         createDialogDataDecorator({
-            task: undefined,
+            task: mockTaskLongText,
             taskListId: "1",
             boardId: "1",
         })
     ]
 };
-export const EditTaskLotOfText: Story = {
+export const Create: Story = {
     decorators: [
         createDialogDataDecorator({
-            task: mockTaskLotOfText,
+            task: undefined,
             taskListId: "1",
             boardId: "1",
         })

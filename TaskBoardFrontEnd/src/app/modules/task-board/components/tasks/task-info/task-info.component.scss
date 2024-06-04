@@ -80,6 +80,8 @@ $description-body-width: $task-info-width * 0.45;
                 .param {
                     color: colors.$secondary-text-priority-color;
                     font-weight: 800;
+                    overflow-x: hidden;
+                    text-overflow: ellipsis;
                 }
             }
 

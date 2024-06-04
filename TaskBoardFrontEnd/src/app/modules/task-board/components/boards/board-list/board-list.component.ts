@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Board } from '../../../../shared';
 import { BoardService } from '../../../index';
 
+/**The component that shows all boards by user id. */
 @Component({
   selector: 'board-list',
   templateUrl: './board-list.component.html',

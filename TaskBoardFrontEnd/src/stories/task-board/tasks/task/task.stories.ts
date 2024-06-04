@@ -9,7 +9,7 @@ import { Meta, StoryObj, applicationConfig, moduleMetadata } from "@storybook/an
 import { ActivityService } from "../../../../app/modules/action-history";
 import { APP_DATE_CONFIG, CustomDatePickerValidatorService, DATE_CONFIG, DateFormaterService, DateValidator, PriorityConvertorService, StandartDateFormaterService } from "../../../../app/modules/shared";
 import { TaskComponent, TaskInfoComponent, TaskListService, TaskManagerComponent, TaskService } from "../../../../app/modules/task-board";
-import { MockActivityService, MockTaskListService, MockTaskService, mockTask } from "../mockServices";
+import { MockActivityService, MockTaskListService, MockTaskService, mockTask, mockTaskLongText } from "../mockServices";
 
 const meta: Meta<TaskComponent> = {
     title: 'Task/TaskComponent',
@@ -17,7 +17,14 @@ const meta: Meta<TaskComponent> = {
     subcomponents: { TaskInfoComponent, TaskManagerComponent },
     decorators: [
         moduleMetadata({
-            imports: [MatDialogModule, FormsModule, MatMenuModule, MatSelectModule, MatNativeDateModule, MatDatepickerModule, ReactiveFormsModule],
+            imports: [
+                MatDialogModule,
+                FormsModule,
+                MatMenuModule,
+                MatSelectModule,
+                MatNativeDateModule,
+                MatDatepickerModule,
+                ReactiveFormsModule],
             providers: [
                 MatDialog,
                 PriorityConvertorService,
@@ -56,6 +63,13 @@ export const Default: Story =
 {
     args: {
         task: mockTask,
+        boardId: '1',
+    }
+}
+export const WithLongText: Story =
+{
+    args: {
+        task: mockTaskLongText,
         boardId: '1',
     }
 }

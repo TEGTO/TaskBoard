@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 import { Meta, StoryObj, moduleMetadata } from "@storybook/angular";
 import { Board } from "../../../../app/modules/shared";
 import { BoardManagerComponent } from "../../../../app/modules/task-board";
-import { MockMatDialogRef, mockBoard, mockBoardLotOfText } from "../../tasks/mockServices";
+import { MockMatDialogRef, mockBoard, mockBoardWithLongText } from "../../tasks/mockServices";
 
 const meta: Meta<BoardManagerComponent> = {
     title: 'Task/BoardManagerComponent',
@@ -29,17 +29,17 @@ const createDialogDataDecorator = (data: Board | undefined) => moduleMetadata({
 
 type Story = StoryObj<BoardManagerComponent>;
 
-export const EditDefault: Story = {
+export const Edit: Story = {
     decorators: [
         createDialogDataDecorator(mockBoard)
     ]
 };
-export const EditLotOfText: Story = {
+export const EditWithLongText: Story = {
     decorators: [
-        createDialogDataDecorator(mockBoardLotOfText)
+        createDialogDataDecorator(mockBoardWithLongText)
     ]
 };
-export const CreateDefault: Story = {
+export const Create: Story = {
     decorators: [
         createDialogDataDecorator(undefined)
     ]

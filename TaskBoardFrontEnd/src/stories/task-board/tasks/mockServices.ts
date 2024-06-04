@@ -2,7 +2,7 @@ import { moveItemInArray } from "@angular/cdk/drag-drop";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { ActivityService, TaskActivityData, TaskListActivityData } from "../../../app/modules/action-history";
-import { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyTaskListValues, copyTaskValues } from "../../../app/modules/shared";
+import { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from "../../../app/modules/shared";
 import { BoardService, TaskListService, TaskService } from "../../../app/modules/task-board";
 
 export const mockTask: BoardTask = {
@@ -14,7 +14,7 @@ export const mockTask: BoardTask = {
     description: "Description",
     priority: Priority.High
 }
-export const mockTaskLotOfText: BoardTask = {
+export const mockTaskLongText: BoardTask = {
     id: "2",
     boardTaskListId: "1",
     creationTime: new Date(),
@@ -28,16 +28,16 @@ export const mockTaskList: BoardTaskList =
     id: "1",
     boardId: "1",
     creationTime: new Date(),
-    name: "Task List 1111111111111111111111111111111111111111111111111111111111111111111111111111",
-    boardTasks: [mockTask, mockTaskLotOfText]
+    name: "Task List 1",
+    boardTasks: [mockTask]
 };
-export const mockTaskListLotOfText: BoardTaskList =
+export const mockTaskListWithLongText: BoardTaskList =
 {
     id: "2",
     boardId: "1",
     creationTime: new Date(),
-    name: "Task List with a big nameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    boardTasks: []
+    name: "Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222",
+    boardTasks: [mockTaskLongText]
 };
 export const mockBoard: Board =
 {
@@ -46,23 +46,17 @@ export const mockBoard: Board =
     creationTime: new Date(),
     name: "Board 1",
 }
-export const mockBoard2: Board =
+export const mockBoardWithLongText: Board =
 {
     id: "2",
     userId: "1",
     creationTime: new Date(),
-    name: "Board 2",
+    name: "Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222",
 }
-export const mockBoardLotOfText: Board =
-{
-    id: "2",
-    userId: "1",
-    creationTime: new Date(),
-    name: "Board 2 with a big nameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeeeeeeeeeeeeee",
-}
-const allMockTasks = [mockTask, mockTaskLotOfText];
-var mockTaskLists = [mockTaskList];
-var mockBoards = [mockBoard, mockBoard2];
+
+const allMockTasks = [mockTask, mockTaskLongText];
+var mockTaskLists = [mockTaskList, mockTaskListWithLongText];
+var mockBoards = [mockBoard, mockBoardWithLongText];
 @Injectable()
 export class MockTaskListService extends TaskListService {
     private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();
@@ -160,16 +154,51 @@ const mockTaskActivities: BoardTaskActivity[] =
             description: "Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
         }
     ]
+const mockActivities: BoardActivity[] =
+    [
+        {
+            id: "1",
+            boardId: "1",
+            activityTime: new Date(),
+            description: "Activity deacription1"
+        },
+        {
+            id: "2",
+            boardId: "1",
+            activityTime: new Date(),
+            description: "Activity deacription2"
+        },
+        {
+            id: "3",
+            boardId: "1",
+            activityTime: new Date(),
+            description: "Activity deacription3"
+        },
+        {
+            id: "4",
+            boardId: "2",
+            activityTime: new Date(),
+            description: "Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+        },
+        {
+            id: "5",
+            boardId: "2",
+            activityTime: new Date(),
+            description: "Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+        }
+    ]
 @Injectable()
 export class MockActivityService extends ActivityService {
     override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {
         return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));
     }
     override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {
-        throw new Error("Method not implemented.");
+        const startIndex = (page - 1) * amountOnPage;
+        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);
+        return of(activities);
     }
     override getBoardActivityAmountByBoardId(id: string): Observable<number> {
-        throw new Error("Method not implemented.");
+        return of(mockActivities.filter(x => x.boardId == id).length);
     }
     override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {
     }
@@ -182,7 +211,6 @@ export class MockMatDialogRef<T> {
         return of(true);
     }
 }
-var currentBoard: BehaviorSubject<Board | undefined>;
 @Injectable()
 export class MockBoardService extends BoardService {
     override getBoardsByUserId(): Observable<Board[]> {
@@ -190,32 +218,34 @@ export class MockBoardService extends BoardService {
     }
     override getBoardById(id: string): Observable<Board | undefined> {
         var board = mockBoards.find(x => x.id == id);
-        currentBoard = new BehaviorSubject(board);
-        return currentBoard;
+        return of(board);
     }
     override getTaskListsAmountByBoardId(id: string): Observable<number> {
-        throw new Error("Method not implemented.");
+        return of(mockTaskLists.filter(x => x.boardId == id).length);
     }
-    override getTasksAmountByBoardId(id: string): Observable<number> {
-        throw new Error("Method not implemented.");
+    getTasksAmountByBoardId(id: string): Observable<number> {
+        const totalTasks = mockTaskLists
+            .filter(x => x.boardId === id)
+            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);
+
+        return of(totalTasks);
     }
     override createBoard(board: Board): void {
-        throw new Error("Method not implemented.");
+        mockBoards.push(board);
     }
     override updateBoard(board: Board): void {
-        throw new Error("Method not implemented.");
+        var oldData = mockBoards.find(x => x.id == board.id);
+        if (oldData)
+            copyBoardValues(oldData, board);
     }
     override deleteBoard(board: Board): void {
-        throw new Error("Method not implemented.");
+        mockBoards = mockBoards.filter(x => x.id != board.id);
     }
 }
 @Injectable()
 export class MockRedirectorService extends RedirectorService {
     override redirectToHome(): void {
-        throw new Error("Method not implemented.");
     }
     override redirectToBoard(boardId: string): void {
-        var board = mockBoards.find(x => x.id == boardId);
-        currentBoard.next(board);
     }
 }

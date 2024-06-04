@@ -2,7 +2,7 @@ import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { Meta, StoryObj, moduleMetadata } from "@storybook/angular";
 import { TaskListManagerComponent, TaskListsPopupData } from "../../../../app/modules/task-board";
-import { MockMatDialogRef, mockTaskList, mockTaskListLotOfText } from "../mockServices";
+import { MockMatDialogRef, mockTaskList, mockTaskListWithLongText } from "../mockServices";
 
 const meta: Meta<TaskListManagerComponent> = {
     title: 'Task/TaskListManagerComponent',
@@ -28,7 +28,7 @@ const createDialogDataDecorator = (data: TaskListsPopupData) => moduleMetadata({
 
 type Story = StoryObj<TaskListManagerComponent>;
 
-export const EditDefault: Story = {
+export const Edit: Story = {
     decorators: [
         createDialogDataDecorator({
             taskList: mockTaskList,
@@ -36,15 +36,15 @@ export const EditDefault: Story = {
         })
     ]
 };
-export const EditLotOfText: Story = {
+export const EditWithLongText: Story = {
     decorators: [
         createDialogDataDecorator({
-            taskList: mockTaskListLotOfText,
+            taskList: mockTaskListWithLongText,
             boardId: "1",
         })
     ]
 };
-export const CreateDefault: Story = {
+export const Create: Story = {
     decorators: [
         createDialogDataDecorator({
             taskList: undefined,
