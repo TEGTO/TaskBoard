@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
-import { BoardActivity, DATE_CONFIG, DateFormaterService } from '../../../../shared';
+import { BoardActivity, DATE_CONFIG, DateFormaterService, StandartDateFormaterService } from '../../../../shared';
 import { ActivityComponent } from './activity.component';
 
 describe('ActivityComponent', () => {
@@ -16,6 +16,7 @@ describe('ActivityComponent', () => {
       providers: [
         DateFormaterService,
         { provide: DATE_CONFIG, useValue: { format: 'EEE, d MMM YYYY' } },
+        { provide: DateFormaterService, useClass: StandartDateFormaterService },
         { provide: DomSanitizer, useValue: sanitizer }
       ]
     }).compileComponents();

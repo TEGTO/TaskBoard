@@ -11,7 +11,7 @@ export function getDefaultBoardTaskList() {
     const taskList: BoardTaskList = {
         id: "",
         boardId: "",
-        creationTime: new Date,
+        creationTime: new Date(),
         name: "",
         boardTasks: []
     };

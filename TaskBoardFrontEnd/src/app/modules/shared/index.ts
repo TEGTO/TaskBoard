@@ -18,6 +18,7 @@ export * from './services/api/task-api/task-api.service';
 export * from './services/api/task-list-api/task-list-api.service';
 export * from './services/api/user-api/user-api.service';
 export * from './services/date-formater/date-formater.service';
+export * from './services/date-formater/standart-date-formater.service';
 export * from './services/dev-mode/dev-mode.service';
 export * from './services/error-handler/custom-error-handler';
 export * from './services/error-handler/error-handler.service';

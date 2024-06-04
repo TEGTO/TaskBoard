@@ -3,6 +3,7 @@
 
 $task-info-width: 700px;
 $task-info-min-height: 600px;
+$task-info-section-max-width : $task-info-width / 2;
 $main-header-height: 70px;
 $max-description-height: 400px;
 $max-activity-height: 600px;
@@ -51,6 +52,7 @@ $description-body-width: $task-info-width * 0.45;
     .task-info {
         display: flex;
         flex-direction: column;
+        max-width: $task-info-section-max-width;
         flex-grow: 1;
 
         .info-header {

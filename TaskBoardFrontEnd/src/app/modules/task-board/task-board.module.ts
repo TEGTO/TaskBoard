@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { provideEffects } from '@ngrx/effects';
 import { provideState, provideStore } from '@ngrx/store';
@@ -37,8 +38,8 @@ import { TaskEffect } from './store/tasks/task/task.effect';
     MatIconModule,
     MatDialogModule,
     MatSelectModule,
-    MatDatepickerModule,
     MatNativeDateModule,
+    MatDatepickerModule,
     HttpClientModule,
     ReactiveFormsModule,
     CdkDropList,
@@ -54,6 +55,7 @@ import { TaskEffect } from './store/tasks/task/task.effect';
     provideEffects(TaskEffect),
     provideEffects(TaskListEffect),
     provideEffects(BoardEffect),
+    provideAnimationsAsync()
   ]
 })
 export class TaskBoardModule { }

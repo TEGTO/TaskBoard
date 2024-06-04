@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Injector, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BoardTask, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
 import { TaskInfoComponent, TaskManagerComponent, TaskPopupData, TaskService } from '../../../index';
@@ -14,11 +14,13 @@ export class TaskComponent {
 
   constructor(public dialog: MatDialog,
     private dateFormater: DateFormaterService,
-    private taskService: TaskService) { }
+    private taskService: TaskService,
+    private injector: Injector) { }
 
   openInfoMenu() {
     const dialogRef = this.dialog.open(TaskInfoComponent, {
-      data: this.getPopupData()
+      data: this.getPopupData(),
+      injector: this.injector
     });
   }
   openEditMenu() {
@@ -26,7 +28,7 @@ export class TaskComponent {
       data: this.getPopupData()
     });
   }
-  deleteButton() {
+  deleteTask() {
     this.taskService.deleteTask(this.task);
   }
   getPriorityString(priority: Priority): string {

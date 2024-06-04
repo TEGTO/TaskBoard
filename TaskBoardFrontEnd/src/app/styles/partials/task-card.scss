@@ -1,8 +1,10 @@
+@use "colors" as colors;
 $card-offset: 20px;
 
 .card-wrapper {
     display: flex;
     flex-direction: column;
+    background: colors.$task-background;
 
     .card-header {
         display: flex;

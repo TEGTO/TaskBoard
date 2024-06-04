@@ -4,7 +4,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { BoardTask, DATE_CONFIG, DateFormaterService, Priority } from '../../../../shared';
+import { BoardTask, DATE_CONFIG, DateFormaterService, Priority, StandartDateFormaterService } from '../../../../shared';
 import { TaskInfoComponent, TaskManagerComponent, TaskService } from '../../../index';
 import { TaskComponent } from './task.component';
 
@@ -27,6 +27,7 @@ describe('TaskComponent', () => {
       providers: [
         DateFormaterService,
         { provide: DATE_CONFIG, useValue: { format: 'EEE, d MMM YYYY' } },
+        { provide: DateFormaterService, useClass: StandartDateFormaterService },
         { provide: TaskService, useValue: mockTaskService },
         { provide: MatDialog, useValue: mockDialog },
         provideAnimationsAsync()
