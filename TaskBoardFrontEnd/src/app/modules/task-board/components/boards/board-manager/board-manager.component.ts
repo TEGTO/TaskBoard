@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Board, getDefaultBoard } from '../../../../shared';
 
+/**The component for adding and editing a board*/
 @Component({
   selector: 'app-board-manager',
   templateUrl: './board-manager.component.html',

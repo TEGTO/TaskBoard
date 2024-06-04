@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BoardTask, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
 import { TaskInfoComponent, TaskManagerComponent, TaskPopupData, TaskService } from '../../../index';
 
+/** The component that renders the task and provides access to edit, info menus.*/
 @Component({
   selector: 'task',
   templateUrl: './task.component.html',

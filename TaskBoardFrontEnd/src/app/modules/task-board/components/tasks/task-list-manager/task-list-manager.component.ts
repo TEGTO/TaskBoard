@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BoardTaskList, getDefaultBoardTaskList } from '../../../../shared';
 import { TaskListsPopupData } from '../../../index';
 
+/**The component for editing/creating a task list.*/
 @Component({
   selector: 'app-task-list-manager',
   templateUrl: './task-list-manager.component.html',
@@ -21,7 +22,7 @@ export class TaskListManagerComponent implements OnInit {
     private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.cardName = this.data ? "Edit List" : "Create List";
+    this.cardName = this.data.taskList ? "Edit List" : "Create List";
     this.assignTaskList();
     this.initForm();
   }

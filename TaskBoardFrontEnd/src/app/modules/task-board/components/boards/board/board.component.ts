@@ -26,8 +26,8 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.boardId = params['boardId'];
-      this.boards$ = this.boardService.getBoardsByUserId();
       this.board$ = this.boardService.getBoardById(this.boardId);
+      this.boards$ = this.boardService.getBoardsByUserId();
       this.taskLists$ = this.taskListService.getTaskListsByBoardId(this.boardId);
     });
   }

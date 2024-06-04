@@ -1,3 +1,5 @@
+import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
+import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -8,16 +10,27 @@ import { provideAnimationsAsync } from "@angular/platform-browser/animations/asy
 import { Meta, StoryObj, applicationConfig, moduleMetadata } from "@storybook/angular";
 import { ActivityService } from "../../../../app/modules/action-history";
 import { APP_DATE_CONFIG, CustomDatePickerValidatorService, DATE_CONFIG, DateFormaterService, DateValidator, PriorityConvertorService, StandartDateFormaterService } from "../../../../app/modules/shared";
-import { TaskComponent, TaskInfoComponent, TaskListService, TaskManagerComponent, TaskService } from "../../../../app/modules/task-board";
-import { MockActivityService, MockTaskListService, MockTaskService, mockTask } from "../mockServices";
+import { TaskComponent, TaskInfoComponent, TaskListComponent, TaskListManagerComponent, TaskListService, TaskManagerComponent, TaskService } from "../../../../app/modules/task-board";
+import { MockActivityService, MockTaskListService, MockTaskService, mockTaskList } from "../mockServices";
 
-const meta: Meta<TaskComponent> = {
-    title: 'Task/TaskComponent',
-    component: TaskComponent,
-    subcomponents: { TaskInfoComponent, TaskManagerComponent },
+const meta: Meta<TaskListComponent> = {
+    title: 'Task/TaskListComponent',
+    component: TaskListComponent,
+    subcomponents: { TaskComponent, TaskListManagerComponent, TaskInfoComponent, TaskManagerComponent },
     decorators: [
         moduleMetadata({
-            imports: [MatDialogModule, FormsModule, MatMenuModule, MatSelectModule, MatNativeDateModule, MatDatepickerModule, ReactiveFormsModule],
+            imports: [
+                CommonModule,
+                MatDialogModule,
+                FormsModule,
+                MatMenuModule,
+                MatSelectModule,
+                MatNativeDateModule,
+                MatDatepickerModule,
+                ReactiveFormsModule,
+                CdkDropList,
+                CdkDrag,
+            ],
             providers: [
                 MatDialog,
                 PriorityConvertorService,
@@ -26,7 +39,7 @@ const meta: Meta<TaskComponent> = {
                 { provide: DateFormaterService, useClass: StandartDateFormaterService },
                 { provide: DATE_CONFIG, useValue: APP_DATE_CONFIG },
             ],
-            declarations: [TaskInfoComponent, TaskManagerComponent]
+            declarations: [TaskComponent, TaskListManagerComponent, TaskInfoComponent, TaskManagerComponent]
         }),
         applicationConfig({
             providers: [
@@ -38,9 +51,9 @@ const meta: Meta<TaskComponent> = {
         }),
     ],
     argTypes: {
-        task: {
+        taskList: {
             control: 'object',
-            description: 'Board task data',
+            description: 'Board task list data',
         },
         boardId: {
             control: 'text',
@@ -50,12 +63,12 @@ const meta: Meta<TaskComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<TaskComponent>;
+type Story = StoryObj<TaskListComponent>;
 
 export const Default: Story =
 {
     args: {
-        task: mockTask,
+        taskList: mockTaskList,
         boardId: '1',
     }
 }

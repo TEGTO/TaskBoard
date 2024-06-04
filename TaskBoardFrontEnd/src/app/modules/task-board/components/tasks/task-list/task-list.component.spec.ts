@@ -7,13 +7,13 @@ import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { of } from 'rxjs';
 import { BoardTaskList } from '../../../../shared';
-import { TaskListManagerComponent, TaskListService, TaskManagerComponent, TasksListComponent } from '../../../index';
+import { TaskListComponent, TaskListManagerComponent, TaskListService, TaskManagerComponent } from '../../../index';
 
 describe('TasksListComponent', () => {
   const mockTaskList: BoardTaskList = { id: '1', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
   const mockAllTaskLists: BoardTaskList[] = [mockTaskList]
-  var component: TasksListComponent;
-  var fixture: ComponentFixture<TasksListComponent>;
+  var component: TaskListComponent;
+  var fixture: ComponentFixture<TaskListComponent>;
   var debugEl: DebugElement;
   var mockDialog: jasmine.SpyObj<MatDialog>;
   var mockTaskListService: jasmine.SpyObj<TaskListService>;
@@ -23,7 +23,7 @@ describe('TasksListComponent', () => {
     mockTaskListService = jasmine.createSpyObj<TaskListService>('TaskListService', ['createTaskList', 'deleteTaskList', 'updateTaskList']);
     TestBed.configureTestingModule({
       imports: [MatMenuModule, CdkDropList, CdkDrag],
-      declarations: [TasksListComponent, TaskManagerComponent, TaskListManagerComponent],
+      declarations: [TaskListComponent, TaskManagerComponent, TaskListManagerComponent],
       providers: [
         { provide: MatDialog, useValue: mockDialog },
         { provide: TaskListService, useValue: mockTaskListService },
@@ -33,7 +33,7 @@ describe('TasksListComponent', () => {
     }).compileComponents();
   }));
   beforeEach(() => {
-    fixture = TestBed.createComponent(TasksListComponent);
+    fixture = TestBed.createComponent(TaskListComponent);
     debugEl = fixture.debugElement;
     component = fixture.componentInstance;
     component.taskList = mockTaskList;

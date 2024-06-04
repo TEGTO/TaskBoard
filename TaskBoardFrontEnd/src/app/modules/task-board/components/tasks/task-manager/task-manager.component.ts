@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BoardTask, BoardTaskList, DateValidator, Priority, PriorityConvertorService, getDefaultBoardTask } from '../../../../shared';
 import { TaskListService, TaskPopupData, TaskService } from '../../../index';
 
+/** The component for editing/creating a task. Takes data task from mat dialog data.*/
 @Component({
   selector: 'app-task-manager',
   templateUrl: './task-manager.component.html',

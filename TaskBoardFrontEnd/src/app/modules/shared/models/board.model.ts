@@ -8,7 +8,7 @@ export function getDefaultBoard() {
     const board: Board = {
         id: "",
         userId: "",
-        creationTime: new Date,
+        creationTime: new Date(),
         name: "",
     };
     return board;

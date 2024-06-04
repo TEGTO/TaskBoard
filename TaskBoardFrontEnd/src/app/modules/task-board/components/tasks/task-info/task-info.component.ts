@@ -6,6 +6,7 @@ import { ActivityService } from '../../../../action-history';
 import { BoardTask, BoardTaskActivity, BoardTaskList, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
 import { TaskListService, TaskManagerComponent, TaskPopupData } from '../../../index';
 
+/** The component that shows more information about the task.*/
 @Component({
   selector: 'app-task-info',
   templateUrl: './task-info.component.html',

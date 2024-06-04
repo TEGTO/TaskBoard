@@ -15,13 +15,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { provideEffects } from '@ngrx/effects';
 import { provideState, provideStore } from '@ngrx/store';
 import { ActionHistoryModule } from '../action-history/action-history.module';
-import { BoardComponent, BoardEffects as BoardEffect, BoardItemComponent, BoardListComponent, BoardManagerComponent, TaskComponent, TaskInfoComponent, TaskListEffect, TaskListManagerComponent, TaskManagerComponent, TasksListComponent, boardReducer, taskReducer } from './index';
+import { BoardComponent, BoardEffects as BoardEffect, BoardItemComponent, BoardListComponent, BoardManagerComponent, TaskComponent, TaskInfoComponent, TaskListComponent, TaskListEffect, TaskListManagerComponent, TaskManagerComponent, boardReducer, taskReducer } from './index';
 import { TaskEffect } from './store/tasks/task/task.effect';
 
 @NgModule({
   declarations: [
     TaskComponent,
-    TasksListComponent,
+    TaskListComponent,
     TaskListManagerComponent,
     TaskInfoComponent,
     TaskManagerComponent,
