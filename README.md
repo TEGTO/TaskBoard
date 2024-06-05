@@ -15,6 +15,8 @@ Modern kanban board (task board) made using Angular for the frontend, ASP.NET We
 ```bash
 docker-compose up
 ```
+#### Please note, you need to disable localhost ssl verification in your browser!
+
 ### To Run an application locally
 - Install the tools if you haven't already
 ```bash

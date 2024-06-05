@@ -55,7 +55,7 @@ export const taskReducer = createReducer(
         if (taskListIndex >= 0) {
             const updatedTaskList = {
                 ...state.taskLists[taskListIndex],
-                boardTasks: [...state.taskLists[taskListIndex].boardTasks, task]
+                boardTasks: [task, ...state.taskLists[taskListIndex].boardTasks]
             };
             const updatedTaskLists = [...state.taskLists];
             updatedTaskLists[taskListIndex] = updatedTaskList;

@@ -95,7 +95,7 @@ describe('Task Reducer', () => {
         const newTask = { id: "2", boardTaskListId: "1", creationTime: new Date(), priority: Priority.Low };
         const action = createTaskSuccess({ task: newTask });
         const state = taskReducer(initialStateWithTaskLists, action);
-        expect(state.taskLists[0].boardTasks[1]).toEqual(newTask);
+        expect(state.taskLists[0].boardTasks[0]).toEqual(newTask);
         expect(state.error).toBeNull();
     });
     it('should handle createTaskFailure', () => {

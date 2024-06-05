@@ -813,31 +813,7 @@
         },
         {
             "name": "User",
-            "id": "interface-User-23c11020a2831beb3fa02ee911a75b64009c31bb46f73a01145c2560cb13b7f7e641105b678bd8fb01a5a199117001f3da4a78351d29d85d213ed7b82982091f",
-            "file": "src/stories/default/user.ts",
-            "deprecated": false,
-            "deprecationMessage": "",
-            "type": "interface",
-            "sourceCode": "export interface User {\r\n  name: string;\r\n}\r\n",
-            "properties": [
-                {
-                    "name": "name",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "string",
-                    "optional": false,
-                    "description": "",
-                    "line": 2
-                }
-            ],
-            "indexSignatures": [],
-            "kind": 171,
-            "methods": [],
-            "extends": []
-        },
-        {
-            "name": "User",
-            "id": "interface-User-0d76ae6179c9510cba9f0114c3d7bb133af8dc8e744a83cecb04d95b167e789062037da33ea2ea7f3dc22b64235ed8ccfcd79d218130878d659c3c398aadf40a-1",
+            "id": "interface-User-0d76ae6179c9510cba9f0114c3d7bb133af8dc8e744a83cecb04d95b167e789062037da33ea2ea7f3dc22b64235ed8ccfcd79d218130878d659c3c398aadf40a",
             "file": "src/app/modules/shared/models/user.model.ts",
             "deprecated": false,
             "deprecationMessage": "",
@@ -857,10 +833,7 @@
             "indexSignatures": [],
             "kind": 171,
             "methods": [],
-            "extends": [],
-            "isDuplicate": true,
-            "duplicateId": 1,
-            "duplicateName": "User-1"
+            "extends": []
         },
         {
             "name": "UserConfig",
@@ -4152,7 +4125,7 @@
         },
         {
             "name": "MockActivityService",
-            "id": "injectable-MockActivityService-69192d8cf7f1f7011838a9615077e3e178ea34a72dbff2a4ef96bfad2941dc286331eb1aac423c6cc501e14506d8d5bfa237155374954a1b8d82bfe746b185ff",
+            "id": "injectable-MockActivityService-d0f3109257c7412f304a70cd40623d3919abd74b98e4a2a6440a57fb49c5c913a17e8c93afe8078b972db22fa19c6c37e6d13863c75c046689e65241ab27cf0b",
             "file": "src/stories/mockServices.ts",
             "properties": [],
             "methods": [
@@ -4175,7 +4148,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 207,
+                    "line": 228,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4224,7 +4197,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 209,
+                    "line": 230,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4279,7 +4252,7 @@
                     "optional": false,
                     "returnType": "Observable<BoardActivity[]>",
                     "typeParameters": [],
-                    "line": 199,
+                    "line": 220,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4331,7 +4304,7 @@
                     "optional": false,
                     "returnType": "Observable<number>",
                     "typeParameters": [],
-                    "line": 204,
+                    "line": 225,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4365,7 +4338,7 @@
                     "optional": false,
                     "returnType": "Observable<BoardTaskActivity[]>",
                     "typeParameters": [],
-                    "line": 196,
+                    "line": 217,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4391,7 +4364,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
+            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\nexport const mockBoardWithManyActvities: Board =\r\n{\r\n    id: \"3\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nfunction getManyActivities(): BoardActivity[] {\r\n    var activities: BoardActivity[] = [];\r\n    for (let index = 6; index < 100; index++) {\r\n        var activity = {\r\n            id: index.toString(),\r\n            boardId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        }\r\n        activities.push(activity);\r\n    }\r\n    return activities;\r\n}\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        ...getManyActivities(),\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
             "extends": [
                 "ActivityService"
             ],
@@ -4399,7 +4372,7 @@
         },
         {
             "name": "MockBoardService",
-            "id": "injectable-MockBoardService-69192d8cf7f1f7011838a9615077e3e178ea34a72dbff2a4ef96bfad2941dc286331eb1aac423c6cc501e14506d8d5bfa237155374954a1b8d82bfe746b185ff",
+            "id": "injectable-MockBoardService-d0f3109257c7412f304a70cd40623d3919abd74b98e4a2a6440a57fb49c5c913a17e8c93afe8078b972db22fa19c6c37e6d13863c75c046689e65241ab27cf0b",
             "file": "src/stories/mockServices.ts",
             "properties": [],
             "methods": [
@@ -4416,7 +4389,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 237,
+                    "line": 258,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4450,7 +4423,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 245,
+                    "line": 266,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4484,7 +4457,7 @@
                     "optional": false,
                     "returnType": "Observable<Board | undefined>",
                     "typeParameters": [],
-                    "line": 223,
+                    "line": 244,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4511,7 +4484,7 @@
                     "optional": false,
                     "returnType": "Observable<Board[]>",
                     "typeParameters": [],
-                    "line": 220,
+                    "line": 241,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4534,7 +4507,7 @@
                     "optional": false,
                     "returnType": "Observable<number>",
                     "typeParameters": [],
-                    "line": 227,
+                    "line": 248,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4568,7 +4541,7 @@
                     "optional": false,
                     "returnType": "Observable<number>",
                     "typeParameters": [],
-                    "line": 230,
+                    "line": 251,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -4599,7 +4572,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 240,
+                    "line": 261,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4625,7 +4598,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
+            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\nexport const mockBoardWithManyActvities: Board =\r\n{\r\n    id: \"3\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nfunction getManyActivities(): BoardActivity[] {\r\n    var activities: BoardActivity[] = [];\r\n    for (let index = 6; index < 100; index++) {\r\n        var activity = {\r\n            id: index.toString(),\r\n            boardId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        }\r\n        activities.push(activity);\r\n    }\r\n    return activities;\r\n}\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        ...getManyActivities(),\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
             "extends": [
                 "BoardService"
             ],
@@ -4633,7 +4606,7 @@
         },
         {
             "name": "MockRedirectorService",
-            "id": "injectable-MockRedirectorService-69192d8cf7f1f7011838a9615077e3e178ea34a72dbff2a4ef96bfad2941dc286331eb1aac423c6cc501e14506d8d5bfa237155374954a1b8d82bfe746b185ff",
+            "id": "injectable-MockRedirectorService-d0f3109257c7412f304a70cd40623d3919abd74b98e4a2a6440a57fb49c5c913a17e8c93afe8078b972db22fa19c6c37e6d13863c75c046689e65241ab27cf0b",
             "file": "src/stories/mockServices.ts",
             "properties": [],
             "methods": [
@@ -4650,7 +4623,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 253,
+                    "line": 274,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4677,7 +4650,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 251,
+                    "line": 272,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4692,7 +4665,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
+            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\nexport const mockBoardWithManyActvities: Board =\r\n{\r\n    id: \"3\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nfunction getManyActivities(): BoardActivity[] {\r\n    var activities: BoardActivity[] = [];\r\n    for (let index = 6; index < 100; index++) {\r\n        var activity = {\r\n            id: index.toString(),\r\n            boardId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        }\r\n        activities.push(activity);\r\n    }\r\n    return activities;\r\n}\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        ...getManyActivities(),\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
             "extends": [
                 "RedirectorService"
             ],
@@ -4700,7 +4673,7 @@
         },
         {
             "name": "MockTaskListService",
-            "id": "injectable-MockTaskListService-69192d8cf7f1f7011838a9615077e3e178ea34a72dbff2a4ef96bfad2941dc286331eb1aac423c6cc501e14506d8d5bfa237155374954a1b8d82bfe746b185ff",
+            "id": "injectable-MockTaskListService-d0f3109257c7412f304a70cd40623d3919abd74b98e4a2a6440a57fb49c5c913a17e8c93afe8078b972db22fa19c6c37e6d13863c75c046689e65241ab27cf0b",
             "file": "src/stories/mockServices.ts",
             "properties": [
                 {
@@ -4711,7 +4684,7 @@
                     "type": "Map<string | BehaviorSubject<BoardTaskList[]>>",
                     "optional": false,
                     "description": "",
-                    "line": 62,
+                    "line": 69,
                     "modifierKind": [
                         123
                     ]
@@ -4731,7 +4704,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 73,
+                    "line": 80,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4765,7 +4738,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 84,
+                    "line": 91,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4799,7 +4772,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 88,
+                    "line": 95,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4830,7 +4803,7 @@
                     "optional": false,
                     "returnType": "Observable<BoardTaskList | undefined>",
                     "typeParameters": [],
-                    "line": 70,
+                    "line": 77,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4864,7 +4837,7 @@
                     "optional": false,
                     "returnType": "Observable<BoardTaskList[]>",
                     "typeParameters": [],
-                    "line": 65,
+                    "line": 72,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4898,7 +4871,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 78,
+                    "line": 85,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4924,7 +4897,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
+            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\nexport const mockBoardWithManyActvities: Board =\r\n{\r\n    id: \"3\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nfunction getManyActivities(): BoardActivity[] {\r\n    var activities: BoardActivity[] = [];\r\n    for (let index = 6; index < 100; index++) {\r\n        var activity = {\r\n            id: index.toString(),\r\n            boardId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        }\r\n        activities.push(activity);\r\n    }\r\n    return activities;\r\n}\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        ...getManyActivities(),\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
             "extends": [
                 "TaskListService"
             ],
@@ -4932,7 +4905,7 @@
         },
         {
             "name": "MockTaskService",
-            "id": "injectable-MockTaskService-69192d8cf7f1f7011838a9615077e3e178ea34a72dbff2a4ef96bfad2941dc286331eb1aac423c6cc501e14506d8d5bfa237155374954a1b8d82bfe746b185ff",
+            "id": "injectable-MockTaskService-d0f3109257c7412f304a70cd40623d3919abd74b98e4a2a6440a57fb49c5c913a17e8c93afe8078b972db22fa19c6c37e6d13863c75c046689e65241ab27cf0b",
             "file": "src/stories/mockServices.ts",
             "properties": [],
             "methods": [
@@ -4949,7 +4922,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 94,
+                    "line": 101,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -4983,7 +4956,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 117,
+                    "line": 124,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -5029,7 +5002,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 100,
+                    "line": 107,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -5073,7 +5046,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
+            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\nexport const mockBoardWithManyActvities: Board =\r\n{\r\n    id: \"3\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nfunction getManyActivities(): BoardActivity[] {\r\n    var activities: BoardActivity[] = [];\r\n    for (let index = 6; index < 100; index++) {\r\n        var activity = {\r\n            id: index.toString(),\r\n            boardId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        }\r\n        activities.push(activity);\r\n    }\r\n    return activities;\r\n}\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        ...getManyActivities(),\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
             "extends": [
                 "TaskService"
             ],
@@ -8177,12 +8150,12 @@
         },
         {
             "name": "MockMatDialogRef",
-            "id": "class-MockMatDialogRef-69192d8cf7f1f7011838a9615077e3e178ea34a72dbff2a4ef96bfad2941dc286331eb1aac423c6cc501e14506d8d5bfa237155374954a1b8d82bfe746b185ff",
+            "id": "class-MockMatDialogRef-d0f3109257c7412f304a70cd40623d3919abd74b98e4a2a6440a57fb49c5c913a17e8c93afe8078b972db22fa19c6c37e6d13863c75c046689e65241ab27cf0b",
             "file": "src/stories/mockServices.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
+            "sourceCode": "import { moveItemInArray } from \"@angular/cdk/drag-drop\";\r\nimport { Injectable } from \"@angular/core\";\r\nimport { BehaviorSubject, Observable, of } from \"rxjs\";\r\nimport { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from \"../../src/app/modules/shared\";\r\nimport { ActivityService, TaskActivityData, TaskListActivityData } from \"../app/modules/action-history\";\r\nimport { BoardService, TaskListService, TaskService } from \"../app/modules/task-board\";\r\n\r\nexport const mockTask: BoardTask = {\r\n    id: \"1\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test Task 1\",\r\n    description: \"Description\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskLongText: BoardTask = {\r\n    id: \"2\",\r\n    boardTaskListId: \"1\",\r\n    creationTime: new Date(),\r\n    dueTime: new Date(),\r\n    name: \"Test with a lot of textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\",\r\n    description: \"Descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\",\r\n    priority: Priority.High\r\n}\r\nexport const mockTaskList: BoardTaskList =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 1\",\r\n    boardTasks: [mockTask]\r\n};\r\nexport const mockTaskListWithLongText: BoardTaskList =\r\n{\r\n    id: \"2\",\r\n    boardId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Task List 222222222222222222222222222222222222222222222222 222222222222222222222222222 2222222222222222222222222222222222222222\",\r\n    boardTasks: [mockTaskLongText]\r\n};\r\nexport const mockBoard: Board =\r\n{\r\n    id: \"1\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 1\",\r\n}\r\nexport const mockBoardWithLongText: Board =\r\n{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}\r\nexport const mockBoardWithManyActvities: Board =\r\n{\r\n    id: \"3\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board\",\r\n}\r\n\r\nconst allMockTasks = [mockTask, mockTaskLongText];\r\nvar mockTaskLists = [mockTaskList, mockTaskListWithLongText];\r\nvar mockBoards = [mockBoard, mockBoardWithLongText];\r\n@Injectable()\r\nexport class MockTaskListService extends TaskListService {\r\n    private observables: Map<string, BehaviorSubject<BoardTaskList[]>> = new Map();\r\n\r\n\r\n    override getTaskListsByBoardId(id: string): Observable<BoardTaskList[]> {\r\n        var obs = new BehaviorSubject(mockTaskLists.filter(x => x.boardId == id));\r\n        this.observables.set(id, obs);\r\n        return obs;\r\n    }\r\n    override getTaskListById(id: string): Observable<BoardTaskList | undefined> {\r\n        return of(mockTaskLists.find(x => x.id == id));\r\n    }\r\n    override createTaskList(taskList: BoardTaskList): void {\r\n        taskList.id = this.getRandomInt(10000).toString();\r\n        mockTaskLists.push(taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override updateTaskList(taskList: BoardTaskList): void {\r\n        var oldListData = mockTaskLists.find(x => x.id == taskList.id);\r\n        if (oldListData)\r\n            copyTaskListValues(oldListData, taskList);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    override deleteTaskList(taskList: BoardTaskList): void {\r\n        mockTaskLists = mockTaskLists.filter(x => x.id != taskList.id);\r\n        this.observables.get(taskList.boardId)!.next(mockTaskLists);\r\n    }\r\n    private getRandomInt(max: number) {\r\n        return Math.floor(Math.random() * max);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockTaskService extends TaskService {\r\n    override createTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks.unshift(task);\r\n        }\r\n    }\r\n    override updateTask(prevTaskList: BoardTaskList, task: BoardTask, currentIndex: number): void {\r\n        var oldTaskData = allMockTasks.find(x => x.id == task.id);\r\n        if (oldTaskData)\r\n            copyTaskValues(oldTaskData, task);\r\n        var currentTaskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (currentTaskList) {\r\n            if (prevTaskList.id == task.boardTaskListId) {\r\n                var oldTaskIndex = currentTaskList.boardTasks.findIndex(x => x.id == task.id);\r\n                moveItemInArray(currentTaskList.boardTasks, oldTaskIndex, currentIndex);\r\n            }\r\n            else {\r\n                prevTaskList.boardTasks = prevTaskList.boardTasks.filter(x => x.id != task.id);\r\n                this.createTask(task);\r\n                moveItemInArray(currentTaskList.boardTasks, 0, currentIndex);\r\n            }\r\n        }\r\n    }\r\n    override deleteTask(task: BoardTask): void {\r\n        var taskList = mockTaskLists.find(x => x.id == task.boardTaskListId);\r\n        if (taskList) {\r\n            taskList.boardTasks = taskList.boardTasks.filter(x => x.id != task.id);\r\n        }\r\n    }\r\n}\r\nconst mockTaskActivities: BoardTaskActivity[] =\r\n    [\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ];\r\nexport const mockActivity: BoardActivity =\r\n{\r\n    id: \"1\",\r\n    boardId: \"1\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacription1\"\r\n};\r\nexport const mockActivityWithLongText: BoardActivity =\r\n{\r\n    id: \"4\",\r\n    boardId: \"2\",\r\n    activityTime: new Date(),\r\n    description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n};\r\nfunction getManyActivities(): BoardActivity[] {\r\n    var activities: BoardActivity[] = [];\r\n    for (let index = 6; index < 100; index++) {\r\n        var activity = {\r\n            id: index.toString(),\r\n            boardId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        }\r\n        activities.push(activity);\r\n    }\r\n    return activities;\r\n}\r\nconst mockActivities: BoardActivity[] =\r\n    [\r\n        ...getManyActivities(),\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n    ];\r\n@Injectable()\r\nexport class MockActivityService extends ActivityService {\r\n    override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {\r\n        return of(mockTaskActivities.filter(x => x.boardTaskId == taskId));\r\n    }\r\n    override getBoardActivitiesOnPageByBoardId(id: string, page: number, amountOnPage: number): Observable<BoardActivity[]> {\r\n        const startIndex = (page - 1) * amountOnPage;\r\n        const activities = mockActivities.filter(x => x.boardId == id).slice(startIndex, startIndex + amountOnPage);\r\n        return of(activities);\r\n    }\r\n    override getBoardActivityAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockActivities.filter(x => x.boardId == id).length);\r\n    }\r\n    override createTaskActivity(activityType: ActivityType, taskActivityData: TaskActivityData): void {\r\n    }\r\n    override createTaskListActivity(activityType: ActivityType, listActivityData: TaskListActivityData): void {\r\n    }\r\n}\r\nexport class MockMatDialogRef<T> {\r\n    close(value = ''): void { }\r\n    afterClosed() {\r\n        return of(true);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockBoardService extends BoardService {\r\n    override getBoardsByUserId(): Observable<Board[]> {\r\n        return of(mockBoards);\r\n    }\r\n    override getBoardById(id: string): Observable<Board | undefined> {\r\n        var board = mockBoards.find(x => x.id == id);\r\n        return of(board);\r\n    }\r\n    override getTaskListsAmountByBoardId(id: string): Observable<number> {\r\n        return of(mockTaskLists.filter(x => x.boardId == id).length);\r\n    }\r\n    getTasksAmountByBoardId(id: string): Observable<number> {\r\n        const totalTasks = mockTaskLists\r\n            .filter(x => x.boardId === id)\r\n            .reduce((sum, taskList) => sum + taskList.boardTasks.length, 0);\r\n\r\n        return of(totalTasks);\r\n    }\r\n    override createBoard(board: Board): void {\r\n        mockBoards.push(board);\r\n    }\r\n    override updateBoard(board: Board): void {\r\n        var oldData = mockBoards.find(x => x.id == board.id);\r\n        if (oldData)\r\n            copyBoardValues(oldData, board);\r\n    }\r\n    override deleteBoard(board: Board): void {\r\n        mockBoards = mockBoards.filter(x => x.id != board.id);\r\n    }\r\n}\r\n@Injectable()\r\nexport class MockRedirectorService extends RedirectorService {\r\n    override redirectToHome(): void {\r\n    }\r\n    override redirectToBoard(boardId: string): void {\r\n    }\r\n}",
             "inputsClass": [],
             "outputsClass": [],
             "properties": [],
@@ -8193,7 +8166,7 @@
                     "optional": false,
                     "returnType": "any",
                     "typeParameters": [],
-                    "line": 214,
+                    "line": 235,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -8211,7 +8184,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 213,
+                    "line": 234,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -8411,7 +8384,7 @@
         },
         {
             "name": "ActivityHistoryComponent",
-            "id": "component-ActivityHistoryComponent-0ac41e89cac4b27ffbb41fa139a4be02d211e6502cf5bfd99b757253d8a3f4126091448d48ba97c1e203967405391d1bc1ee1af404cc94750d85d2b87ebba6d1",
+            "id": "component-ActivityHistoryComponent-815f4795e2aa493d813286c4330795dc24cc25a21e64a0a2a4faec4b090c3269c65f1703f9a285c7abfffe03b11ff9267472bada3073bca0eb17127f80587081",
             "file": "src/app/modules/action-history/components/activity-popup/activity-history/activity-history.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -8437,7 +8410,7 @@
                     "type": "BoardActivity[]",
                     "optional": false,
                     "description": "",
-                    "line": 15
+                    "line": 16
                 },
                 {
                     "name": "activitiesAmount",
@@ -8447,7 +8420,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 14
+                    "line": 15
                 },
                 {
                     "name": "amountOnPage",
@@ -8457,7 +8430,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 13
+                    "line": 14
                 },
                 {
                     "name": "page",
@@ -8467,7 +8440,7 @@
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 13
                 },
                 {
                     "name": "popupData",
@@ -8476,7 +8449,7 @@
                     "type": "ActivityPopupData",
                     "optional": false,
                     "description": "",
-                    "line": 17,
+                    "line": 18,
                     "decorators": [
                         {
                             "name": "Inject",
@@ -8496,7 +8469,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 32,
+                    "line": 33,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -8509,7 +8482,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 27,
+                    "line": 28,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "modifierKind": [
@@ -8522,7 +8495,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 19,
+                    "line": 20,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -8532,7 +8505,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 23,
+                    "line": 24,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -8543,10 +8516,10 @@
             "hostListeners": [],
             "standalone": false,
             "imports": [],
-            "description": "",
-            "rawdescription": "\n",
+            "description": "<p>The component that renders all board activities.</p>\n",
+            "rawdescription": "\nThe component that renders all board activities.",
             "type": "component",
-            "sourceCode": "import { Component, Inject, OnInit } from '@angular/core';\r\nimport { MAT_DIALOG_DATA } from '@angular/material/dialog';\r\nimport { BoardActivity } from '../../../../shared';\r\nimport { ActivityPopupData, ActivityService } from '../../../index';\r\n\r\n@Component({\r\n  selector: 'app-activity-history',\r\n  templateUrl: './activity-history.component.html',\r\n  styleUrl: './activity-history.component.scss'\r\n})\r\nexport class ActivityHistoryComponent implements OnInit {\r\n  page = 0;\r\n  amountOnPage = 20;\r\n  activitiesAmount: number = 0;\r\n  activities: BoardActivity[] = [];\r\n\r\n  constructor(@Inject(MAT_DIALOG_DATA) public popupData: ActivityPopupData, private activityService: ActivityService) { }\r\n\r\n  ngOnInit(): void {\r\n    this.showMore();\r\n    this.getActivitiesAmount();\r\n  }\r\n  showMore() {\r\n    this.page++;\r\n    this.loadActivities();\r\n  }\r\n  private loadActivities() {\r\n    this.activityService.getBoardActivitiesOnPageByBoardId(this.popupData.board.id, this.page, this.amountOnPage).subscribe(activities => {\r\n      this.activities = this.activities.concat(activities);\r\n    })\r\n  }\r\n  private getActivitiesAmount() {\r\n    this.activityService.getBoardActivityAmountByBoardId(this.popupData.board.id).subscribe(amount => {\r\n      this.activitiesAmount = amount;\r\n    })\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, Inject, OnInit } from '@angular/core';\r\nimport { MAT_DIALOG_DATA } from '@angular/material/dialog';\r\nimport { BoardActivity } from '../../../../shared';\r\nimport { ActivityPopupData, ActivityService } from '../../../index';\r\n\r\n/**The component that renders all board activities. */\r\n@Component({\r\n  selector: 'app-activity-history',\r\n  templateUrl: './activity-history.component.html',\r\n  styleUrl: './activity-history.component.scss'\r\n})\r\nexport class ActivityHistoryComponent implements OnInit {\r\n  page = 0;\r\n  amountOnPage = 20;\r\n  activitiesAmount: number = 0;\r\n  activities: BoardActivity[] = [];\r\n\r\n  constructor(@Inject(MAT_DIALOG_DATA) public popupData: ActivityPopupData, private activityService: ActivityService) { }\r\n\r\n  ngOnInit(): void {\r\n    this.showMore();\r\n    this.getActivitiesAmount();\r\n  }\r\n  showMore() {\r\n    this.page++;\r\n    this.loadActivities();\r\n  }\r\n  private loadActivities() {\r\n    this.activityService.getBoardActivitiesOnPageByBoardId(this.popupData.board.id, this.page, this.amountOnPage).subscribe(activities => {\r\n      this.activities = this.activities.concat(activities);\r\n    })\r\n  }\r\n  private getActivitiesAmount() {\r\n    this.activityService.getBoardActivityAmountByBoardId(this.popupData.board.id).subscribe(amount => {\r\n      this.activitiesAmount = amount;\r\n    })\r\n  }\r\n}\r\n",
             "styleUrl": "./activity-history.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
@@ -8570,7 +8543,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 15,
+                "line": 16,
                 "jsdoctags": [
                     {
                         "name": "popupData",
@@ -9423,225 +9396,6 @@
             "templateData": "<form [formGroup]=\"boardFormGroup\" (ngSubmit)=\"onSubmit()\">\r\n    <div class=\"manager-wrapper\">\r\n        <header class=\"manager-header\">{{cardName}}</header>\r\n\r\n        <body class=\"manager-body\">\r\n            <div>\r\n                <span *ngIf=\"isNameInvalid()\" class=\"message is-danger\">\r\n                    Please enter board name\r\n                </span>\r\n                <input class=\"input\" id=\"input-name\" type=\"text\" placeholder=\"Board name\" formControlName=\"name\">\r\n            </div>\r\n            <div class=\"action-buttons\">\r\n                <button mat-dialog-close class=\"button\">\r\n                    <span>Cancel</span>\r\n                </button>\r\n                <button type=\"submit\" [disabled]=\"boardFormGroup.invalid\" class=\"button is-dark\">\r\n                    <span>Save</span>\r\n                </button>\r\n            </div>\r\n        </body>\r\n    </div>\r\n</form>"
         },
         {
-            "name": "ButtonComponent",
-            "id": "component-ButtonComponent-c3bd323da00016e22e16a3a7d43440094eeceddea5e6076a399bcaba62f8e742efe65e543735e36f9ea1bed026ab8e3c8fb60482667ae55ec324f8adfe79b9f7",
-            "file": "src/stories/default/button.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "storybook-button",
-            "styleUrls": [
-                "./button.css"
-            ],
-            "styles": [],
-            "template": "<button   type=\"button\"\n   (click)=\"onClick.emit($event)\"\n   [ngClass]=\"classes\"\n   [ngStyle]=\"{ 'background-color': backgroundColor }\"\n >\n   {{ label }}\n </button>",
-            "templateUrl": [],
-            "viewProviders": [],
-            "hostDirectives": [],
-            "inputsClass": [
-                {
-                    "name": "backgroundColor",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "rawdescription": "\n\nWhat background color to use\n",
-                    "description": "<p>What background color to use</p>\n",
-                    "line": 29,
-                    "type": "string",
-                    "decorators": []
-                },
-                {
-                    "name": "label",
-                    "defaultValue": "'Button'",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "jsdoctags": [
-                        {
-                            "pos": 837,
-                            "end": 851,
-                            "flags": 16842752,
-                            "modifierFlagsCache": 0,
-                            "transformFlags": 0,
-                            "kind": 334,
-                            "tagName": {
-                                "pos": 838,
-                                "end": 846,
-                                "flags": 16842752,
-                                "modifierFlagsCache": 0,
-                                "transformFlags": 0,
-                                "kind": 80,
-                                "escapedText": "required"
-                            },
-                            "comment": ""
-                        }
-                    ],
-                    "rawdescription": "\n\nButton contents\n\n",
-                    "description": "<p>Button contents</p>\n",
-                    "line": 43,
-                    "type": "string",
-                    "decorators": []
-                },
-                {
-                    "name": "primary",
-                    "defaultValue": "false",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "rawdescription": "\n\nIs this the principal call to action on the page?\n",
-                    "description": "<p>Is this the principal call to action on the page?</p>\n",
-                    "line": 23,
-                    "type": "boolean",
-                    "decorators": []
-                },
-                {
-                    "name": "size",
-                    "defaultValue": "'medium'",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "rawdescription": "\n\nHow large should the button be?\n",
-                    "description": "<p>How large should the button be?</p>\n",
-                    "line": 35,
-                    "type": "\"small\" | \"medium\" | \"large\"",
-                    "decorators": []
-                }
-            ],
-            "outputsClass": [
-                {
-                    "name": "onClick",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "rawdescription": "\n\nOptional click handler\n",
-                    "description": "<p>Optional click handler</p>\n",
-                    "line": 49,
-                    "type": "EventEmitter"
-                }
-            ],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "standalone": true,
-            "imports": [
-                {
-                    "name": "CommonModule",
-                    "type": "module"
-                }
-            ],
-            "description": "",
-            "rawdescription": "\n",
-            "type": "component",
-            "sourceCode": "import { CommonModule } from '@angular/common';\r\nimport { Component, Input, Output, EventEmitter } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'storybook-button',\r\n  standalone: true,\r\n  imports: [CommonModule],\r\n  template: ` <button\r\n    type=\"button\"\r\n    (click)=\"onClick.emit($event)\"\r\n    [ngClass]=\"classes\"\r\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\r\n  >\r\n    {{ label }}\r\n  </button>`,\r\n  styleUrls: ['./button.css'],\r\n})\r\nexport class ButtonComponent {\r\n  /**\r\n   * Is this the principal call to action on the page?\r\n   */\r\n  @Input()\r\n  primary = false;\r\n\r\n  /**\r\n   * What background color to use\r\n   */\r\n  @Input()\r\n  backgroundColor?: string;\r\n\r\n  /**\r\n   * How large should the button be?\r\n   */\r\n  @Input()\r\n  size: 'small' | 'medium' | 'large' = 'medium';\r\n\r\n  /**\r\n   * Button contents\r\n   *\r\n   * @required\r\n   */\r\n  @Input()\r\n  label = 'Button';\r\n\r\n  /**\r\n   * Optional click handler\r\n   */\r\n  @Output()\r\n  onClick = new EventEmitter<Event>();\r\n\r\n  public get classes(): string[] {\r\n    const mode = this.primary ? 'storybook-button--primary' : 'storybook-button--secondary';\r\n\r\n    return ['storybook-button', `storybook-button--${this.size}`, mode];\r\n  }\r\n}\r\n",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": ".storybook-button {\r\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\r\n  font-weight: 700;\r\n  border: 0;\r\n  border-radius: 3em;\r\n  cursor: pointer;\r\n  display: inline-block;\r\n  line-height: 1;\r\n}\r\n.storybook-button--primary {\r\n  color: white;\r\n  background-color: #1ea7fd;\r\n}\r\n.storybook-button--secondary {\r\n  color: #333;\r\n  background-color: transparent;\r\n  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;\r\n}\r\n.storybook-button--small {\r\n  font-size: 12px;\r\n  padding: 10px 16px;\r\n}\r\n.storybook-button--medium {\r\n  font-size: 14px;\r\n  padding: 11px 20px;\r\n}\r\n.storybook-button--large {\r\n  font-size: 16px;\r\n  padding: 12px 24px;\r\n}\r\n",
-                    "styleUrl": "./button.css"
-                }
-            ],
-            "stylesData": "",
-            "extends": [],
-            "accessors": {
-                "classes": {
-                    "name": "classes",
-                    "getSignature": {
-                        "name": "classes",
-                        "type": "[]",
-                        "returnType": "string[]",
-                        "line": 51
-                    }
-                }
-            }
-        },
-        {
-            "name": "HeaderComponent",
-            "id": "component-HeaderComponent-07f894be6f38e12f30e1e7e5d9e999c27c78ce2f0be03c15c8c5f39207229e147892a2fd1fdb54e935c4f04f03c2162e39a22c28cdc64e027ea15824ddf0f3c9",
-            "file": "src/stories/default/header.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "storybook-header",
-            "styleUrls": [
-                "./header.css"
-            ],
-            "styles": [],
-            "template": "<header>    <div class=\"storybook-header\">\n      <div>\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <div *ngIf=\"user\">\n          <span class=\"welcome\">\n            Welcome, <b>{{ user.name }}</b\n            >!\n          </span>\n          <storybook-button\n            *ngIf=\"user\"\n            size=\"small\"\n            (onClick)=\"onLogout.emit($event)\"\n            label=\"Log out\"\n          ></storybook-button>\n        </div>\n        <div *ngIf=\"!user\">\n          <storybook-button\n            *ngIf=\"!user\"\n            size=\"small\"\n            class=\"margin-left\"\n            (onClick)=\"onLogin.emit($event)\"\n            label=\"Log in\"\n          ></storybook-button>\n          <storybook-button\n            *ngIf=\"!user\"\n            size=\"small\"\n            [primary]=\"true\"\n            class=\"margin-left\"\n            (onClick)=\"onCreateAccount.emit($event)\"\n            label=\"Sign up\"\n          ></storybook-button>\n        </div>\n      </div>\n    </div>\n  </header>",
-            "templateUrl": [],
-            "viewProviders": [],
-            "hostDirectives": [],
-            "inputsClass": [
-                {
-                    "name": "user",
-                    "defaultValue": "null",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 69,
-                    "type": "User | null",
-                    "decorators": []
-                }
-            ],
-            "outputsClass": [
-                {
-                    "name": "onCreateAccount",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 78,
-                    "type": "EventEmitter"
-                },
-                {
-                    "name": "onLogin",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 72,
-                    "type": "EventEmitter"
-                },
-                {
-                    "name": "onLogout",
-                    "defaultValue": "new EventEmitter<Event>()",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 75,
-                    "type": "EventEmitter"
-                }
-            ],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "standalone": true,
-            "imports": [
-                {
-                    "name": "CommonModule",
-                    "type": "module"
-                },
-                {
-                    "name": "ButtonComponent",
-                    "type": "component"
-                }
-            ],
-            "description": "",
-            "rawdescription": "\n",
-            "type": "component",
-            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\n\r\nimport { ButtonComponent } from './button.component';\r\nimport type { User } from './user';\r\n\r\n@Component({\r\n  selector: 'storybook-header',\r\n  standalone: true,\r\n  imports: [CommonModule, ButtonComponent],\r\n  template: `<header>\r\n    <div class=\"storybook-header\">\r\n      <div>\r\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\r\n          <g fill=\"none\" fillRule=\"evenodd\">\r\n            <path\r\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\r\n              fill=\"#FFF\"\r\n            />\r\n            <path\r\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\r\n              fill=\"#555AB9\"\r\n            />\r\n            <path\r\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\r\n              fill=\"#91BAF8\"\r\n            />\r\n          </g>\r\n        </svg>\r\n        <h1>Acme</h1>\r\n      </div>\r\n      <div>\r\n        <div *ngIf=\"user\">\r\n          <span class=\"welcome\">\r\n            Welcome, <b>{{ user.name }}</b\r\n            >!\r\n          </span>\r\n          <storybook-button\r\n            *ngIf=\"user\"\r\n            size=\"small\"\r\n            (onClick)=\"onLogout.emit($event)\"\r\n            label=\"Log out\"\r\n          ></storybook-button>\r\n        </div>\r\n        <div *ngIf=\"!user\">\r\n          <storybook-button\r\n            *ngIf=\"!user\"\r\n            size=\"small\"\r\n            class=\"margin-left\"\r\n            (onClick)=\"onLogin.emit($event)\"\r\n            label=\"Log in\"\r\n          ></storybook-button>\r\n          <storybook-button\r\n            *ngIf=\"!user\"\r\n            size=\"small\"\r\n            [primary]=\"true\"\r\n            class=\"margin-left\"\r\n            (onClick)=\"onCreateAccount.emit($event)\"\r\n            label=\"Sign up\"\r\n          ></storybook-button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </header>`,\r\n  styleUrls: ['./header.css'],\r\n})\r\nexport class HeaderComponent {\r\n  @Input()\r\n  user: User | null = null;\r\n\r\n  @Output()\r\n  onLogin = new EventEmitter<Event>();\r\n\r\n  @Output()\r\n  onLogout = new EventEmitter<Event>();\r\n\r\n  @Output()\r\n  onCreateAccount = new EventEmitter<Event>();\r\n}\r\n",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": ".storybook-header {\r\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\r\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\r\n  padding: 15px 20px;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n}\r\n\r\n.storybook-header svg {\r\n  display: inline-block;\r\n  vertical-align: top;\r\n}\r\n\r\n.storybook-header h1 {\r\n  font-weight: 700;\r\n  font-size: 20px;\r\n  line-height: 1;\r\n  margin: 6px 0 6px 10px;\r\n  display: inline-block;\r\n  vertical-align: top;\r\n}\r\n\r\n.storybook-header button + button {\r\n  margin-left: 10px;\r\n}\r\n\r\n.storybook-header .welcome {\r\n  color: #333;\r\n  font-size: 14px;\r\n  margin-right: 10px;\r\n}\r\n",
-                    "styleUrl": "./header.css"
-                }
-            ],
-            "stylesData": "",
-            "extends": []
-        },
-        {
             "name": "MainViewComponent",
             "id": "component-MainViewComponent-7cc8954bbba598a0aa7450af0f07e4d91e5f1b066a697ca5fba23ba83591c2107f5e10b7ece6f965ac8eabbc8eafe5d1096f976ac00567ff429a67c818ecb4bb",
             "file": "src/app/modules/core/components/main-view/main-view.component.ts",
@@ -9715,99 +9469,6 @@
             },
             "extends": [],
             "templateData": "<div class=\"root\">\r\n    <header class=\"header\" (click)=\"redirectToHome()\">\r\n        <span class=\"icon is-small is-left\">\r\n            <i class=\"fa-regular fa-clipboard\"></i>\r\n        </span>\r\n        <p class=\"name\">Task Manager</p>\r\n    </header>\r\n\r\n    <body class=\"wrapper\">\r\n        <router-outlet></router-outlet>\r\n    </body>\r\n</div>"
-        },
-        {
-            "name": "PageComponent",
-            "id": "component-PageComponent-92f4cc9cc0054ccf9d578fc1ebe06b6d7ed1424277151dbedd6cfe73ba15609d9919dcba6e9acbd021b43117d9ce1f28adf6630c681037299b01a4c726c15a8e",
-            "file": "src/stories/default/page.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "storybook-page",
-            "styleUrls": [
-                "./page.css"
-            ],
-            "styles": [],
-            "template": "<article>    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"doLogout()\"\n      (onLogin)=\"doLogin()\"\n      (onCreateAccount)=\"doCreateAccount()\"\n    ></storybook-header>\n    <section class=\"storybook-page\">\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a href=\"https://componentdriven.org\" target=\"_blank\" rel=\"noopener noreferrer\">\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page states without\n        needing to navigate to them in your app. Here are some handy patterns for managing page data\n        in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose such data from the\n          \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock these services out\n          using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a href=\"https://storybook.js.org/tutorials/\" target=\"_blank\" rel=\"noopener noreferrer\">\n          Storybook tutorials\n        </a>\n        . Read more in the\n        <a href=\"https://storybook.js.org/docs\" target=\"_blank\" rel=\"noopener noreferrer\"> docs </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>",
-            "templateUrl": [],
-            "viewProviders": [],
-            "hostDirectives": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [
-                {
-                    "name": "user",
-                    "defaultValue": "null",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "User | null",
-                    "optional": false,
-                    "description": "",
-                    "line": 69
-                }
-            ],
-            "methodsClass": [
-                {
-                    "name": "doCreateAccount",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 79,
-                    "deprecated": false,
-                    "deprecationMessage": ""
-                },
-                {
-                    "name": "doLogin",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 75,
-                    "deprecated": false,
-                    "deprecationMessage": ""
-                },
-                {
-                    "name": "doLogout",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 71,
-                    "deprecated": false,
-                    "deprecationMessage": ""
-                }
-            ],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "standalone": true,
-            "imports": [
-                {
-                    "name": "CommonModule",
-                    "type": "module"
-                },
-                {
-                    "name": "HeaderComponent",
-                    "type": "component"
-                }
-            ],
-            "description": "",
-            "rawdescription": "\n",
-            "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\n\r\nimport { HeaderComponent } from './header.component';\r\nimport type { User } from './user';\r\n\r\n@Component({\r\n  selector: 'storybook-page',\r\n  standalone: true,\r\n  imports: [CommonModule, HeaderComponent],\r\n  template: `<article>\r\n    <storybook-header\r\n      [user]=\"user\"\r\n      (onLogout)=\"doLogout()\"\r\n      (onLogin)=\"doLogin()\"\r\n      (onCreateAccount)=\"doCreateAccount()\"\r\n    ></storybook-header>\r\n    <section class=\"storybook-page\">\r\n      <h2>Pages in Storybook</h2>\r\n      <p>\r\n        We recommend building UIs with a\r\n        <a href=\"https://componentdriven.org\" target=\"_blank\" rel=\"noopener noreferrer\">\r\n          <strong>component-driven</strong>\r\n        </a>\r\n        process starting with atomic components and ending with pages.\r\n      </p>\r\n      <p>\r\n        Render pages with mock data. This makes it easy to build and review page states without\r\n        needing to navigate to them in your app. Here are some handy patterns for managing page data\r\n        in Storybook:\r\n      </p>\r\n      <ul>\r\n        <li>\r\n          Use a higher-level connected component. Storybook helps you compose such data from the\r\n          \"args\" of child component stories\r\n        </li>\r\n        <li>\r\n          Assemble data in the page component from your services. You can mock these services out\r\n          using Storybook.\r\n        </li>\r\n      </ul>\r\n      <p>\r\n        Get a guided tutorial on component-driven development at\r\n        <a href=\"https://storybook.js.org/tutorials/\" target=\"_blank\" rel=\"noopener noreferrer\">\r\n          Storybook tutorials\r\n        </a>\r\n        . Read more in the\r\n        <a href=\"https://storybook.js.org/docs\" target=\"_blank\" rel=\"noopener noreferrer\"> docs </a>\r\n        .\r\n      </p>\r\n      <div class=\"tip-wrapper\">\r\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\r\n        <svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" xmlns=\"http://www.w3.org/2000/svg\">\r\n          <g fill=\"none\" fillRule=\"evenodd\">\r\n            <path\r\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\r\n              id=\"a\"\r\n              fill=\"#999\"\r\n            />\r\n          </g>\r\n        </svg>\r\n        Viewports addon in the toolbar\r\n      </div>\r\n    </section>\r\n  </article>`,\r\n  styleUrls: ['./page.css'],\r\n})\r\nexport class PageComponent {\r\n  user: User | null = null;\r\n\r\n  doLogout() {\r\n    this.user = null;\r\n  }\r\n\r\n  doLogin() {\r\n    this.user = { name: 'Jane Doe' };\r\n  }\r\n\r\n  doCreateAccount() {\r\n    this.user = { name: 'Jane Doe' };\r\n  }\r\n}\r\n",
-            "assetsDirs": [],
-            "styleUrlsData": [
-                {
-                    "data": ".storybook-page {\r\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 24px;\r\n  padding: 48px 20px;\r\n  margin: 0 auto;\r\n  max-width: 600px;\r\n  color: #333;\r\n}\r\n\r\n.storybook-page h2 {\r\n  font-weight: 700;\r\n  font-size: 32px;\r\n  line-height: 1;\r\n  margin: 0 0 4px;\r\n  display: inline-block;\r\n  vertical-align: top;\r\n}\r\n\r\n.storybook-page p {\r\n  margin: 1em 0;\r\n}\r\n\r\n.storybook-page a {\r\n  text-decoration: none;\r\n  color: #1ea7fd;\r\n}\r\n\r\n.storybook-page ul {\r\n  padding-left: 30px;\r\n  margin: 1em 0;\r\n}\r\n\r\n.storybook-page li {\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.storybook-page .tip {\r\n  display: inline-block;\r\n  border-radius: 1em;\r\n  font-size: 11px;\r\n  line-height: 12px;\r\n  font-weight: 700;\r\n  background: #e7fdd8;\r\n  color: #66bf3c;\r\n  padding: 4px 12px;\r\n  margin-right: 10px;\r\n  vertical-align: top;\r\n}\r\n\r\n.storybook-page .tip-wrapper {\r\n  font-size: 13px;\r\n  line-height: 20px;\r\n  margin-top: 40px;\r\n  margin-bottom: 40px;\r\n}\r\n\r\n.storybook-page .tip-wrapper svg {\r\n  display: inline-block;\r\n  height: 12px;\r\n  width: 12px;\r\n  margin-right: 4px;\r\n  vertical-align: top;\r\n  margin-top: 3px;\r\n}\r\n\r\n.storybook-page .tip-wrapper svg path {\r\n  fill: #1ea7fd;\r\n}\r\n",
-                    "styleUrl": "./page.css"
-                }
-            ],
-            "stylesData": "",
-            "extends": []
         },
         {
             "name": "TaskComponent",
@@ -11751,7 +11412,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "BoardActivity[]",
-                "defaultValue": "[\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ]"
+                "defaultValue": "[\r\n        ...getManyActivities(),\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n    ]"
             },
             {
                 "name": "mockActivity",
@@ -11804,6 +11465,16 @@
                 "defaultValue": "{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}"
             },
             {
+                "name": "mockBoardWithManyActvities",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/mockServices.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Board",
+                "defaultValue": "{\r\n    id: \"3\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board\",\r\n}"
+            },
+            {
                 "name": "mockTask",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -11821,7 +11492,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "BoardTaskActivity[]",
-                "defaultValue": "[\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ]"
+                "defaultValue": "[\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ]"
             },
             {
                 "name": "mockTaskList",
@@ -12195,6 +11866,17 @@
                 "args": []
             },
             {
+                "name": "getManyActivities",
+                "file": "src/stories/mockServices.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [],
+                "returnType": "BoardActivity[]"
+            },
+            {
                 "name": "updateTaskInDifferentList",
                 "file": "src/app/modules/task-board/store/tasks/tasks.reducer.ts",
                 "ctype": "miscellaneous",
@@ -12429,7 +12111,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "BoardActivity[]",
-                    "defaultValue": "[\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ]"
+                    "defaultValue": "[\r\n        ...getManyActivities(),\r\n        mockActivity,\r\n        {\r\n            id: \"2\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        mockActivityWithLongText,\r\n        {\r\n            id: \"5\",\r\n            boardId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n    ]"
                 },
                 {
                     "name": "mockActivity",
@@ -12482,6 +12164,16 @@
                     "defaultValue": "{\r\n    id: \"2\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222\",\r\n}"
                 },
                 {
+                    "name": "mockBoardWithManyActvities",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/mockServices.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Board",
+                    "defaultValue": "{\r\n    id: \"3\",\r\n    userId: \"1\",\r\n    creationTime: new Date(),\r\n    name: \"Board\",\r\n}"
+                },
+                {
                     "name": "mockTask",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
@@ -12499,7 +12191,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "BoardTaskActivity[]",
-                    "defaultValue": "[\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"2\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ]"
+                    "defaultValue": "[\r\n        {\r\n            id: \"1\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription1\"\r\n        },\r\n        {\r\n            id: \"2\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription2\"\r\n        },\r\n        {\r\n            id: \"3\",\r\n            boardTaskId: \"1\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacription3\"\r\n        },\r\n        {\r\n            id: \"4\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        },\r\n        {\r\n            id: \"5\",\r\n            boardTaskId: \"3\",\r\n            activityTime: new Date(),\r\n            description: \"Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\"\r\n        }\r\n    ]"
                 },
                 {
                     "name": "mockTaskList",
@@ -13221,6 +12913,19 @@
                     "args": []
                 }
             ],
+            "src/stories/mockServices.ts": [
+                {
+                    "name": "getManyActivities",
+                    "file": "src/stories/mockServices.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [],
+                    "returnType": "BoardActivity[]"
+                }
+            ],
             "src/app/modules/task-board/store/tasks/tasks.reducer.ts": [
                 {
                     "name": "updateTaskInDifferentList",
@@ -13451,7 +13156,7 @@
         ]
     },
     "coverage": {
-        "count": 1,
+        "count": 0,
         "status": "low",
         "files": [
             {
@@ -13459,8 +13164,8 @@
                 "type": "component",
                 "linktype": "component",
                 "name": "ActivityHistoryComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/11",
+                "coveragePercent": 9,
+                "coverageCount": "1/11",
                 "status": "low"
             },
             {
@@ -14648,42 +14353,6 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/default/button.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "ButtonComponent",
-                "coveragePercent": 83,
-                "coverageCount": "5/6",
-                "status": "very-good"
-            },
-            {
-                "filePath": "src/stories/default/header.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "HeaderComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/5",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/default/page.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "PageComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/5",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/default/user.ts",
-                "type": "interface",
-                "linktype": "interface",
-                "name": "User",
-                "coveragePercent": 0,
-                "coverageCount": "0/2",
-                "status": "low"
-            },
-            {
                 "filePath": "src/stories/mockServices.ts",
                 "type": "class",
                 "linktype": "classe",
@@ -14735,6 +14404,16 @@
                 "name": "MockTaskService",
                 "coveragePercent": 0,
                 "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/mockServices.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "getManyActivities",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -14803,6 +14482,16 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "mockBoardWithLongText",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/mockServices.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "mockBoardWithManyActvities",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
