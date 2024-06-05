@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoardActivity } from '../../../../shared';
 import { ActivityPopupData, ActivityService } from '../../../index';
 
+/**The component that renders all board activities. */
 @Component({
   selector: 'app-activity-history',
   templateUrl: './activity-history.component.html',

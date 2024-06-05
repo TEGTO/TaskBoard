@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 import { Meta, StoryObj, moduleMetadata } from "@storybook/angular";
 import { Board } from "../../../../app/modules/shared";
 import { BoardManagerComponent } from "../../../../app/modules/task-board";
-import { MockMatDialogRef, mockBoard, mockBoardWithLongText } from "../../tasks/mockServices";
+import { MockMatDialogRef, mockBoard, mockBoardWithLongText } from "../../../index";
 
 const meta: Meta<BoardManagerComponent> = {
     title: 'Task/BoardManagerComponent',

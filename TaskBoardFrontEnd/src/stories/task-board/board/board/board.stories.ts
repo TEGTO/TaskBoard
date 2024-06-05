@@ -13,7 +13,7 @@ import { of } from "rxjs";
 import { ActivityComponent, ActivityHistoryComponent, ActivityService } from "../../../../app/modules/action-history";
 import { APP_DATE_CONFIG, CustomDatePickerValidatorService, DATE_CONFIG, DateFormaterService, DateValidator, PriorityConvertorService, RedirectorService, StandartDateFormaterService } from "../../../../app/modules/shared";
 import { BoardComponent, BoardService, TaskComponent, TaskInfoComponent, TaskListComponent, TaskListManagerComponent, TaskListService, TaskManagerComponent, TaskService } from "../../../../app/modules/task-board";
-import { MockActivityService, MockBoardService, MockRedirectorService, MockTaskListService, MockTaskService, mockBoard } from "../../tasks/mockServices";
+import { MockActivityService, MockBoardService, MockRedirectorService, MockTaskListService, MockTaskService, mockBoard } from "../../../index";
 
 const meta: Meta<BoardComponent> = {
     title: 'Task/BoardComponent',

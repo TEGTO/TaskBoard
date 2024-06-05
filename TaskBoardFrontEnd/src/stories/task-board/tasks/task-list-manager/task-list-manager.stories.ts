@@ -2,7 +2,7 @@ import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { Meta, StoryObj, moduleMetadata } from "@storybook/angular";
 import { TaskListManagerComponent, TaskListsPopupData } from "../../../../app/modules/task-board";
-import { MockMatDialogRef, mockTaskList, mockTaskListWithLongText } from "../mockServices";
+import { MockMatDialogRef, mockTaskList, mockTaskListWithLongText } from "../../../index";
 
 const meta: Meta<TaskListManagerComponent> = {
     title: 'Task/TaskListManagerComponent',

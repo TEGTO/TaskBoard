@@ -5,7 +5,7 @@ import { provideAnimationsAsync } from "@angular/platform-browser/animations/asy
 import { Meta, StoryObj, applicationConfig, moduleMetadata } from "@storybook/angular";
 import { APP_DATE_CONFIG, DATE_CONFIG, DateFormaterService, RedirectorService, StandartDateFormaterService } from "../../../app/modules/shared";
 import { BoardItemComponent, BoardListComponent, BoardService } from "../../../app/modules/task-board";
-import { MockBoardService, MockMatDialogRef, MockRedirectorService } from "../tasks/mockServices";
+import { MockBoardService, MockMatDialogRef, MockRedirectorService } from "../../index";
 
 const meta: Meta<BoardListComponent> = {
     title: 'Task/BoardListComponent',

@@ -9,7 +9,7 @@ import { Meta, StoryObj, applicationConfig, moduleMetadata } from "@storybook/an
 import { ActivityService } from "../../../../app/modules/action-history";
 import { APP_DATE_CONFIG, CustomDatePickerValidatorService, DATE_CONFIG, DateFormaterService, DateValidator, StandartDateFormaterService } from "../../../../app/modules/shared";
 import { TaskInfoComponent, TaskListService, TaskManagerComponent, TaskPopupData, TaskService } from "../../../../app/modules/task-board";
-import { MockActivityService, MockMatDialogRef, MockTaskListService, MockTaskService, mockTask, mockTaskLongText } from "../mockServices";
+import { MockActivityService, MockMatDialogRef, MockTaskListService, MockTaskService, mockTask, mockTaskLongText } from "../../../index";
 
 const meta: Meta<TaskInfoComponent> = {
     title: 'Task/TaskInfoComponent',
@@ -57,7 +57,7 @@ export const Default: Story = {
     ]
 };
 
-export const LotOfText: Story = {
+export const WithLongText: Story = {
     decorators: [
         createDialogDataDecorator({
             task: mockTaskLongText,

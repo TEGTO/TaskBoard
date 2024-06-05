@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@a
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { BoardActivity, DateFormaterService } from '../../../../shared';
 
+/**Component that renders activity board data.*/
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',

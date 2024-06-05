@@ -1,9 +1,9 @@
 import { moveItemInArray } from "@angular/cdk/drag-drop";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of } from "rxjs";
-import { ActivityService, TaskActivityData, TaskListActivityData } from "../../../app/modules/action-history";
-import { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from "../../../app/modules/shared";
-import { BoardService, TaskListService, TaskService } from "../../../app/modules/task-board";
+import { ActivityType, Board, BoardActivity, BoardTask, BoardTaskActivity, BoardTaskList, Priority, RedirectorService, copyBoardValues, copyTaskListValues, copyTaskValues } from "../../src/app/modules/shared";
+import { ActivityService, TaskActivityData, TaskListActivityData } from "../app/modules/action-history";
+import { BoardService, TaskListService, TaskService } from "../app/modules/task-board";
 
 export const mockTask: BoardTask = {
     id: "1",
@@ -52,6 +52,13 @@ export const mockBoardWithLongText: Board =
     userId: "1",
     creationTime: new Date(),
     name: "Board 2222222222222222222222222222222222222222222222222222 222222222222222222222222222222222222222222222222222222 222222222222222",
+}
+export const mockBoardWithManyActvities: Board =
+{
+    id: "3",
+    userId: "1",
+    creationTime: new Date(),
+    name: "Board",
 }
 
 const allMockTasks = [mockTask, mockTaskLongText];
@@ -143,25 +150,48 @@ const mockTaskActivities: BoardTaskActivity[] =
         },
         {
             id: "4",
-            boardTaskId: "2",
+            boardTaskId: "3",
             activityTime: new Date(),
             description: "Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
         },
         {
             id: "5",
-            boardTaskId: "2",
+            boardTaskId: "3",
             activityTime: new Date(),
             description: "Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
         }
-    ]
-const mockActivities: BoardActivity[] =
-    [
-        {
-            id: "1",
-            boardId: "1",
+    ];
+export const mockActivity: BoardActivity =
+{
+    id: "1",
+    boardId: "1",
+    activityTime: new Date(),
+    description: "Activity deacription1"
+};
+export const mockActivityWithLongText: BoardActivity =
+{
+    id: "4",
+    boardId: "2",
+    activityTime: new Date(),
+    description: "Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+};
+function getManyActivities(): BoardActivity[] {
+    var activities: BoardActivity[] = [];
+    for (let index = 6; index < 100; index++) {
+        var activity = {
+            id: index.toString(),
+            boardId: "3",
             activityTime: new Date(),
             description: "Activity deacription1"
-        },
+        }
+        activities.push(activity);
+    }
+    return activities;
+}
+const mockActivities: BoardActivity[] =
+    [
+        ...getManyActivities(),
+        mockActivity,
         {
             id: "2",
             boardId: "1",
@@ -174,19 +204,14 @@ const mockActivities: BoardActivity[] =
             activityTime: new Date(),
             description: "Activity deacription3"
         },
-        {
-            id: "4",
-            boardId: "2",
-            activityTime: new Date(),
-            description: "Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-        },
+        mockActivityWithLongText,
         {
             id: "5",
             boardId: "2",
             activityTime: new Date(),
             description: "Activity deacriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-        }
-    ]
+        },
+    ];
 @Injectable()
 export class MockActivityService extends ActivityService {
     override getTaskActivitiesByTaskId(taskId: string): Observable<BoardTaskActivity[]> {

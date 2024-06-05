@@ -9,7 +9,7 @@ import { Meta, StoryObj, applicationConfig, moduleMetadata } from "@storybook/an
 import { ActivityService } from "../../../../app/modules/action-history";
 import { APP_DATE_CONFIG, CustomDatePickerValidatorService, DATE_CONFIG, DateFormaterService, DateValidator, PriorityConvertorService, StandartDateFormaterService } from "../../../../app/modules/shared";
 import { TaskComponent, TaskInfoComponent, TaskListService, TaskManagerComponent, TaskService } from "../../../../app/modules/task-board";
-import { MockActivityService, MockTaskListService, MockTaskService, mockTask, mockTaskLongText } from "../mockServices";
+import { MockActivityService, MockTaskListService, MockTaskService, mockTask, mockTaskLongText } from "../../../index";
 
 const meta: Meta<TaskComponent> = {
     title: 'Task/TaskComponent',

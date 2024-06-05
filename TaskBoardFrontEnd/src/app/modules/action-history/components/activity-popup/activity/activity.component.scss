@@ -3,6 +3,7 @@
 .activity-wrapper {
     color: colors.$secondary-text-color;
     overflow-wrap: normal;
+    background-color: colors.$activity-background;
 
     .activity-description {
         overflow: hidden;

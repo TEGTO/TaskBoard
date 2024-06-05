@@ -11,7 +11,7 @@ import { Meta, StoryObj, applicationConfig, moduleMetadata } from "@storybook/an
 import { ActivityService } from "../../../../app/modules/action-history";
 import { APP_DATE_CONFIG, CustomDatePickerValidatorService, DATE_CONFIG, DateFormaterService, DateValidator, PriorityConvertorService, StandartDateFormaterService } from "../../../../app/modules/shared";
 import { TaskComponent, TaskInfoComponent, TaskListComponent, TaskListManagerComponent, TaskListService, TaskManagerComponent, TaskService } from "../../../../app/modules/task-board";
-import { MockActivityService, MockTaskListService, MockTaskService, mockTaskList } from "../mockServices";
+import { MockActivityService, MockTaskListService, MockTaskService, mockTaskList } from "../../../index";
 
 const meta: Meta<TaskListComponent> = {
     title: 'Task/TaskListComponent',
