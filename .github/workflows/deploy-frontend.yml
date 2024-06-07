@@ -24,6 +24,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
+      - run: node TaskBoardFrontEnd/custom-environment.config.js
+        env: 
+          API_URL: ${{ secrets.BACKEND_API_URL }}
 
       - name: Install dependencies
         run: npm install
