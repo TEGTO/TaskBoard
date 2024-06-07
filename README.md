@@ -1,5 +1,5 @@
 ## Description
-Modern kanban board (task board) made using Angular for the frontend, ASP.NET Web API for the backend, and PostgreSQL for the database, all packaged with a Docker Compose setup for seamless deployment.  [Try Out.](https://orange-dune-064a80203.5.azurestaticapps.net/)
+Modern kanban board (task board) made using Angular for the frontend, ASP.NET Web API for the backend, and PostgreSQL for the database, all packaged with a Docker Compose setup for seamless deployment.  <b>[Try Out.](https://orange-dune-064a80203.5.azurestaticapps.net/)</b>
 
 ## Installation
 
@@ -41,7 +41,12 @@ ENV=development #production
 ```bash
 npm start
 ```
-## Test
+## Stoorybook
+```bash
+npm run storybook --prefix TaskBoardFrontEnd
+```
+
+## Tests
 #### Backend
 ```bash
 # unit tests
@@ -52,9 +57,9 @@ dotnet test TaskBoardBackEnd/TaskBoardIntegrationTests
 #### Frontend
 ```bash
 # unit tests
-npm npm run test --prefix TaskBoardFrontEnd
+npm run test --prefix TaskBoardFrontEnd
 # unit tests with coverage
-npm npm run coverage --prefix TaskBoardFrontEnd
+npm run coverage --prefix TaskBoardFrontEnd
 ```
 
 ## Functionality 
