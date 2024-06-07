@@ -32,6 +32,10 @@ jobs:
         run: npm install
         working-directory: TaskBoardFrontEnd
 
+      - name: Run tests
+        run: npm run test:ci
+        working-directory: TaskBoardFrontEnd
+
       - name: Build and Deploy to Azure Static Web App
         uses: Azure/static-web-apps-deploy@v1
         with:

@@ -7,8 +7,10 @@ on:
       - main
     paths:
       - 'TaskBoardBackEnd/**'
+
 env:
   AZURE_WEBAPP_NAME: "app-taskboard-api-germanywestcentral-001"
+
 jobs:
   build-and-deploy:
     runs-on: windows-latest
@@ -25,11 +27,15 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore TaskBoardBackEnd/TaskBoardAPI
 
-    - name: Run tests
-      run: dotnet build TaskBoardBackEnd/TaskBoardAPITests
-      run: dotnet build TaskBoardBackEnd/TaskBoardIntegrationTests
-      run: dotnet test "TaskBoardAPITests\bin\Debug\net8.0\TaskBoardAPITests.dll"
-      run: dotnet test "TaskBoardIntegrationTests\bin\Debug\net8.0\TaskBoardIntegrationTests.dll"
+    - name: Build and Run Unit Tests
+      run: 
+        dotnet build TaskBoardBackEnd/TaskBoardAPITests
+        dotnet test "TaskBoardBackEnd/TaskBoardAPITests/bin/Debug/net8.0/TaskBoardAPITests.dll"
+
+    - name: Build and Run Integration Tests
+      run: 
+        dotnet build TaskBoardBackEnd/TaskBoardIntegrationTests
+        dotnet test "TaskBoardBackEnd/TaskBoardIntegrationTests/bin/Debug/net8.0/TaskBoardIntegrationTests.dll"
 
     - name: Build
       run: dotnet build TaskBoardBackEnd/TaskBoardAPI --configuration Release --no-restore
@@ -40,7 +46,7 @@ jobs:
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{env.AZURE_WEBAPP_NAME}}
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
         slot-name: 'production'
         publish-profile: ${{ secrets.API_PUBLISH_SECRET }}
         package: ./TaskBoardBackEnd/TaskBoardAPI/publish

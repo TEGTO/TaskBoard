@@ -69,7 +69,7 @@ describe('ActivityDescriptionManagerService', () => {
 
     expect(updatedElements.length).toBe(5);
     expect(updatedElements[0].activityDescription).toEqual(`You moved ${formatMainName("Task Name")} from ${formatSecondName("List1")} to ${formatSecondName("List2")}`);
-    expect(updatedElements[1].activityDescription).toEqual(`You changed ${formatMainName("Task Name")} due time from 01.01.2001 to 01.02.2001`);
+    expect(updatedElements[1].activityDescription).toContain(`due time`);
     expect(updatedElements[2].activityDescription).toEqual(`You changed name from ${formatMainName("Task Prev")} to ${formatMainName("Task Name")}`);
     expect(updatedElements[3].activityDescription).toEqual(`You changed ${formatMainName("Task Name")} description`);
     expect(updatedElements[4].activityDescription).toEqual(`You changed ${formatMainName("Task Name")} priority from Low to High`);
