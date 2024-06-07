@@ -1,24 +1,27 @@
-import { Component, Input } from '@angular/core';
+import { Component, Injector, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BoardTask, BoardTaskList, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
+import { BoardTask, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
 import { TaskInfoComponent, TaskManagerComponent, TaskPopupData, TaskService } from '../../../index';
 
+/** The component that renders the task and provides access to edit, info menus.*/
 @Component({
   selector: 'task',
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss'
 })
 export class TaskComponent {
-  @Input({ required: true }) task: BoardTask | undefined;
-  @Input({ required: true }) taskList!: BoardTaskList;
-  @Input({ required: true }) allTaskLists!: BoardTaskList[];
+  @Input({ required: true }) task!: BoardTask;
+  @Input({ required: true }) boardId!: string;
 
-  constructor(public dialog: MatDialog, private dateFormater: DateFormaterService,
-    private taskService: TaskService) { }
+  constructor(public dialog: MatDialog,
+    private dateFormater: DateFormaterService,
+    private taskService: TaskService,
+    private injector: Injector) { }
 
   openInfoMenu() {
     const dialogRef = this.dialog.open(TaskInfoComponent, {
-      data: this.getPopupData()
+      data: this.getPopupData(),
+      injector: this.injector
     });
   }
   openEditMenu() {
@@ -26,8 +29,8 @@ export class TaskComponent {
       data: this.getPopupData()
     });
   }
-  deleteButton() {
-    this.taskService.deleteTask(this.task!, this.taskList);
+  deleteTask() {
+    this.taskService.deleteTask(this.task);
   }
   getPriorityString(priority: Priority): string {
     return PriorityConvertorService.getPriorityString(priority);
@@ -38,8 +41,8 @@ export class TaskComponent {
   private getPopupData() {
     const taskPopupData: TaskPopupData = {
       task: this.task,
-      currentTaskList: this.taskList,
-      allTaskLists: this.allTaskLists
+      taskListId: this.task.boardTaskListId,
+      boardId: this.boardId
     }
     return taskPopupData;
   }

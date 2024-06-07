@@ -6,9 +6,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { By } from '@angular/platform-browser';
-import { BoardTask, BoardTaskList, DateValidator, Priority, PriorityConvertorService } from '../../../../shared';
-import { TaskService } from '../../../services/task-service/task-service';
-import { TaskPopupData } from '../../../util/task-popup-data';
+import { of } from 'rxjs';
+import { Board, BoardTask, BoardTaskList, DateValidator, Priority, PriorityConvertorService } from '../../../../shared';
+import { TaskListService, TaskPopupData, TaskService } from '../../../index';
 import { TaskManagerComponent } from './task-manager.component';
 
 describe('TaskManagerComponent', () => {
@@ -21,26 +21,31 @@ describe('TaskManagerComponent', () => {
     priority: Priority.Low,
     description: 'Test Description'
   };
-  const mockTaskList: BoardTaskList = { id: '1', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [mockTask] }
+  const mockTaskList: BoardTaskList = { id: '1', boardId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [mockTask] };
+  const mockBoard: Board = { id: "1", userId: "1", creationTime: new Date() };
   const mockData: TaskPopupData = {
-    currentTaskList: mockTaskList,
+    taskListId: mockTaskList.id,
     task: mockTask,
-    allTaskLists: [mockTaskList]
+    boardId: mockBoard.id
   };
   var component: TaskManagerComponent;
   var fixture: ComponentFixture<TaskManagerComponent>;
   var dialogRef: jasmine.SpyObj<MatDialogRef<TaskManagerComponent>>;
   var mockDialog: jasmine.SpyObj<MatDialog>;
-  var taskService: jasmine.SpyObj<TaskService>;
-  var dateValidator: jasmine.SpyObj<DateValidator>;
+  var mockTaskService: jasmine.SpyObj<TaskService>;
+  var mockTaskListService: jasmine.SpyObj<TaskListService>;
+  var mockDateValidator: jasmine.SpyObj<DateValidator>;
   var debugEl: DebugElement;
 
   beforeEach(waitForAsync(() => {
     dialogRef = jasmine.createSpyObj<MatDialogRef<TaskManagerComponent>>('MatDialogRef', ['close']);
     mockDialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
-    taskService = jasmine.createSpyObj<TaskService>('TaskService', ['createNewTask', 'updateTask']);
-    dateValidator = jasmine.createSpyObj<DateValidator>('DateValidator', ['dateMinimum']);
-    dateValidator.dateMinimum.and.returnValue(() => null as unknown as ValidatorFn);
+    mockTaskService = jasmine.createSpyObj<TaskService>('TaskService', ['createTask', 'updateTask']);
+    mockTaskListService = jasmine.createSpyObj<TaskListService>('TaskListService', ['getTaskListsByBoardId', 'getTaskListById']);
+    mockDateValidator = jasmine.createSpyObj<DateValidator>('DateValidator', ['dateMinimum']);
+    mockDateValidator.dateMinimum.and.returnValue(() => null as unknown as ValidatorFn);
+    mockTaskListService.getTaskListsByBoardId.and.returnValue(of([mockTaskList]));
+    mockTaskListService.getTaskListById.and.returnValue(of(mockTaskList));
     TestBed.configureTestingModule({
       declarations: [TaskManagerComponent],
       imports: [ReactiveFormsModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule],
@@ -49,13 +54,16 @@ describe('TaskManagerComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: mockData },
         { provide: MatDialogRef, useValue: dialogRef },
         { provide: MatDialog, useValue: mockDialog },
-        { provide: TaskService, useValue: taskService },
-        { provide: DateValidator, useValue: dateValidator },
+        { provide: TaskService, useValue: mockTaskService },
+        { provide: TaskListService, useValue: mockTaskListService },
+        { provide: DateValidator, useValue: mockDateValidator },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskManagerComponent);
     component = fixture.componentInstance;
+    component.minDate = new Date(1);
+    component.ngOnInit();
     debugEl = fixture.debugElement;
     fixture.detectChanges();
   }));
@@ -136,15 +144,15 @@ describe('TaskManagerComponent', () => {
   });
 
   it('should call createNewTask when creating a new task', () => {
-    component.isNew = true;
+    component.isNewTask = true;
     component.taskForm.get('name')?.setValue('New Task Name');
     component.onSubmit();
-    expect(taskService.createNewTask).toHaveBeenCalled();
+    expect(mockTaskService.createTask).toHaveBeenCalled();
   });
   it('should call updateTask when updating an existing task', () => {
-    component.isNew = false;
+    component.isNewTask = false;
     component.taskForm.get('name')?.setValue('Updated Task Name');
     component.onSubmit();
-    expect(taskService.updateTask).toHaveBeenCalled();
+    expect(mockTaskService.updateTask).toHaveBeenCalled();
   });
 });

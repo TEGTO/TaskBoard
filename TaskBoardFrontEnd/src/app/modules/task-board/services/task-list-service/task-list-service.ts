@@ -6,9 +6,9 @@ import { BoardTaskList } from '../../../shared';
   providedIn: 'root'
 })
 export abstract class TaskListService {
-  abstract getTaskLists(): Observable<BoardTaskList[]>;
+  abstract getTaskListsByBoardId(id: string): Observable<BoardTaskList[]>;
   abstract getTaskListById(id: string): Observable<BoardTaskList | undefined>;
-  abstract createNewTaskList(taskList: BoardTaskList | undefined, allTaskLists: BoardTaskList[]): void;
-  abstract updateTaskList(taskList: BoardTaskList | undefined): void;
-  abstract deleteTaskList(taskList: BoardTaskList | undefined, allTaskLists: BoardTaskList[]): void;
+  abstract createTaskList(taskList: BoardTaskList): void;
+  abstract updateTaskList(taskList: BoardTaskList): void;
+  abstract deleteTaskList(taskList: BoardTaskList): void;
 }

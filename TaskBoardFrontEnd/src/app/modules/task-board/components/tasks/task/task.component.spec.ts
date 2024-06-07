@@ -4,13 +4,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { BoardTask, BoardTaskList, DATE_CONFIG, DateFormaterService, Priority } from '../../../../shared';
+import { BoardTask, DATE_CONFIG, DateFormaterService, Priority, StandartDateFormaterService } from '../../../../shared';
 import { TaskInfoComponent, TaskManagerComponent, TaskService } from '../../../index';
 import { TaskComponent } from './task.component';
 
 describe('TaskComponent', () => {
   const mockTask: BoardTask = { id: 'task_id', name: 'task', boardTaskListId: 'list_id', creationTime: new Date(), dueTime: new Date(), priority: Priority.Low, description: 'desc' };
-  const mockTaskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [mockTask] }
   var component: TaskComponent;
   var fixture: ComponentFixture<TaskComponent>;
   var dialog: MatDialog;
@@ -28,6 +27,7 @@ describe('TaskComponent', () => {
       providers: [
         DateFormaterService,
         { provide: DATE_CONFIG, useValue: { format: 'EEE, d MMM YYYY' } },
+        { provide: DateFormaterService, useClass: StandartDateFormaterService },
         { provide: TaskService, useValue: mockTaskService },
         { provide: MatDialog, useValue: mockDialog },
         provideAnimationsAsync()
@@ -38,7 +38,6 @@ describe('TaskComponent', () => {
     debugEl = fixture.debugElement;
     component = fixture.componentInstance;
     component.task = mockTask;
-    component.taskList = mockTaskList;
     fixture.detectChanges();
   }));
 
@@ -81,6 +80,6 @@ describe('TaskComponent', () => {
     const deleteButton: HTMLElement = debugEl.queryAll(By.css('button'))[3].nativeElement;
     deleteButton.click();
     fixture.detectChanges();
-    expect(mockTaskService.deleteTask).toHaveBeenCalledWith(mockTask, mockTaskList);
+    expect(mockTaskService.deleteTask).toHaveBeenCalledWith(mockTask);
   });
 });

@@ -1,3 +1,12 @@
 <div class="root">
-    <task-board></task-board>
+    <header class="header" (click)="redirectToHome()">
+        <span class="icon is-small is-left">
+            <i class="fa-regular fa-clipboard"></i>
+        </span>
+        <p class="name">Task Manager</p>
+    </header>
+
+    <body class="wrapper">
+        <router-outlet></router-outlet>
+    </body>
 </div>

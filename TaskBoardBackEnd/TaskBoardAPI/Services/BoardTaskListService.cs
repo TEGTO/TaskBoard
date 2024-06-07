@@ -17,14 +17,14 @@ namespace TaskBoardAPI.Services
                 return boardTaskList;
             }
         }
-        public async Task<IEnumerable<BoardTaskList>> GetTaskListsByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<BoardTaskList>> GetTaskListsByBoardIdAsync(string id, CancellationToken cancellationToken = default)
         {
             List<BoardTaskList> boardTaskLists = new List<BoardTaskList>();
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
                 boardTaskLists.AddRange(dbContext.BoardTaskLists
-                  .Where(x => x.UserId == userId)
-                  .OrderBy(x => x.CreationTime.Date).ThenBy(c => c.CreationTime.TimeOfDay)
+                  .Where(x => x.BoardId == id)
+                  .OrderBy(x => x.CreationTime)
                   .AsNoTracking());
                 await Task.WhenAll(boardTaskLists.Select(async list =>
                 {

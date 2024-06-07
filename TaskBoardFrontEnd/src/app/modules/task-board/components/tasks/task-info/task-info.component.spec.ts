@@ -5,6 +5,7 @@ import { By, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ActivityService } from '../../../../action-history';
 import { BoardTask, BoardTaskActivity, BoardTaskList, DateFormaterService, Priority, PriorityConvertorService } from '../../../../shared';
+import { TaskListService } from '../../../services/task-list-service/task-list-service';
 import { TaskInfoComponent } from './task-info.component';
 
 describe('TaskInfoComponent', () => {
@@ -13,6 +14,7 @@ describe('TaskInfoComponent', () => {
   var debugEl: DebugElement;
   var mockDialog: jasmine.SpyObj<MatDialog>;
   var mockActivityService: jasmine.SpyObj<ActivityService>;
+  var mockTaskListService: jasmine.SpyObj<TaskListService>;
   var mockDateFormater: jasmine.SpyObj<DateFormaterService>;
   var mockPriorityConvertor: jasmine.SpyObj<PriorityConvertorService>;
   const mockTask: BoardTask = {
@@ -26,7 +28,7 @@ describe('TaskInfoComponent', () => {
   };
   const mockTaskList: BoardTaskList = {
     id: '1',
-    userId: '1',
+    boardId: '1',
     creationTime: new Date('2024-05-19'),
     name: 'Test List',
     boardTasks: [mockTask]
@@ -38,11 +40,12 @@ describe('TaskInfoComponent', () => {
 
   beforeEach(waitForAsync(() => {
     mockDialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
-
+    mockTaskListService = jasmine.createSpyObj<TaskListService>('TaskListService', ['getTaskListById']);
     mockActivityService = jasmine.createSpyObj<ActivityService>('ActivityService', ['getTaskActivitiesByTaskId']);
-    mockActivityService.getTaskActivitiesByTaskId.and.returnValue(of(mockActivities));
-
     mockDateFormater = jasmine.createSpyObj<DateFormaterService>('DateFormaterService', ['formatDate']);
+
+    mockTaskListService.getTaskListById.and.returnValue(of(mockTaskList));
+    mockActivityService.getTaskActivitiesByTaskId.and.returnValue(of(mockActivities));
     mockDateFormater.formatDate.and.callFake((date: Date) => date.toDateString())
 
     const sanitizerMock = {
@@ -57,6 +60,7 @@ describe('TaskInfoComponent', () => {
         { provide: DateFormaterService, useValue: mockDateFormater },
         { provide: MAT_DIALOG_DATA, useValue: { task: mockTask, currentTaskList: mockTaskList } },
         { provide: MatDialog, useValue: mockDialog },
+        { provide: TaskListService, useValue: mockTaskListService },
         { provide: ActivityService, useValue: mockActivityService },
         { provide: PriorityConvertorService, useValue: mockPriorityConvertor },
         { provide: DomSanitizer, useValue: sanitizerMock }
@@ -74,7 +78,6 @@ describe('TaskInfoComponent', () => {
   });
   it('should initialize task and currentTaskList', () => {
     expect(component.task).toEqual(mockTask);
-    expect(component.currentTaskList).toEqual(mockTaskList);
   });
   it('should display task details correctly', () => {
     const taskNameElement: HTMLElement = debugEl.query(By.css('.card-name')).nativeElement;
@@ -97,6 +100,7 @@ describe('TaskInfoComponent', () => {
   });
   it('should show loading state while activities are being fetched', () => {
     component.taskActivities$ = of(undefined);
+    component.updateView();
     fixture.detectChanges();
     expect(debugEl.query(By.css('.activity-body')).nativeElement.textContent).toContain('Loading...');
   });

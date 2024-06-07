@@ -23,6 +23,7 @@ namespace TaskBoardAPI.Models
         public Priority Priority { get; set; }
         public string? PrevTaskId { get; set; }
         public string? NextTaskId { get; set; }
+        public List<BoardTaskActivity> BoardTaskActivities { get; set; } = new List<BoardTaskActivity>();
 
         public void CopyOther(BoardTask other)
         {

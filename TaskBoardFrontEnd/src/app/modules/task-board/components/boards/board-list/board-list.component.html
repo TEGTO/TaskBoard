@@ -1,0 +1,15 @@
+<div class="board-list">
+    <ng-container *ngIf="boards$ | async as boards; else loading">
+        <div class="board-list-wrapper">
+            <div class="list-columns">
+                @for (board of boards; track board;) {
+                <board-item [board]="board" class="list-column"></board-item>
+                }
+                <board-item [board]="undefined" class="list-column"></board-item>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #loading>
+        Loading...
+    </ng-template>
+</div>

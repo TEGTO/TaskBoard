@@ -63,7 +63,7 @@ namespace TaskBoardAPITests.Services
         {
             // Arrange
             var service = CreateService();
-            User user = new User { Id = "oldID", BoardTaskLists = new List<BoardTaskList> { new BoardTaskList { Name = "NewTaskList" } } };
+            User user = new User { Id = "oldID"};
             CancellationToken cancellationToken = default(global::System.Threading.CancellationToken);
             // Act
             var result = await service.CreateNewUserAsync(
@@ -72,7 +72,6 @@ namespace TaskBoardAPITests.Services
             // Assert
             Assert.That(testUsers.Count(), Is.EqualTo(3));
             Assert.That(testUsers.Last().Id, Is.Not.EqualTo("oldID"));
-            Assert.That(testUsers.Last().BoardTaskLists.First().Name, Is.EqualTo("NewTaskList"));
             mockDbContext.Verify(x => x.SaveChangesAsync(cancellationToken), Times.Exactly(1));
             mockDbContext.Verify(x => x.AddAsync(user, cancellationToken), Times.Exactly(1));
             mockDbContext.Verify(x => x.Dispose(), Times.Exactly(1));

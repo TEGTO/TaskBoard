@@ -1,6 +1,4 @@
 ﻿using FluentValidation.TestHelper;
-using Moq;
-using NUnit.Framework;
 using TaskBoardAPI.Models;
 using TaskBoardAPI.Models.Dto;
 using TaskBoardAPI.Validators;
@@ -21,7 +19,7 @@ namespace TaskBoardAPITests.Validators
         public void Validate_WhenIdIsNull_ShouldHaveValidationErrorForId()
         {
             // Arrange
-            var boardTaskDto = new BoardTaskDto { Id = null, BoardTaskListId = "1"};
+            var boardTaskDto = new BoardTaskDto { Id = null, BoardTaskListId = "1" };
             // Act
             var result = validator.TestValidate(boardTaskDto);
             // Assert

@@ -1,0 +1,35 @@
+<div class="board">
+    <ng-container *ngIf="board$ | async as board; else loading">
+        <div class="board-bar">
+            <div class="board-name">
+                <ng-container *ngIf="boards$ | async as boards; else loading">
+                    <mat-select [(value)]="boardId" (selectionChange)="changeBoard()" panelClass="dropdown-panel">
+                        <ng-container *ngFor="let board of boards;">
+                            <mat-option [value]="board.id" panelClass="board-name-panel">{{board.name}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                </ng-container>
+            </div>
+            <ng-template #loading>
+                Loading...
+            </ng-template>
+            <button class="history-menu" (click)="openHistoryBar()">
+                History
+                <span class="icon">
+                    <i class="fas fa-history"></i>
+                </span>
+            </button>
+        </div>
+        <div class="board-wrapper">
+            <div class="board-columns" *ngIf="taskLists$ | async as taskLists; else loading" cdkDropListGroup>
+                @for (taskList of taskLists; track taskList) {
+                <tasks-list class="board-column" [taskList]="taskList" [boardId]="boardId"></tasks-list>
+                }
+                <tasks-list class="board-column" id="create-task-list" [boardId]="boardId"></tasks-list>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #loading>
+        Loading...
+    </ng-template>
+</div>

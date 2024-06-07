@@ -1,0 +1,55 @@
+@use 'colors' as colors;
+
+.board {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    padding: 10px 40px 30px 40px;
+
+    .board-bar {
+        display: flex;
+        justify-content: space-between;
+
+        .board-name {
+            font-size: 35px;
+            font-weight: 800;
+            padding-left: 10px;
+
+            * {
+                font-size: 30px !important;
+                font-weight: 800;
+                color: inherit !important;
+            }
+        }
+
+        .history-menu {
+            font-size: 23px;
+            font-weight: 800;
+        }
+    }
+
+    .board-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin: 0;
+
+        .board-columns {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(423px, 1fr));
+            margin: 0 0 50px 0;
+            row-gap: 50px;
+            column-gap: 20px;
+            justify-items: center;
+
+            .board-column {
+                height: 700px;
+                width: 100%;
+                max-width: 423px;
+            }
+        }
+    }
+}

@@ -25,17 +25,17 @@ namespace TaskBoardAPI.Services
                 return boardActivity;
             }
         }
-        public async Task<IEnumerable<BoardActivity>> GetActivitiesOnPageByUserIdAsync(string userId, int page, int amountObjectsPerPage, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<BoardActivity>> GetActivitiesOnPageByBoardIdAsync(string id, int page, int amountObjectsPerPage, CancellationToken cancellationToken = default)
         {
             List<BoardActivity> activitiesOnPage = new List<BoardActivity>();
             if (page > 0 && amountObjectsPerPage > 0)
             {
                 using (var dbContext = await CreateDbContextAsync(cancellationToken))
                 {
-                    if ((await dbContext.BoardActivities.Where(x => x.UserId == userId).CountAsync()) > 0)
+                    if ((await dbContext.BoardActivities.Where(x => x.BoardId == id).CountAsync()) > 0)
                     {
                         activitiesOnPage.AddRange(await dbContext.BoardActivities
-                        .Where(x => x.UserId == userId)
+                        .Where(x => x.BoardId == id)
                         .OrderByDescending(x => x.ActivityTime)
                         .Skip((page - 1) * amountObjectsPerPage)
                         .Take(amountObjectsPerPage)
@@ -46,11 +46,11 @@ namespace TaskBoardAPI.Services
             }
             return activitiesOnPage;
         }
-        public async Task<int> GetBoardActivityAmountByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+        public async Task<int> GetBoardActivityAmountByBoardIdAsync(string id, CancellationToken cancellationToken = default)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                return await dbContext.BoardActivities.Where(x => x.UserId == userId).CountAsync();
+                return await dbContext.BoardActivities.Where(x => x.BoardId == id).CountAsync();
             }
         }
         public async Task<BoardActivity> CreateBoardActivityAsync(BoardActivity boardActivity, CancellationToken cancellationToken = default)

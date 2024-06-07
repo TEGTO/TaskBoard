@@ -10,18 +10,25 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { provideEffects } from '@ngrx/effects';
+import { provideState, provideStore } from '@ngrx/store';
 import { ActionHistoryModule } from '../action-history/action-history.module';
-import { BoardComponent, TaskComponent, TaskInfoComponent, TaskListManagerComponent, TaskManagerComponent, TasksListComponent } from './index';
+import { BoardComponent, BoardEffects as BoardEffect, BoardItemComponent, BoardListComponent, BoardManagerComponent, TaskComponent, TaskInfoComponent, TaskListComponent, TaskListEffect, TaskListManagerComponent, TaskManagerComponent, boardReducer, taskReducer } from './index';
+import { TaskEffect } from './store/tasks/task/task.effect';
 
 @NgModule({
   declarations: [
     TaskComponent,
-    TasksListComponent,
+    TaskListComponent,
     TaskListManagerComponent,
     TaskInfoComponent,
     TaskManagerComponent,
-    BoardComponent
+    BoardComponent,
+    BoardListComponent,
+    BoardItemComponent,
+    BoardManagerComponent
   ],
   imports: [
     CommonModule,
@@ -31,8 +38,8 @@ import { BoardComponent, TaskComponent, TaskInfoComponent, TaskListManagerCompon
     MatIconModule,
     MatDialogModule,
     MatSelectModule,
-    MatDatepickerModule,
     MatNativeDateModule,
+    MatDatepickerModule,
     HttpClientModule,
     ReactiveFormsModule,
     CdkDropList,
@@ -41,5 +48,14 @@ import { BoardComponent, TaskComponent, TaskInfoComponent, TaskListManagerCompon
     ActionHistoryModule
   ],
   exports: [BoardComponent],
+  providers: [
+    provideStore(),
+    provideState({ name: "tasks", reducer: taskReducer }),
+    provideState({ name: "boards", reducer: boardReducer }),
+    provideEffects(TaskEffect),
+    provideEffects(TaskListEffect),
+    provideEffects(BoardEffect),
+    provideAnimationsAsync()
+  ]
 })
 export class TaskBoardModule { }

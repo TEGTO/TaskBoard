@@ -1,5 +1,5 @@
 ## Description
-A modern kanban board (task board) made using Angular for the frontend, ASP.NET Web API for the backend, and PostgreSQL for the database, all packaged with a Docker Compose setup for seamless deployment.
+Modern kanban board (task board) made using Angular for the frontend, ASP.NET Web API for the backend, and PostgreSQL for the database, all packaged with a Docker Compose setup for seamless deployment.
 
 ## Installation
 
@@ -15,6 +15,8 @@ A modern kanban board (task board) made using Angular for the frontend, ASP.NET 
 ```bash
 docker-compose up
 ```
+#### Please note, you need to disable localhost ssl verification in your browser!
+
 ### To Run an application locally
 - Install the tools if you haven't already
 ```bash
@@ -45,6 +47,9 @@ npm start
 # unit tests
 dotnet build TaskBoardAPITests
 dotnet test "TaskBoardAPITests\bin\Debug\net8.0\TaskBoardAPITests.dll"
+# integration tests
+dotnet build TaskBoardIntegrationTests
+dotnet test "TaskBoardIntegrationTests\bin\Debug\net8.0\TaskBoardIntegrationTests.dll"
 ```
 #### Frontend (inside TaskBoardFrontEnd)
 ```bash
@@ -55,20 +60,22 @@ npm run coverage
 ```
 
 ## Functionality 
+- Menu for creating/deleting/updating boards
 - Menu for creating/deleting/updating task lists
 - Menu for creating/deleting/updating tasks
 - Task information menu
 - Ability to drag and drop a task
-- History tab for all actions and activity tab for a specific task
+- History tab for all actions on a board and Activity tab for a specific task.
   
 ## Screenshots 
-![image](https://github.com/TEGTO/TaskBoard/assets/90476119/d3ad30bd-b635-4c2f-8918-ec06c22ded1d)
-![image](https://github.com/TEGTO/TaskBoard/assets/90476119/13c6c84a-dde8-4fa7-b7be-728524c47498)
-![image](https://github.com/TEGTO/TaskBoard/assets/90476119/fa35107c-4fd5-497b-af5f-f8a411e73318)
-![image](https://github.com/TEGTO/TaskBoard/assets/90476119/d0420b29-a37b-4220-8ed0-588bb27ca8ac)
-![image](https://github.com/TEGTO/TaskBoard/assets/90476119/26de8151-8abd-4b3e-bf54-23f2adf6d8a4)
-![image](https://github.com/TEGTO/TaskBoard/assets/90476119/f11613c8-9521-443c-81fc-315c7893c2e1)
-![image](https://github.com/TEGTO/TaskBoard/assets/90476119/ecf8ace1-a30e-45de-a0cf-7f92d43aa1c3)
+![image](https://github.com/TEGTO/TaskBoard/assets/90476119/0666bba2-f1e6-43c7-b77c-46bc17a28b86)
+![image](https://github.com/TEGTO/TaskBoard/assets/90476119/11fe97f1-a06e-4340-8647-8c517e5074d5)
+![image](https://github.com/TEGTO/TaskBoard/assets/90476119/a3c81bc4-fd8b-4c01-896b-5431abcef6de)
+![image](https://github.com/TEGTO/TaskBoard/assets/90476119/c5ec7cc2-f3bb-43fb-9ac0-ff5679c250c7)
+![image](https://github.com/TEGTO/TaskBoard/assets/90476119/56daeafd-9464-40e9-837d-db393e53a462)
+![image](https://github.com/TEGTO/TaskBoard/assets/90476119/3f9c9bbe-36aa-42ab-b901-00def97c541b)
+![image](https://github.com/TEGTO/TaskBoard/assets/90476119/aa08f2fe-8d37-4f7b-a583-5df99291ecd2)
+![image](https://github.com/TEGTO/TaskBoard/assets/90476119/77d726f6-e3eb-4316-9cae-9758e9f6614c)
 
 
 

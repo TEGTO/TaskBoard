@@ -1,13 +1,12 @@
 @use "colors" as colors;
 @use "task-card" as tc;
 
-$task-info-width: 1000px;
-$task-info-min-height: 400px;
+$task-info-width: 700px;
+$task-info-min-height: 600px;
+$task-info-section-max-width : $task-info-width / 2;
 $main-header-height: 70px;
 $max-description-height: 400px;
 $max-activity-height: 600px;
-$info-zone-width: $task-info-width * 0.6;
-$activity-zone-width: $task-info-width * 0.4;
 $card-name-width: $task-info-width * 0.4;
 $description-body-width: $task-info-width * 0.45;
 
@@ -36,6 +35,7 @@ $description-body-width: $task-info-width * 0.45;
     flex-direction: row;
     width: $task-info-width;
     min-height: $task-info-min-height;
+    flex-grow: 1;
 
     >* {
         padding: 0 20px 30px 30px;
@@ -52,7 +52,8 @@ $description-body-width: $task-info-width * 0.45;
     .task-info {
         display: flex;
         flex-direction: column;
-        width: $info-zone-width;
+        max-width: $task-info-section-max-width;
+        flex-grow: 1;
 
         .info-header {
             @include part-header;
@@ -79,6 +80,8 @@ $description-body-width: $task-info-width * 0.45;
                 .param {
                     color: colors.$secondary-text-priority-color;
                     font-weight: 800;
+                    overflow-x: hidden;
+                    text-overflow: ellipsis;
                 }
             }
 
@@ -106,7 +109,7 @@ $description-body-width: $task-info-width * 0.45;
     .task-activity {
         display: flex;
         flex-direction: column;
-        width: $activity-zone-width;
+        flex-grow: 1;
 
         .activity-header {
             @include part-header;

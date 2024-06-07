@@ -23,6 +23,15 @@
         padding: 0;
         height: 100%;
 
+        .activities-wrapper {
+            padding: 1.25rem;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            letter-spacing: 0.03125;
+            height: 0px;
+            font-weight: 400;
+        }
+
         .mat-typography {
             padding-top: 0;
             display: flex;

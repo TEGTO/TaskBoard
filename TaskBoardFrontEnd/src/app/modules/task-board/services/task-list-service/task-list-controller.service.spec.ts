@@ -1,107 +1,53 @@
 import { TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { ActivityService } from '../../../action-history';
-import { ActivityType, BoardTaskList, TaskListApiService } from '../../../shared';
+import { BoardTaskList, TaskListApiService } from '../../../shared';
+import { createTaskList, deleteTaskList, getTaskListsByBoardId, updateTaskList } from '../../store/tasks/task-list/task-list.actions';
 import { TaskListControllerService } from './task-list-controller.service';
 
 describe('TaskListControllerService', () => {
-  let service: TaskListControllerService;
-  let taskListApiService: jasmine.SpyObj<TaskListApiService>;
-  let activityService: jasmine.SpyObj<ActivityService>;
+  var service: TaskListControllerService;
+  var mockStore: jasmine.SpyObj<Store>;
+  var mockTaskListApi: jasmine.SpyObj<TaskListApiService>;
 
   beforeEach(() => {
-    const taskListApiSpy = jasmine.createSpyObj('TaskListApiService', ['getTaskLists', 'getTaskListById', 'createNewTaskList', 'updateTaskList', 'deleteTaskList']);
-    const activityServiceSpy = jasmine.createSpyObj('ActivityService', ['createTaskListActivity']);
-
+    mockStore = jasmine.createSpyObj<Store>('Store', ['dispatch', 'select']);
+    mockTaskListApi = jasmine.createSpyObj<TaskListApiService>('TaskListApiService', ['getTaskListById']);
+    mockStore.select.and.returnValue(of([]));
     TestBed.configureTestingModule({
       providers: [
         TaskListControllerService,
-        { provide: TaskListApiService, useValue: taskListApiSpy },
-        { provide: ActivityService, useValue: activityServiceSpy }
+        { provide: Store, useValue: mockStore },
+        { provide: TaskListApiService, useValue: mockTaskListApi }
       ]
     });
     service = TestBed.inject(TaskListControllerService);
-    taskListApiService = TestBed.inject(TaskListApiService) as jasmine.SpyObj<TaskListApiService>;
-    activityService = TestBed.inject(ActivityService) as jasmine.SpyObj<ActivityService>;
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should dispatch getTaskListsByBoardId action and select task lists', () => {
+    const boardId = '123';
+    service.getTaskListsByBoardId(boardId).subscribe();
+    expect(mockStore.dispatch).toHaveBeenCalledWith(getTaskListsByBoardId({ boardId }));
+    expect(mockStore.select).toHaveBeenCalled();
   });
-
-  it('should create new task list and call services', () => {
-    const taskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
-    const allTaskLists: BoardTaskList[] = [];
-    taskListApiService.createNewTaskList.and.returnValue(of(taskList));
-
-    service.createNewTaskList(taskList, allTaskLists);
-
-    expect(allTaskLists.length).toBe(1);
-    expect(allTaskLists[0]).toEqual(taskList);
-    expect(taskListApiService.createNewTaskList).toHaveBeenCalledWith(taskList);
-    expect(activityService.createTaskListActivity).toHaveBeenCalledWith(ActivityType.Create, {
-      taskList: taskList,
-      prevTaskList: undefined
-    });
+  it('should call getTaskListById from taskListApi', () => {
+    const listId = '123';
+    service.getTaskListById(listId);
+    expect(mockTaskListApi.getTaskListById).toHaveBeenCalledWith(listId);
   });
-
-  it('task list undefined create should do nothing', () => {
-    const taskList: BoardTaskList | undefined = undefined;
-    const allTaskLists: BoardTaskList[] = [];
-
-    service.createNewTaskList(taskList, allTaskLists);
-
-    expect(allTaskLists.length).toBe(0);
-    expect(taskListApiService.createNewTaskList).not.toHaveBeenCalled();
-    expect(activityService.createTaskListActivity).not.toHaveBeenCalled();
+  it('should dispatch createTaskList action', () => {
+    const taskList: BoardTaskList = { id: '1', boardId: '1', creationTime: new Date(), name: 'Test Task List', boardTasks: [] };
+    service.createTaskList(taskList);
+    expect(mockStore.dispatch).toHaveBeenCalledWith(createTaskList({ taskList }));
   });
-  it('should update task list and call services', () => {
-    const prevTaskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
-    const taskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
-    taskListApiService.getTaskListById.and.returnValue(of(prevTaskList));
-    taskListApiService.updateTaskList.and.returnValue(of(taskList));
-
+  it('should dispatch updateTaskList action', () => {
+    const taskList: BoardTaskList = { id: '1', boardId: '1', creationTime: new Date(), name: 'Updated Task List', boardTasks: [] };
     service.updateTaskList(taskList);
-
-    expect(taskListApiService.getTaskListById).toHaveBeenCalledWith(taskList.id);
-    expect(taskListApiService.updateTaskList).toHaveBeenCalledWith(taskList);
-    expect(activityService.createTaskListActivity).toHaveBeenCalledWith(ActivityType.Update, {
-      taskList: taskList,
-      prevTaskList: prevTaskList
-    });
+    expect(mockStore.dispatch).toHaveBeenCalledWith(updateTaskList({ taskList }));
   });
-  it('task list undefined create should do nothing', () => {
-    const taskList: BoardTaskList | undefined = undefined;
-
-    service.updateTaskList(taskList);
-
-    expect(taskListApiService.updateTaskList).not.toHaveBeenCalled();
-    expect(activityService.createTaskListActivity).not.toHaveBeenCalled();
-  });
-  it('should delete task list and call services', () => {
-    const taskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
-    const allTaskLists = [taskList];
-    taskListApiService.deleteTaskList.and.returnValue(of(taskList));
-
-    service.deleteTaskList(taskList, allTaskLists);
-
-    expect(allTaskLists.length).toBe(0);
-    expect(taskListApiService.deleteTaskList).toHaveBeenCalledWith(taskList);
-    expect(activityService.createTaskListActivity).toHaveBeenCalledWith(ActivityType.Delete, {
-      taskList: taskList,
-      prevTaskList: undefined
-    });
-  });
-  it('task undefined delete should to nothing', () => {
-    const taskList: BoardTaskList = { id: 'list_id', userId: "userId", creationTime: new Date(), name: 'List 1', boardTasks: [] }
-    const allTaskLists = [taskList];
-    taskListApiService.deleteTaskList.and.returnValue(of(taskList));
-
-    service.deleteTaskList(undefined, allTaskLists);
-
-    expect(allTaskLists.length).toBe(1);
-    expect(allTaskLists[0]).toEqual(taskList);
-    expect(taskListApiService.deleteTaskList).not.toHaveBeenCalled();
-    expect(activityService.createTaskListActivity).not.toHaveBeenCalled();
+  it('should dispatch removeTaskList action', () => {
+    const taskList: BoardTaskList = { id: '1', boardId: '1', creationTime: new Date(), name: 'Task List to Delete', boardTasks: [] };
+    service.deleteTaskList(taskList);
+    expect(mockStore.dispatch).toHaveBeenCalledWith(deleteTaskList({ listId: taskList.id }));
   });
 });
