@@ -60,5 +60,8 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "storybook": "^8.1.5",
     "typescript": "~5.4.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

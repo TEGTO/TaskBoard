@@ -3,7 +3,7 @@
 
 $task-info-width: 700px;
 $task-info-min-height: 600px;
-$task-info-section-max-width : $task-info-width / 2;
+$task-info-section-max-width : calc($task-info-width / 2);
 $main-header-height: 70px;
 $max-description-height: 400px;
 $max-activity-height: 600px;
