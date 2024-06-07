@@ -42,21 +42,19 @@ ENV=development #production
 npm start
 ```
 ## Test
-#### Backend (inside TaskBoardBackEnd)
+#### Backend
 ```bash
 # unit tests
-dotnet build TaskBoardAPITests
-dotnet test "TaskBoardAPITests\bin\Debug\net8.0\TaskBoardAPITests.dll"
+dotnet test TaskBoardBackEnd/TaskBoardAPITests
 # integration tests
-dotnet build TaskBoardIntegrationTests
-dotnet test "TaskBoardIntegrationTests\bin\Debug\net8.0\TaskBoardIntegrationTests.dll"
+dotnet test TaskBoardBackEnd/TaskBoardIntegrationTests
 ```
-#### Frontend (inside TaskBoardFrontEnd)
+#### Frontend
 ```bash
 # unit tests
-npm run test
+npm npm run test --prefix TaskBoardFrontEnd
 # unit tests with coverage
-npm run coverage 
+npm npm run coverage --prefix TaskBoardFrontEnd
 ```
 
 ## Functionality 

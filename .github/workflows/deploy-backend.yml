@@ -27,15 +27,11 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore TaskBoardBackEnd/TaskBoardAPI
 
-    - name: Build and Run Unit Tests
-      run: 
-        dotnet build TaskBoardBackEnd/TaskBoardAPITests
-        dotnet test "TaskBoardBackEnd/TaskBoardAPITests/bin/Debug/net8.0/TaskBoardAPITests.dll"
+    - name: Run Unit Tests
+      run: dotnet test TaskBoardBackEnd/TaskBoardAPITests
 
-    - name: Build and Run Integration Tests
-      run: 
-        dotnet build TaskBoardBackEnd/TaskBoardIntegrationTests
-        dotnet test "TaskBoardBackEnd/TaskBoardIntegrationTests/bin/Debug/net8.0/TaskBoardIntegrationTests.dll"
+    - name: Run Integration Tests
+      run: dotnet test TaskBoardBackEnd/TaskBoardIntegrationTests
 
     - name: Build
       run: dotnet build TaskBoardBackEnd/TaskBoardAPI --configuration Release --no-restore

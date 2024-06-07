@@ -73,7 +73,7 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     };
 });
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContextFactory<BoardTasksDbContext>(options =>
     options.UseNpgsql(connectionString));
 
