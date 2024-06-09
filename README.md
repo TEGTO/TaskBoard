@@ -41,7 +41,7 @@ ENV=development #production
 ```bash
 npm start
 ```
-## Stoorybook
+## Storybook
 ```bash
 npm run storybook --prefix TaskBoardFrontEnd
 ```
