@@ -1,21 +1,21 @@
 CREATE TABLE IF NOT EXISTS "Users"(
-    "Id" TEXT PRIMARY KEY
+    "Id" CHAR(36) PRIMARY KEY
 );
 CREATE TABLE IF NOT EXISTS "Boards"(
-    "Id" TEXT PRIMARY KEY,
-    "UserId" TEXT REFERENCES "Users"("Id") ON DELETE CASCADE NOT NULL,
+    "Id" CHAR(36) PRIMARY KEY,
+    "UserId" CHAR(36) REFERENCES "Users"("Id") ON DELETE CASCADE NOT NULL,
     "CreationTime" TIMESTAMPTZ NOT NULL,
     "Name" TEXT
 );
 CREATE TABLE IF NOT EXISTS "BoardTaskLists"(
-    "Id" TEXT PRIMARY KEY,
-    "BoardId" TEXT REFERENCES "Boards"("Id") ON DELETE CASCADE NOT NULL,
+    "Id" CHAR(36) PRIMARY KEY,
+    "BoardId" CHAR(36) REFERENCES "Boards"("Id") ON DELETE CASCADE NOT NULL,
     "CreationTime" TIMESTAMPTZ NOT NULL,
     "Name" TEXT
 );
 CREATE TABLE IF NOT EXISTS "BoardTasks"(
-    "Id" TEXT PRIMARY KEY,
-    "BoardTaskListId" TEXT REFERENCES "BoardTaskLists"("Id")  ON DELETE CASCADE NOT NULL,
+    "Id" CHAR(36) PRIMARY KEY,
+    "BoardTaskListId" CHAR(36) REFERENCES "BoardTaskLists"("Id")  ON DELETE CASCADE NOT NULL,
     "CreationTime" TIMESTAMPTZ NOT NULL,
     "DueTime" TIMESTAMPTZ,
     "Name" TEXT,
@@ -25,14 +25,14 @@ CREATE TABLE IF NOT EXISTS "BoardTasks"(
     "NextTaskId" TEXT
 );
 CREATE TABLE IF NOT EXISTS "BoardActivities"(
-    "Id" TEXT PRIMARY KEY,
-    "BoardId" TEXT REFERENCES "Boards"("Id") ON DELETE CASCADE NOT NULL,
+    "Id" CHAR(36) PRIMARY KEY,
+    "BoardId" CHAR(36) REFERENCES "Boards"("Id") ON DELETE CASCADE NOT NULL,
     "ActivityTime" TIMESTAMPTZ NOT NULL,
     "Description" TEXT
 );
 CREATE TABLE IF NOT EXISTS "BoardTaskActivities"(
-    "Id" TEXT PRIMARY KEY,
-    "BoardTaskId" TEXT REFERENCES "BoardTasks"("Id") ON DELETE CASCADE NOT NULL,
+    "Id" CHAR(36) PRIMARY KEY,
+    "BoardTaskId" CHAR(36) REFERENCES "BoardTasks"("Id") ON DELETE CASCADE NOT NULL,
     "ActivityTime" TIMESTAMPTZ NOT NULL,
     "Description" TEXT
 );
