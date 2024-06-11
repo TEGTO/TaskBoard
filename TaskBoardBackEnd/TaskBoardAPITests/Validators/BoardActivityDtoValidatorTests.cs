@@ -5,14 +5,14 @@ using TaskBoardAPI.Validators;
 namespace TaskBoardAPITests.Validators
 {
     [TestFixture]
-    public class BoardActivityValidatorTests
+    public class BoardActivityDtoValidatorTests
     {
-        private BoardActivityValidator validator;
+        private BoardActivityDtoValidator validator;
 
         [SetUp]
         public void Setup()
         {
-            validator = new BoardActivityValidator();
+            validator = new BoardActivityDtoValidator();
         }
         [Test]
         public void Validate_WhenIdIsNull_ShouldHaveValidationErrorForId()

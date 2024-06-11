@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using TaskBoardAPI.Data;
 using TaskBoardAPI.Middleware;
 using TaskBoardAPI.Services;
-using TaskBoardAPI.Validators;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -59,7 +58,7 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
-builder.Services.AddValidatorsFromAssemblyContaining<UserDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 ValidatorOptions.Global.LanguageManager.Enabled = false;
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {

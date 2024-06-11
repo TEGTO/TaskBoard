@@ -3,9 +3,9 @@ using TaskBoardAPI.Models.Dto;
 
 namespace TaskBoardAPI.Validators
 {
-    public class BoardTaskActivityValidator : AbstractValidator<BoardTaskActivityDto>
+    public class BoardTaskActivityDtoValidator : AbstractValidator<BoardTaskActivityDto>
     {
-        public BoardTaskActivityValidator()
+        public BoardTaskActivityDtoValidator()
         {
             RuleFor(x => x.Id).NotNull();
             RuleFor(x => x.BoardTaskId).NotNull();
